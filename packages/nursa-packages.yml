@@ -1,0 +1,54 @@
+generated: '2026-08-04'
+method: searched
+source: npm, PyPI, the Nursa developer page, and the github.com/nursa-com organization
+packages: []
+sdks_published: false
+detail: >-
+  Nursa publishes NO first-party client library in any language. Searched the npm registry
+  (registry.npmjs.org search for "nursa" — no Nursa-authored package), PyPI (nursa, nursa-api,
+  nursa-sdk all 404), and the public github.com/nursa-com organization, whose seven public repos
+  are a US federal-holidays utility, an Airbyte fork, a Mage Terraform-templates fork, Helm charts,
+  a Swift photo viewer, a HyperTrack Ionic/Capacitor SDK wrapper and Slack data-eng workflows —
+  infrastructure, not an API client. The developer page and the docs offer no download, no code
+  samples beyond three webhook-signature verification snippets (Python, JavaScript, Java), and no
+  Postman collection or workspace.
+searched_registries:
+- registry: npm
+  query: nursa
+  result: no first-party package
+- registry: pypi
+  query: nursa | nursa-api | nursa-sdk
+  result: 404
+- registry: github
+  query: github.com/nursa-com
+  result: 7 public repos, none an API client
+- registry: postman
+  query: nursa
+  result: no Nursa-published public workspace or collection
+code_samples:
+- language: python
+  purpose: webhook signature verification
+  url: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20configuration/
+- language: javascript
+  purpose: webhook signature verification
+  url: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20configuration/
+- language: java
+  purpose: webhook signature verification
+  url: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20configuration/
+gaps:
+- >-
+  No SDK in any language. Because Nursa also ships no downloadable OpenAPI, integrators cannot even
+  generate one — the two gaps compound. Publishing the spec that already backs the docs would make
+  a generated client available to every partner for free.
+- No public Postman collection or workspace.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://registry.npmjs.org/-/v1/search?text=nursa&size=20
+    status: 200
+  - url: https://pypi.org/pypi/nursa/json
+    status: 404
+  - url: https://api.github.com/orgs/nursa-com/repos?per_page=100
+    status: 200
+  - url: https://nursa.com/developers/start-here
+    status: 200

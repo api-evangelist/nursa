@@ -1,0 +1,91 @@
+generated: '2026-08-04'
+method: searched
+source: live probes of every Nursa host in apis.yml and openapi/ servers[]
+note: >-
+  Nursa serves OIDC discovery from a NON-canonical path — /oidc/.well-known/openid-configuration
+  rather than /.well-known/openid-configuration. The canonical RFC 8414 / OIDC Discovery path
+  returns 404, so a generic OIDC client pointed at the issuer will not auto-discover. The
+  document is otherwise complete and anonymous.
+hosts:
+- host: https://auth.nursa.com
+  role: authorization server (production)
+  documents:
+  - path: /oidc/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: nursa-openid-configuration.json
+  - path: /oidc/.well-known/jwks.json
+    status: 200
+    content_type: application/json
+    note: referenced as jwks_uri; not stored (rotating key material)
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: https://auth.sandbox.nursa.com
+  role: authorization server (sandbox)
+  documents:
+  - path: /oidc/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: nursa-sandbox-openid-configuration.json
+- host: https://public-api.prod.nursa.com
+  role: API host (production)
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /api-json
+    status: 404
+- host: https://public-api.sandbox.nursa.com
+  role: API host (sandbox)
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /api-json
+    status: 404
+- host: https://nursa.com
+  role: marketing site
+  documents:
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    file: ../llms/nursa-llms.txt
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://docs.nursa.com
+  role: developer documentation
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://app.nursa.com
+  role: application
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    note: returns the SPA shell with HTTP 200 on some paths; no RFC 9116 document served
+  - path: /.well-known/agent-card.json
+    status: 404
+gaps:
+- No /.well-known/security.txt on any Nursa host (RFC 9116) — the single cheapest missing artifact.
+- No /.well-known/api-catalog (RFC 9727).
+- OIDC discovery is not at the canonical /.well-known/openid-configuration path.
+- No A2A agent card at either the canonical or the legacy well-known path on any host.
+x-evidence:
+  fetched: '2026-08-04'
+  probes: 22

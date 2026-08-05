@@ -1,0 +1,76 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.nursa.com/
+versioning:
+  scheme: uri-path
+  current: v2
+  path_prefix: /api/v2/public
+  policy_url: null
+  detail: >-
+    The API is versioned in the path and titled "Nursa Public API V2". No v1 documentation is
+    published, so what changed at the v1 -> v2 boundary is not recoverable from the public surface.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No deprecation policy is published, RFC 8594 Sunset / Deprecation headers are not documented,
+    and no operation in the spec carries `deprecated: true`. A consumer has no advertised notice
+    period for a breaking change.
+changelog:
+  url: null
+  detail: >-
+    No changelog, release notes or "what's new" page exists on docs.nursa.com or nursa.com.
+    Probed /changelog and /docs/changelog on the docs host (404) and /changelog on the marketing
+    site (404). The only dating on the reference is the site footer's "Copyright 2025".
+status_page:
+  url: null
+  detail: >-
+    No status page. status.nursa.com does not resolve, and no status link appears in the docs, the
+    developer page or the llms.txt index. There is no published uptime history and no incident
+    feed for either the API or the authorization server.
+sla:
+  url: null
+  uptime_target: null
+  detail: No SLA or uptime commitment is published on the public surface.
+roadmap:
+  url: null
+support:
+  developer_contact: josh.bear@nursa.com (Head of Integrations)
+  product_contact: piotrek@nursa.com (Product Manager, Nursa API team)
+  general: https://nursa.com/support
+  help_center: https://community.nursa.com/help-center/
+  detail: >-
+    Developer support is a named human by email, not a ticketing system or a developer forum. The
+    First Steps guide asks integrators to book a meeting before building, and the client
+    credentials grant is only enabled after that conversation — onboarding is relationship-gated.
+environments:
+- name: production
+  api: https://public-api.prod.nursa.com
+  auth: https://auth.nursa.com/
+  portal: https://developers.prod.nursa.com/
+- name: sandbox
+  api: https://public-api.sandbox.nursa.com
+  auth: https://auth.sandbox.nursa.com/
+  portal: https://developers.sandbox.nursa.com/
+deprecated_operations: []
+gaps:
+- No changelog or release notes.
+- No status page or incident history.
+- No deprecation policy and no Sunset/Deprecation header support.
+- No SLA or uptime target.
+- No public roadmap.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://docs.nursa.com/changelog
+    status: 404
+  - url: https://docs.nursa.com/docs/changelog
+    status: 404
+  - url: https://nursa.com/changelog
+    status: 404
+  - url: https://nursa.com/roadmap
+    status: 404
+  - url: https://status.nursa.com/
+    status: 0
+    note: DNS does not resolve

@@ -1,0 +1,58 @@
+generated: '2026-08-04'
+method: generated
+source: openapi/nursa-public-api-v2-openapi.yml + https://docs.nursa.com/
+note: >-
+  Packaged agent skills for the Nursa Public API V2. Every operationId referenced was verified
+  present in openapi/nursa-public-api-v2-openapi.yml; no operation was invented. Nursa publishes no
+  AGENTS.md or provider-authored skills, so these are generated from the harvested contract plus
+  the published integration guides.
+skills:
+- file: nursa-onboard-a-facility.md
+  name: Onboard a facility onto the Nursa API
+  api: openapi/nursa-public-api-v2-openapi.yml
+  operations:
+  - FacilitiesController_requestConnection
+  - FacilitiesController_requestFacilityCreation
+  - FacilitiesController_searchFacilities
+  - FacilitiesController_getAll
+  - FacilitiesController_getOneById
+  - FacilitiesController_getAllSpecialties
+  - SupportFacilitiesController_associateUsersToFacility
+- file: nursa-post-and-fill-a-shift.md
+  name: Post and fill a per diem shift on Nursa
+  api: openapi/nursa-public-api-v2-openapi.yml
+  operations:
+  - LicensesController_getAll
+  - FacilitiesController_searchFacilities
+  - MarketplaceController_quoteShift
+  - MarketplaceController_createShiftFromQuote
+  - MarketplaceController_createShifts
+  - ShiftRequestsController_getShiftRequests
+  - CliniciansController_getDetails
+  - ScheduleShiftsController_scheduleShift
+- file: nursa-reconcile-shift-reports.md
+  name: Reconcile a Nursa shift report
+  api: openapi/nursa-public-api-v2-openapi.yml
+  operations:
+  - MarketplaceShiftReportsController_getAllShiftShiftReports
+  - MarketplaceShiftReportsController_acceptShiftReport
+  - MarketplaceShiftReportsController_rejectShiftReport
+  - MarketplaceShiftReportsController_cancelShiftReport
+  - DownloadController_clinicianProfile
+- file: nursa-subscribe-to-webhooks.md
+  name: Subscribe to and verify Nursa webhooks
+  api: openapi/nursa-public-api-v2-openapi.yml
+  operations:
+  - FacilitiesWebhooksController_createOne
+  - FacilitiesWebhooksController_getAll
+  - FacilitiesWebhooksController_updateOne
+  - FacilitiesWebhooksController_deleteOne
+  - UserWebhooksController_createOneUserWebhook
+  - UserWebhooksController_getAllUserWebhooks
+  - UserWebhooksController_updateOneUserWebhook
+  - UserWebhooksController_deleteOneUserWebhook
+  - WebhookLogsController_searchLogs
+coverage:
+  skills: 4
+  operations_referenced: 27
+  operations_total: 40

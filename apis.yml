@@ -1,23 +1,175 @@
 aid: nursa
 name: Nursa
-description: 'Nursa is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Nursa is a healthcare staffing marketplace, founded in Salt Lake City in 2019, that connects
+  credentialed per diem (PRN) clinicians — registered nurses, licensed practical nurses, certified nursing
+  assistants, certified medication aides and allied professionals — directly with hospitals, skilled nursing
+  facilities, long-term and post-acute care providers, removing the traditional staffing agency from the
+  middle. Facilities post open shifts and set their own rates, clinicians browse and request shifts, and both
+  sides settle through Nursa''s shift-report flow. Nursa publishes a Public API V2 (REST, JWT bearer, with an
+  OpenID Connect / OAuth 2.0 authorization server) so workforce-management and scheduling platforms can post
+  shifts, review requests, schedule clinicians, read clinician credentials and subscribe to webhooks — the
+  integration surface behind its Covr, StaffLion, Dropstat, Maple and UKG partnerships. The company is
+  accredited by The Joint Commission and reports more than 4,500 facilities and 500,000 clinicians nationwide.'
+image: https://cdn.prod.website-files.com/636e7f8063d6538dea5ca1e4/63e3d5253bcbd6e2b35efeee_logo-horizontal-color.svg
 url: https://raw.githubusercontent.com/api-evangelist/nursa/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
 - Company
-apis: []
+- Healthcare
+- Health
+- Staffing
+- Nursing
+- Marketplace
+- Workforce Management
+- Scheduling
+- Human Resources
+- Per Diem
+- Shifts
+- Webhooks
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: nursa:public-api-v2
+  name: Nursa Public API V2
+  description: 'REST API for healthcare facilities and the workforce-management platforms that serve them.
+    Post, quote, update and cancel per diem shifts on the Nursa marketplace; read and reject clinician shift
+    requests; schedule and unschedule clinicians; accept, reject and cancel shift reports; search facilities
+    and specialties; read clinician profiles, documents and license types; and manage facility- and user-scoped
+    webhook subscriptions with signed, retried delivery. Authenticated with a JWT bearer token issued by the
+    Nursa OIDC authorization server; sandbox and production environments are separate.'
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Healthcare
+  - Staffing
+  - Nursing
+  - Marketplace
+  - Shifts
+  - Scheduling
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-public-api-v2-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Overlay
+    url: overlays/nursa-public-api-v2-overlay.yaml
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:auth
+  name: Nursa Authorization Server
+  description: 'Nursa''s OpenID Connect / OAuth 2.0 authorization server. Issues the JWT access tokens the
+    Nursa Public API requires, supports the authorization code (with and without PKCE), resource owner
+    password, implicit, refresh token and client credentials grants, and publishes OIDC discovery metadata,
+    a JWKS, authorization, token, userinfo and end-session endpoints. Resource scopes are namespaced per
+    capability (marketplace, shift-requests, shift-reports, facilities, finances, permissions and more).'
+  humanURL: https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
+  baseURL: https://auth.nursa.com/oidc
+  tags:
+  - Authentication
+  - Authorization
+  - OpenID Connect
+  - OAuth
+  - Identity
+  properties:
+  - type: Documentation
+    url: https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
+  - type: OpenIDConnect
+    url: https://auth.nursa.com/oidc/.well-known/openid-configuration
+  - type: OAuthScopes
+    url: scopes/nursa-scopes.yml
+  - type: Authentication
+    url: authentication/nursa-authentication.yml
 common:
+- type: TrustCenter
+  url: security/nursa-trust-center.yml
+- type: DomainSecurity
+  url: security/nursa-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/nursa_stock/
+  url: https://nursa.com/
+- type: DeveloperPortal
+  url: https://nursa.com/developers/start-here
+- type: Portal
+  url: https://developers.prod.nursa.com/
+- type: Documentation
+  url: https://docs.nursa.com/
+- type: APIReference
+  url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+- type: GettingStarted
+  url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+- type: SignUp
+  url: https://nursa.com/signup/facility
+- type: Login
+  url: https://app.nursa.com/
+- type: Pricing
+  url: https://nursa.com/facility/pricing
+- type: TermsOfService
+  url: https://nursa.com/terms
+- type: PrivacyPolicy
+  url: https://nursa.com/privacy-policy
+- type: Support
+  url: https://nursa.com/support
+- type: HelpCenter
+  url: https://community.nursa.com/help-center/
+- type: Community
+  url: https://community.nursa.com/
+- type: Blog
+  url: https://nursa.com/blog
+- type: GitHubOrganization
+  url: https://github.com/nursa-com
+- type: Compliance
+  url: https://trust.nursa.com/
+- type: LLMsTxt
+  url: llms/nursa-llms.txt
+- type: Sandbox
+  url: sandbox/nursa-sandbox.yml
+- type: Conventions
+  url: conventions/nursa-conventions.yml
+- type: Conformance
+  url: conformance/nursa-conformance.yml
+- type: Lifecycle
+  url: lifecycle/nursa-lifecycle.yml
+- type: WellKnown
+  url: well-known/nursa-well-known.yml
+- type: OAuthScopes
+  url: scopes/nursa-scopes.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/nursa-packages.yml
+- type: OpenAPI
+  url: openapi/nursa-public-api-v2-openapi.yml
+- type: Authentication
+  url: authentication/nursa-authentication.yml
+- type: Webhooks
+  url: asyncapi/nursa-public-api-v2-webhooks.yml
+- type: ErrorCatalog
+  url: errors/nursa-problem-types.yml
+- type: RateLimits
+  url: rate-limits/nursa-rate-limits.yml
+- type: DataModel
+  url: data-model/nursa-data-model.yml
+- type: Overlay
+  url: overlays/nursa-public-api-v2-overlay.yaml
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 25
+  pass: local-v1

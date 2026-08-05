@@ -1,0 +1,87 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.nursa.com/docs/Getting%20Started/Accessing%20the%20API/
+docs:
+- https://docs.nursa.com/docs/Getting%20Started/Accessing%20the%20API/
+- https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+- https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
+model: separate-environment
+detail: >-
+  Nursa separates test from live by ENVIRONMENT, not by key prefix — there is no sk_test/sk_live
+  style discriminator. Sandbox is a fully parallel stack with its own sign-up, authorization
+  server, developer portal and API host, and credentials are not portable between the two. The
+  documented order of work is: build and test in sandbox first, then request production access.
+environments:
+- name: sandbox
+  api_base: https://public-api.sandbox.nursa.com
+  auth_base: https://auth.sandbox.nursa.com
+  oidc_discovery: https://auth.sandbox.nursa.com/oidc/.well-known/openid-configuration
+  developer_portal: https://developers.sandbox.nursa.com/
+  sign_up: https://nursa-sandbox.web.app/
+  access_token_ttl: 24 hours
+  probed_status: 401
+- name: production
+  api_base: https://public-api.prod.nursa.com
+  auth_base: https://auth.nursa.com
+  oidc_discovery: https://auth.nursa.com/oidc/.well-known/openid-configuration
+  developer_portal: https://developers.prod.nursa.com/
+  app_sign_up: https://nursa.com/signup/facility
+  access_token_ttl: 1 hour
+  probed_status: 401
+onboarding:
+  self_serve: partial
+  steps:
+  - Sign up as a Facility User at the sandbox sign-up URL (email + password, then "I manage a facility").
+  - Register an application in the Developer Portal to obtain a Client ID and Client Secret.
+  - Obtain a token via the authorization code flow, or via client credentials once Nursa enables it.
+  - Connect to a facility (FacilitiesController_requestConnection or FacilitiesController_requestFacilityCreation).
+  - Post a first shift, then poll or subscribe to webhooks.
+  gates:
+  - >-
+    The client credentials (machine-to-machine) grant is DISABLED by default and enabled per
+    application only on explicit request to Nursa, "due to security reasons". A pure server-to-
+    server integration cannot be built self-serve.
+  - >-
+    First Steps asks integrators to book a meeting with the Head of Integrations before starting.
+    Going to production is a conversation, not a toggle.
+  - >-
+    Every action must be attributable to a Nursa user with the right level of access to the target
+    facility, so even an M2M app has to be bound to a facility user.
+password_policy:
+  min_length: 8
+  requires: at least 3 of lowercase, uppercase, numbers, special characters
+test_data:
+  magic_values: []
+  test_cards: []
+  test_clock: false
+  fixtures: false
+  detail: >-
+    Nursa publishes NO magic test identifiers, seeded fixture facilities, seeded clinicians, or
+    simulator values. A sandbox account starts empty, so the two sides of the marketplace that make
+    the flows interesting — a clinician requesting a shift, a clinician submitting a shift report —
+    cannot be exercised from the API alone. There is no documented way to simulate a shift request,
+    a no-show, or an auto-accepted shift report, which are precisely the events an integrator has
+    to handle. Webhook deliveries likewise have no documented trigger/replay tool.
+example_values_in_docs:
+  note: >-
+    The reference does carry consistent illustrative ids (facility NUR-123456 / NUR-0879, shift
+    12120878, clinician I7002epLHLhBCypdPCrn9XP4kTN2, user lcFQMy1n0decDeZljQG2wUNZBru7). These are
+    DOCUMENTATION EXAMPLES, not working sandbox fixtures — Nursa does not claim they resolve.
+gaps:
+- No seeded sandbox data, so the clinician side of every flow is untestable.
+- No event trigger / webhook replay tooling.
+- No time simulation for the 48-hour shift-report auto-accept window.
+- Machine-to-machine access is gated behind a manual request.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://public-api.sandbox.nursa.com/api/v2/public/licenses
+    status: 401
+  - url: https://public-api.prod.nursa.com/api/v2/public/licenses
+    status: 401
+  - url: https://auth.sandbox.nursa.com/oidc/.well-known/openid-configuration
+    status: 200
+  - url: https://developers.sandbox.nursa.com
+    status: 200
+  - url: https://developers.prod.nursa.com
+    status: 200

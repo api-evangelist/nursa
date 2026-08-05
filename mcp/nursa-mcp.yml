@@ -1,0 +1,96 @@
+generated: '2026-08-04'
+method: derived
+status: candidate
+source: openapi/nursa-public-api-v2-openapi.yml
+published: false
+note: >-
+  NURSA OPERATES NO MCP SERVER. This file is a CANDIDATE design derived from the 40 operations in
+  the harvested OpenAPI — it is not a Nursa product, it is not hosted anywhere, and it is
+  deliberately NOT wired as a `type: MCPServer` pointer in apis.yml, because emitting that pointer
+  would assert an agent surface Nursa does not run. Probed for a server on every Nursa host and
+  searched the public registries: nothing. It is recorded here so the shape of the gap is concrete
+  the day Nursa (or a partner) wants to close it.
+probes:
+- url: https://nursa.com/.well-known/ai-plugin.json
+  status: 404
+- url: https://nursa.com/.well-known/agent-card.json
+  status: 404
+- url: https://public-api.prod.nursa.com/.well-known/agent-card.json
+  status: 404
+- url: https://docs.nursa.com/llms.txt
+  status: 404
+  note: nursa.com/llms.txt exists (200) but indexes marketing pages, not tools
+blockers:
+  - >-
+    Auth is the real blocker, not transport. Every Nursa action must be attributable to a facility
+    user with access to the target facility, and the client-credentials grant is enabled only on
+    request. An MCP server would need the OAuth authorization-code flow per user, plus
+    /.well-known/oauth-protected-resource (currently absent) for a client to discover it.
+  - >-
+    Twenty resource scopes are documented in prose but every operation declares an EMPTY scope
+    array, so a tool cannot compute the least-privilege token it needs.
+  - >-
+    No idempotency key. The write tools below are financially consequential; an agent that retries
+    createShifts can double-post a facility's shifts with no way to detect it.
+candidate_tools:
+- name: list_license_types
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#LicensesController_getAll
+- name: search_facilities
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#FacilitiesController_searchFacilities
+- name: get_facility
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#FacilitiesController_getOneById
+- name: list_marketplace_shifts
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#MarketplaceController_getMarketplaceShifts
+- name: search_shifts
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#ShiftsController_searchShifts
+- name: quote_shift
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#MarketplaceController_quoteShift
+  note: pricing only; creates no commitment
+- name: list_shift_requests
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#ShiftRequestsController_getShiftRequests
+- name: get_clinician_details
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#CliniciansController_getDetails
+  caution: returns clinician PII and credential documents; human-in-the-loop recommended
+- name: list_shift_reports
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#MarketplaceShiftReportsController_getAllShiftShiftReports
+- name: search_webhook_logs
+  read_only: true
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#WebhookLogsController_searchLogs
+- name: create_shift_from_quote
+  read_only: false
+  consequence: financial
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#MarketplaceController_createShiftFromQuote
+  note: single-use quoteId makes this the only replay-safe write in the API
+- name: create_shifts_batch
+  read_only: false
+  consequence: financial
+  human_in_the_loop: recommended
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#MarketplaceController_createShifts
+- name: schedule_clinician
+  read_only: false
+  consequence: financial
+  human_in_the_loop: recommended
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#ScheduleShiftsController_scheduleShift
+- name: cancel_shift
+  read_only: false
+  consequence: financial
+  human_in_the_loop: recommended
+  source_operation: openapi/nursa-public-api-v2-openapi.yml#MarketplaceController_cancelShift
+coverage:
+  operations_total: 40
+  candidate_tools: 14
+  read_only: 10
+  write: 4
+x-evidence:
+  fetched: '2026-08-04'
+  searched: docs.nursa.com, nursa.com, github.com/nursa-com, npm registry
+  result: no MCP server published by Nursa

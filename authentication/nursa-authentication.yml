@@ -1,0 +1,144 @@
+generated: '2026-08-04'
+method: searched
+source: openapi/nursa-public-api-v2-openapi.yml
+docs: https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
+summary:
+  types:
+  - http
+  - openIdConnect
+  - oauth2
+  api_key_in: []
+  oauth2_flows:
+  - authorizationCode
+  - authorizationCode+PKCE
+  - password
+  - implicit
+  - clientCredentials
+  - refreshToken
+  note: >-
+    The OpenAPI surface declares only `http bearer` (JWT) — the token itself is minted by a full
+    OpenID Connect / OAuth 2.0 authorization server that the spec never references. The spec has no
+    `openIdConnect` or `oauth2` securityScheme and no `openIdConnectUrl`, so the machine-readable
+    contract understates the real auth model by a wide margin. This file is the reconciled view.
+schemes:
+- name: public-api
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Please, fill this with your authorization token
+  sources:
+  - openapi/nursa-public-api-v2-openapi.yml
+- name: nursa-oidc
+  type: openIdConnect
+  openIdConnectUrl: https://auth.nursa.com/oidc/.well-known/openid-configuration
+  description: >-
+    Nursa Authorization Server. Not declared in the OpenAPI; documented at
+    docs.nursa.com/docs/Integration Guideline/Authentication and confirmed by a live 200 on the
+    discovery document.
+  sources:
+  - https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
+  - well-known/nursa-openid-configuration.json
+environments:
+- name: production
+  issuer: https://auth.nursa.com/
+  authorization_endpoint: https://auth.nursa.com/oidc/authorize
+  token_endpoint: https://auth.nursa.com/oidc/oauth/token
+  userinfo_endpoint: https://auth.nursa.com/oidc/userinfo
+  end_session_endpoint: https://auth.nursa.com/oidc/logout
+  jwks_uri: https://auth.nursa.com/oidc/.well-known/jwks.json
+  api_base: https://public-api.prod.nursa.com
+  developer_portal: https://developers.prod.nursa.com/
+- name: sandbox
+  issuer: https://auth.sandbox.nursa.com/
+  authorization_endpoint: https://auth.sandbox.nursa.com/oidc/authorize
+  token_endpoint: https://auth.sandbox.nursa.com/oidc/oauth/token
+  userinfo_endpoint: https://auth.sandbox.nursa.com/oidc/userinfo
+  end_session_endpoint: https://auth.sandbox.nursa.com/oidc/logout
+  jwks_uri: https://auth.sandbox.nursa.com/oidc/.well-known/jwks.json
+  api_base: https://public-api.sandbox.nursa.com
+  developer_portal: https://developers.sandbox.nursa.com/
+  sign_up: https://nursa-sandbox.web.app/
+grants:
+- id: authorization_code
+  supported: true
+  recommended_for: regular web applications with a secure back end
+- id: authorization_code_pkce
+  supported: true
+  code_challenge_methods:
+  - S256
+  - plain
+  recommended_for: native, mobile and single-page applications
+- id: client_credentials
+  supported: true
+  gated: true
+  note: >-
+    Machine-to-machine. Nursa enables the client credentials grant on an application only on
+    explicit request, "due to security reasons" — actions in Nursa must be attributable to a user,
+    so a M2M app has to be associated with a facility user before it can act.
+- id: password
+  supported: true
+  note: Resource Owner Password flow; listed in the docs but discouraged by current OAuth BCP.
+- id: implicit
+  supported: true
+  note: Implicit flow; listed in the docs. Deprecated by OAuth 2.1 / Security BCP (RFC 9700).
+- id: refresh_token
+  supported: true
+  note: requires the offline_access scope
+tokens:
+  format: JWT (RS256)
+  transport: Authorization Bearer header
+  access_token_ttl: 1 hour (production); 24 hours (sandbox, client-credentials)
+  refresh_token: rotating, single-use, 30-day default expiry; non-rotating available on request
+  id_token_claims:
+  - iss
+  - aud
+  - nonce
+  - sid
+  - sub
+  - name
+  - nickname
+  - picture
+  - phone_number
+  - email
+  - role
+  - address
+  - iat
+  - exp
+  access_token_claims:
+  - iss
+  - sub
+  - role
+  - aud
+  - azp
+  - scope
+  - iat
+  - exp
+  roles:
+  - NURSE_USER
+  - FACILITY_USER
+  id_token_signing_alg_values_supported:
+  - RS256
+enforcement:
+  missing_token: HTTP 401 {"message":"Unauthorized","statusCode":401}
+  missing_scope: HTTP 403 {"message":"Forbidden Resource","error":"Forbidden","statusCode":403}
+gaps:
+- >-
+  The OpenAPI declares no oauth2/openIdConnect scheme and no per-operation scope requirements, so
+  no scope can be resolved from the machine-readable contract — the scope table lives only in prose
+  at docs.nursa.com/docs/Integration Guideline/Scopes.
+- Implicit and Resource Owner Password grants are still advertised as supported.
+- No mutualTLS, no DPoP / proof-of-possession, no private_key_jwt client authentication documented.
+- >-
+  The discovery document advertises `code_challenge_methods_supported: [S256, plain]`; `plain`
+  weakens PKCE and is discouraged by RFC 7636 and OAuth 2.1.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
+    status: 200
+  - url: https://auth.nursa.com/oidc/.well-known/openid-configuration
+    status: 200
+  - url: https://auth.sandbox.nursa.com/oidc/.well-known/openid-configuration
+    status: 200
+  - url: https://public-api.prod.nursa.com/api/v2/public/licenses
+    status: 401

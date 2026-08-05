@@ -1,0 +1,76 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Nursa Public API V2
+  version: 1.0.0
+extends: openapi/nursa-public-api-v2-openapi.yml
+x-provenance:
+  generated: '2026-08-04'
+  method: generated
+  source: >-
+    API Evangelist enrichment pipeline. Captures OUR additions and OUR observations about Nursa's
+    published contract. It never mutates the harvested spec — apply it to see the enhanced view.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apievangelist.com/providers/nursa
+    x-apievangelist-harvested: '2026-08-04'
+    x-apievangelist-harvest-method: >-
+      decoded from the docusaurus-plugin-openapi-docs page chunks at docs.nursa.com; Nursa
+      publishes no downloadable OpenAPI document
+    x-support-contact: josh.bear@nursa.com
+- target: $.info
+  update:
+    x-defects:
+      description: >-
+        Schema defects present in Nursa's own published operation objects, preserved verbatim in
+        the harvested spec. Each one makes the contract fail standard OpenAPI validation.
+      items:
+      - invalid-type-Array: >-
+          CliniciansController_getDetails declares `licenseType: {type: Array}` — OpenAPI types are
+          lowercase; the valid value is `array` with an `items` schema.
+      - invalid-type-sting: >-
+          CliniciansController_getDetails declares `lastShiftDate: {type: sting}` — a typo for
+          `string`.
+      - boolean-example-as-string: >-
+          FacilitiesController_favoritingClinician declares `isFavorited: {type: boolean}` with
+          `example: 'true'` (a string).
+      - number-field-string-example: >-
+          MarketplaceShiftReportsController_* declares `reviewComment: {type: number}` with
+          `example: A comment` — the field is prose, not a number.
+      - polymorphic-message-field: >-
+          The error envelope declares `message` as a string but 12 documented examples supply an
+          array of validation strings.
+      - untagged-operation: >-
+          SupportFacilitiesController_associateUsersToFacility carries no tags, so it is orphaned
+          in every generated reference.
+- target: $
+  update:
+    x-agent-readiness-notes:
+      idempotency: >-
+        No idempotency contract. MarketplaceController_createShifts creates shifts in BATCHES under
+        a transaction; a retried request after a timeout can double-post real financial
+        commitments. An Idempotency-Key header on the four Marketplace write operations is the
+        highest-value single addition to this API.
+      error_semantics: >-
+        Errors carry no stable machine-readable code — only prose in `message`. An agent must
+        string-match to branch.
+      pagination: >-
+        Two pagination models coexist (limit+offset and page+limit) with no total or next-page
+        signal.
+      scopes: >-
+        20 documented resource scopes exist, but every operation declares `security: [{public-api: []}]`
+        with an EMPTY scope array, so least privilege cannot be computed from the contract.
+      events: >-
+        14 real webhook events with signed, retried delivery — and no AsyncAPI and no OpenAPI 3.1
+        `webhooks:` block.
+- target: $.components
+  update:
+    x-note: >-
+      Nursa's spec defines no components.schemas — every body is inlined per operation. Extracting
+      Facility, Shift, Clinician, ShiftRequest, ScheduledShift and ShiftReport into named schemas
+      would make the contract generatable and remove the largest source of drift. See
+      data-model/nursa-data-model.yml for the entity graph as derived.
+- target: $.paths['/api/v2/support/facilities/user/associate'].put
+  update:
+    tags:
+    - Support

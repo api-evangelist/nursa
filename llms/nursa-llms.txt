@@ -1,0 +1,63 @@
+# Nursa
+
+Nursa is a healthcare staffing platform that connects nursing clinicians seeking flexible, per diem work with healthcare facilities that need to fill shifts. Founded in 2019 and based in Salt Lake City, Utah, Nursa's mission is "a nurse at the bedside of every patient in need." The platform serves over 400,000 verified clinicians and 3,400+ facilities across 31+ states.
+
+## About
+
+Nursa is a marketplace platform that enables healthcare facilities and qualified clinicians to connect to directly, bypassing traditional staffing agencies and reducing costs. Facilities post shifts, set their own rates, review clinician profiles, and select candidates—all through the platform. Clinicians add their credentials and experience, browse and request shifts that fit their schedule, and receive payment after completing shifts. Nursa operates on a pay-as-you-go model with transparent pricing, no long-term contracts, no minimum posted shift requirements, and no hire-away fees.
+
+The platform supports Registered Nurses (RNs), Licensed Practical Nurses (LPNs/LVNs), Certified Nursing Assistants (CNAs), Certified Medication Aides (CMAs), and other allied healthcare professionals. It serves acute-care hospitals, skilled nursing facilities, long-term care, rehabilitation centers, memory care, and more post-acute care settings.
+
+## Facility Resources
+
+- [Nursa for Facilities](https://nursa.com/facility): Main hub for healthcare facility administrators and schedulers looking to fill staffing gaps.
+- [Facility Sign Up](https://nursa.com/signup/facility): Sign up for Nursa, get connected to your facility, and begin posting shifts in minutes.
+- [Nursa Pricing for Facilities](https://nursa.com/facility/pricing): Learn how Nursa's transparent pricing model works.
+- [Nursa Demo for Facilities](https://nursa.com/facility/demo): Request a demonstration of the Nursa platform for hospitals and healthcare facilities.
+- [Solutions](https://nursa.com/facility/solutions): Pages dedicated to how Nursa helps different types of facilities, solves problems for different facility users, and serves different use cases for facilities.
+- [Per Diem Staffing](https://nursa.com/facility/solutions/per-diem-staffing): Post open per diem shifts and connect with qualified clinicians on a shift-by-shift basis.
+- [PRN Staffing](https://nursa.com/facility/solutions/prn-staffing): PRN nurse staffing on demand for hospitals and healthcare facilities.
+- [Contingent Nurse Staffing](https://nursa.com/facility/solutions/contingent-staffing): Flexible contingent workforce solutions for healthcare facilities.
+— [Nursa Facility Case Studies](https://nursa.com/facility/case-studies): Discover how healthcare facilities have used Nursa to reduce staffing costs, cover last-minute staffing gaps, and reduce time spent on scheduling.
+— [Nursa Integrations](https://nursa.com/facility/integrations): Nursa integrates with top scheduling tools including Covr, StaffLion, Dropstat, Maple and more.
+— [Nursa Developer API](https://nursa.com/developers/start-here): Use the Nursa API to connect Nursa with your facility's own scheduling tools.
+- [Local Staffing by City](https://nursa.com/facility/staffing): Find available nursing talent by location.
+- [Facility Articles](https://nursa.com/facility/articles): Resources for healthcare administrators on staffing challenges, retention, work culture, and facility management best practices.
+
+## Clinician Resources
+
+- [Pick Up PRN Jobs](https://nursa.com/clinicians/pick-up-prn-jobs): Understand Nursa's main benefits and features for clinicians.
+- [Clinician Sign Up](https://nursa.com/signup/clinicians): Sign up with Nursa to create a profile, upload your license, request shifts, and start earning money.
+- [Nursa Shifts](https://nursa.com/jobs/shifts): View shifts posted on the Nursa shift marketplace at nearby facilities.
+- [Nursa Jobs](https://nursa.com/jobs): Job listings representing the shifts posted on the Nursa platform.
+- [Nursa Facility Directory](https://nursa.com/facilities): Browse shifts by facilities on the Nursa platform. See a facility not posting shifts? Let us know and Nursa will let them know you'd like to pick up shifts there.
+- [Nursa Testimonials](https://nursa.com/clinicians/testimonials): Learn what clinicians think about Nursa and picking up shifts on the platform.
+— [Nursa Partners](https://nursa.com/partners): Explore more perks available to clinicians including supplemental healthcare coverage, tax help for 1099 workers, and opportunities with the American Red Cross.
+- [Nursa Blog](https://nursa.com/blog): Articles for nursing professionals focused on PRN nursing, general nursing guides, healthcare industry news, and more.
+- [Nursa iOS or Android App](https://nursa.com/download): Download the Nursa mobile app for iPhone or Android devices.
+
+## Help and Support
+
+- [Support](https://nursa.com/support): Contact Nursa's support team for help with the platform.
+- [Help Center](https://community.nursa.com/help-center/): Knowledge base with answers, troubleshooting tips, and how-to guides.
+- [Clinician Help Center](https://community.nursa.com/help-center/clinician/): Help resources specifically for clinicians using the platform.
+- [Nursa Community](https://community.nursa.com/): Forum for nurses and PRN healthcare professionals to connect, share experiences, and get peer support.
+- [Clinician Guides](https://community.nursa.com/help-center/clinician/): Written guides on how to use Nursa as a clinician.
+- [Facility Guides](https://community.nursa.com/clinician-help/facility-guides/): Everything facilities need to know about getting set up with their account, managing shifts, and scheduling clinicians on Nursa.
+- [In-App Help](https://app.nursa.com/help): Access help directly within the Nursa application.
+
+## Nursa Study
+
+- [Nursa Study Hub for Nursing Programs and Schools](https://nursa.com/schools): Nursa Study connects schools, students, and instructors to coordinate clinical experiences in one place.
+- [Nursa Study Sign Up](https://nursa.study/signup): Sign up for Nursa Study.
+- [Nursa Study for Clinical Placement Management](https://nursa.com/schools/placement-management): Easily manage student placements and credentials, track clinical hours, and build relationships with facilities on one platform.
+- [Nursa Study for Nursing Student Compliance Management](https://nursa.com/schools/compliance-management): Manage credentials, documentation, and facility-specific requirements to maintain regulatory compliance.
+- [Nursa Study School Admin Help Guide](https://nursa.com/schools/school-administrator-help-guide): Step-by-step instructions for School Administrators to set up their program, manage students and cohorts, oversee clinical operations, and report on progress and compliance.
+- [Nursa Study Student Help Guide](https://nursa.com/schools/student-help-guide): Step-by-step instructions to help you set up your account, manage clinical placements, track hours, and stay compliant in Nursa Study.
+
+## Company
+
+- [About Nursa](https://nursa.com/about-us): Learn how Nursa streamlines the process of filling per diem shifts by connecting facilities directly to its network of available clinicians through a shift marketplace model.
+- [Nursa Newsroom](https://nursa.com/newsroom): Check out the latest news about Nursa including press releases, media mentions, webinars, and other resources.
+— [Nursa Privacy Policy](https://nursa.com/privacy-policy): Nursa respects your right to privacy. Read on about how we are committed to protecting your privacy while you use our app.
+— [Nursa Terms of Service](https://app.nursa.com/settings/terms/terms-of-service): Read Nursa's terms of service agreement.

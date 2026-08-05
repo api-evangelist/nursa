@@ -1,0 +1,162 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/nursa-public-api-v2-openapi.yml
+docs: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+format: nestjs-http-exception
+rfc9457: false
+note: 'Nursa does NOT use RFC 9457 problem+json. Every error is the default NestJS HttpException envelope served
+  as application/json: {message, error, statusCode}. `message` is a STRING for business-rule failures and an ARRAY
+  OF STRINGS for request-validation failures — the same field carries two different types, and several in-spec examples
+  declare `message` as a string while supplying an array, which is why the spec fails oas3-valid-media-example.
+  There is no stable machine-readable error code anywhere in the contract: the only discriminator is the prose in
+  `message`.'
+envelope:
+  media_type: application/json
+  fields:
+  - name: message
+    type: string | string[]
+    description: Error description. Array form is returned by request validation, one entry per failed constraint.
+  - name: error
+    type: string
+    description: The type of error — the HTTP reason phrase (Bad Request, Forbidden, Not Found). Absent on 401.
+  - name: statusCode
+    type: integer
+    description: HTTP status code, repeated in the body.
+  error_code_field: null
+  type_uri_field: null
+  trace_id_field: null
+status_codes:
+- status: 400
+  title: Bad request
+  operations: 33
+  description: Request validation failure (message is an array) or a business-rule violation (message is a string).
+- status: 401
+  title: Unauthorized
+  operations: 39
+  description: 'Missing, malformed or expired bearer token. Body: {"message":"Unauthorized","statusCode":401} —
+    no `error` field.'
+- status: 403
+  title: Forbidden
+  operations: 39
+  description: 'Token valid but the required scope is missing, or a business-rule denial. Default body: {"message":"Forbidden
+    Resource","error":"Forbidden","statusCode":403}.'
+- status: 404
+  title: Not Found
+  operations: 8
+  description: Referenced shift, facility, clinician, quote, specialty or webhook does not exist — or the caller
+    is not connected to the facility.
+- status: 429
+  title: Too Many Requests
+  operations: 0
+  description: Rate limit exceeded (100 req/min). NOT declared on any operation in the spec, and the body is HTML,
+    not JSON — see rate-limits/nursa-rate-limits.yml.
+problems:
+- status: 400
+  message: Cannot transition job from status Paid to CancelledFilledInternally
+  operations:
+  - MarketplaceController_cancelShift
+- status: 400
+  message: Clinician is no longer available to be scheduled to this shift due to overlapping shifts.
+  operations:
+  - ScheduleShiftsController_scheduleShift
+- status: 400
+  message: Clinician is no longer available to be scheduled to this shift.
+  operations:
+  - ScheduleShiftsController_scheduleShift
+- status: 400
+  message: Clinician is not scheduled for the shift.
+  operations:
+  - ScheduleShiftsController_removeScheduledClinician
+- status: 400
+  message: Clinician shift report was not submitted
+  operations:
+  - MarketplaceShiftReportsController_acceptShiftReport
+  - MarketplaceShiftReportsController_cancelShiftReport
+  - MarketplaceShiftReportsController_rejectShiftReport
+- status: 400
+  message: Facility connection request already exists
+  operations:
+  - FacilitiesController_requestConnection
+- status: 400
+  message: Facility shift report already submitted
+  operations:
+  - MarketplaceShiftReportsController_acceptShiftReport
+  - MarketplaceShiftReportsController_cancelShiftReport
+  - MarketplaceShiftReportsController_rejectShiftReport
+- status: 400
+  message: Shift must be completed to submit a shift report
+  operations:
+  - MarketplaceShiftReportsController_acceptShiftReport
+  - MarketplaceShiftReportsController_cancelShiftReport
+  - MarketplaceShiftReportsController_rejectShiftReport
+- status: 403
+  message: Clinician didn't requested this shift.
+  operations:
+  - DownloadController_clinicianProfile
+- status: 403
+  message: Clinician is blocked
+  operations:
+  - FacilitiesController_favoritingClinician
+- status: 404
+  message: Clinician is no longer available
+  operations:
+  - ScheduleShiftsController_scheduleShift
+- status: 404
+  message: Clinician is no longer available for favoriting
+  operations:
+  - FacilitiesController_favoritingClinician
+- status: 404
+  message: Clinician not found
+  operations:
+  - ScheduleShiftsController_scheduleShift
+- status: 404
+  message: Clinician profile url is not available yet, try again later.
+  operations:
+  - DownloadController_clinicianProfile
+- status: 404
+  message: Error downloading the PDF
+  operations:
+  - DownloadController_clinicianProfile
+- status: 404
+  message: Facility not found
+  operations:
+  - FacilitiesController_getOneById
+- status: 404
+  message: Failed to retrieve clinician profile snapshot url
+  operations:
+  - DownloadController_clinicianProfile
+- status: 404
+  message: Failed to retrieve shift request
+  operations:
+  - DownloadController_clinicianProfile
+- status: 404
+  message: Quoted shift not found
+  operations:
+  - MarketplaceController_createShiftFromQuote
+- status: 404
+  message: Shift not found
+  operations:
+  - ScheduleShiftsController_scheduleShift
+- status: 404
+  message: Shift request not found
+  operations:
+  - ScheduleShiftsController_scheduleShift
+- status: 404
+  message: Specialty Wound Care not found
+  operations:
+  - FacilitiesController_requestFacilityCreation
+- status: 404
+  message: Webhook not found
+  operations:
+  - FacilitiesWebhooksController_updateOne
+  - UserWebhooksController_updateOneUserWebhook
+gaps:
+- No RFC 9457 application/problem+json.
+- No stable, machine-readable error code or type URI — clients must string-match `message`.
+- The `message` field is polymorphic (string or string[]) and the spec declares it inconsistently.
+- No 429 response documented on any of the 40 operations, though a 100 req/min limit is published.
+- No 5xx responses documented on any operation.
+- No request/correlation id is returned on errors, so a failure cannot be tied to a support ticket.
+x-evidence:
+  fetched: '2026-08-04'
+  derived_from: 40 operations, 119 documented 4xx responses, 23 distinct error messages

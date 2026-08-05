@@ -1,0 +1,191 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20Events/
+spec_type: Webhooks
+asyncapi_published: false
+note: >-
+  Nursa publishes no AsyncAPI document and no `webhooks:` block in its OpenAPI. It DOES publish a
+  complete, dated, example-bearing webhook event catalogue in prose, plus signature verification,
+  a retry schedule and a delivery-log search endpoint. This file captures that catalogue as-found.
+  No event, field or payload below was authored by API Evangelist — every one is transcribed from
+  the provider's own reference. NOTHING here is an AsyncAPI substitute; it is the honest record of
+  a real event surface that lacks a machine-readable contract.
+docs:
+  events: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20Events/
+  configuration: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20configuration/
+  retry: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20Retry%20Mechanism/
+delivery:
+  transport: HTTPS POST to a subscriber-supplied URL
+  envelope:
+    data: object
+    eventType: string
+  signature:
+    header: Nursa-Signature
+    format: 't=<unix-seconds>, v1=<hex-hmac>[, v1=<hex-hmac>]'
+    algorithm: HMAC-SHA256, hex encoded
+    signed_payload: '<timestamp> + "." + <raw JSON body>'
+    secret_rotation: up to two secrets may be active at once so a rotation causes no downtime
+    replay_protection: >-
+      subscriber compares the header timestamp against current time and applies its own tolerance;
+      Nursa does not state a maximum age
+    code_examples:
+    - Python
+    - JavaScript
+    - Java
+  retries:
+    max_attempts: 3
+    trigger: response status code >= 400
+    schedule:
+    - after a minimum of 5 minutes
+    - after 30 minutes
+    - after 60 minutes
+    inspection: >-
+      the retries property on the webhook notification log records every attempt — see
+      WebhookLogsController_searchLogs
+subscriptions:
+- kind: facility
+  create_operation: FacilitiesWebhooksController_createOne
+  list_operation: FacilitiesWebhooksController_getAll
+  update_operation: FacilitiesWebhooksController_updateOne
+  delete_operation: FacilitiesWebhooksController_deleteOne
+  parameters:
+  - name: url
+    type: string
+    required: true
+    description: The URL endpoint where webhook notifications will be sent
+  - name: events
+    type: array
+    required: true
+    description: Event types to subscribe to
+  - name: facilities
+    type: array
+    required: false
+    description: Facility IDs to limit notifications to specific facilities
+  - name: secrets
+    type: array
+    required: false
+    description: Up to two secret tokens for signing payloads; one is generated if omitted
+- kind: user
+  create_operation: UserWebhooksController_createOneUserWebhook
+  list_operation: UserWebhooksController_getAllUserWebhooks
+  update_operation: UserWebhooksController_updateOneUserWebhook
+  delete_operation: UserWebhooksController_deleteOneUserWebhook
+  parameters:
+  - name: url
+    type: string
+    required: true
+  - name: events
+    type: array
+    required: true
+  - name: secrets
+    type: array
+    required: false
+logs:
+  search_operation: WebhookLogsController_searchLogs
+  filters:
+  - eventType
+  - facilityId
+  - startDate
+  - endDate
+events:
+- eventType: shift.created
+  name: Shift Created
+  scope: facility
+  description: Triggered when a shift is created.
+  payload_fields: [shiftId, facilityId, from, to, at, description, licenseType, breakTime, autoScheduleSettings, createdBy]
+- eventType: shift.request.created
+  name: Shift Request Created
+  scope: facility
+  description: Triggered when a clinician requests a shift.
+  payload_fields: [shiftId, facilityId, clinicianId, at, clinicianContactPhone, requestedBy]
+- eventType: shift.request.cancelled
+  name: Shift Request Cancelled
+  scope: facility
+  description: >-
+    Triggered whenever a clinician request is cancelled — including when the cancellation was not
+    made by the clinician, e.g. when a facility accepts one request all other requests on that
+    shift are cancelled.
+  payload_fields: [shiftId, facilityId, clinicianId, at, clinicianContactPhone, cancelledBy]
+- eventType: shift.scheduled
+  name: Shift Scheduled
+  scope: facility
+  description: Triggered when a clinician is scheduled to a shift.
+  payload_fields: [shiftId, facilityId, at, clinician, scheduledBy]
+  note: >-
+    scheduledBy.autoScheduleContext.issued indicates whether the system auto-scheduled the shift;
+    .origin names the feature that caused it (e.g. Favorites, Screenings).
+- eventType: shift.scheduled.cancelled
+  name: Shift Scheduled Cancelled
+  scope: facility
+  description: Triggered when a schedule is cancelled.
+  payload_fields: [shiftId, facilityId, clinicianId, at, clinicianContactPhone, cancelledBy]
+- eventType: shift.cancelled
+  name: Shift Cancelled
+  scope: facility
+  description: Triggered when a shift is cancelled.
+  payload_fields: [shiftId, facilityId, at, reason, cancelledBy]
+- eventType: shift.report.created
+  name: Shift Report Created
+  scope: facility
+  description: Triggered whenever a new shift report is created.
+  payload_fields: [shiftId, facilityId, reportType, at, createdBy]
+- eventType: shift.report.accepted-automatically
+  name: Shift Report Accepted Automatically
+  scope: facility
+  description: >-
+    Triggered when the system automatically accepts the clinician shift report because the facility
+    did not submit its own report within 48 hours of the clinician's submission.
+  payload_fields: [shiftId, facilityId, at, reportType, clinicianId, acceptedBy]
+- eventType: shift.report.accepted
+  name: Shift Report Accepted
+  scope: facility
+  description: Triggered when a facility shift report is created and agrees with the clinician shift report.
+  payload_fields: [shiftId, facilityId, at, reportType, clinicianId, acceptedBy]
+- eventType: shift.report.rejected
+  name: Shift Report Rejected
+  scope: facility
+  description: Triggered when a facility shift report is created and is in discrepancy with the clinician shift report.
+  payload_fields: [shiftId, facilityId, at, reportType, clinicianId, rejectedBy]
+- eventType: facility.user-connection.accepted
+  name: Facility User Connection Accepted
+  scope: user
+  description: Triggered when a request to connect a facility user to a facility is accepted.
+  payload_fields: [facilityId, userId]
+- eventType: facility.user-connection.rejected
+  name: Facility User Connection Rejected
+  scope: user
+  description: Triggered when a request to connect a facility user to a facility is rejected.
+  payload_fields: [facilityId, userId]
+- eventType: facility.creation.accepted
+  name: Facility Creation Accepted
+  scope: user
+  description: Triggered when a request to create a new facility is accepted.
+  payload_fields: [facilityId]
+- eventType: facility.creation.rejected
+  name: Facility Creation Rejected
+  scope: user
+  description: Triggered when a request to create a new facility is rejected.
+  payload_fields: [facilityName]
+coverage:
+  events_total: 14
+  facility_scoped: 10
+  user_scoped: 4
+gaps:
+- No AsyncAPI document is published for this event surface.
+- >-
+  The events are not declared in the OpenAPI either — OpenAPI 3.1 `webhooks:` would carry all 14
+  with real payload schemas against the same spec the REST operations already live in.
+- >-
+  Payload shapes exist only as JSON examples in prose; there are no schemas, so a consumer cannot
+  validate a delivery or generate types.
+- No documented maximum signature age (replay tolerance is left entirely to the subscriber).
+- No dead-letter or manual-replay endpoint; after the third failed attempt the event is dropped.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20Events/
+    status: 200
+  - url: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20configuration/
+    status: 200
+  - url: https://docs.nursa.com/docs/Integration%20Guideline/Webhooks%20Retry%20Mechanism/
+    status: 200

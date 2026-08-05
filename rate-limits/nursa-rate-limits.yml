@@ -1,0 +1,57 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.nursa.com/docs/Rate%20Limiting/
+docs: https://docs.nursa.com/docs/Rate%20Limiting/
+rate_limits:
+- name: Public API default
+  scope: application
+  limit_count: 100
+  limit_period: minute
+  applies_to: https://public-api.prod.nursa.com
+  exceeded_status: 429
+  exceeded_body: text/html
+  note: >-
+    "The default Public API rate limit is 100 requests per minute." Nursa calls it a default, which
+    implies negotiated ceilings exist, but publishes no tier table and no way to read your own
+    limit.
+- name: Authorization server
+  scope: application
+  limit_count: null
+  limit_period: null
+  applies_to: https://auth.nursa.com/oidc/oauth/token
+  note: >-
+    No number is published. The Authentication guide warns that requesting a new token on every API
+    call "may block your server due to the Rate Limiting" and recommends caching the token until it
+    nears expiry — so a limit exists and is enforced, but is undocumented.
+signaling:
+  headers: []
+  retry_after: false
+  note: >-
+    No RateLimit-Limit / RateLimit-Remaining / RateLimit-Reset (RFC 9239 / draft-ietf-httpapi-ratelimit)
+    and no Retry-After are documented. A client cannot see how much budget it has left; it only finds
+    out by being refused.
+exceeded:
+  status: 429
+  content_type: text/html
+  body_example: |
+    <!doctype html>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>429</title>429 Too Many Requests
+  note: >-
+    The 429 is served as HTML by the edge, not as the JSON envelope every other Nursa error uses. A
+    JSON client parsing the response body will throw on the rate-limit path specifically — the one
+    path where robust handling matters most.
+gaps:
+- No rate-limit response headers of any kind.
+- No Retry-After on 429.
+- 429 body is HTML while every other error is JSON — an envelope inconsistency at the edge.
+- No 429 response is declared on any of the 40 operations in the OpenAPI.
+- The authorization server's limit is enforced but never quantified.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://docs.nursa.com/docs/Rate%20Limiting/
+    status: 200
+  - url: https://docs.nursa.com/docs/Getting%20Started/Accessing%20the%20API/
+    status: 200

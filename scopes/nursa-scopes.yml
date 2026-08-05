@@ -1,0 +1,174 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.nursa.com/docs/Integration%20Guideline/Scopes/
+docs: https://docs.nursa.com/docs/Integration%20Guideline/Scopes/
+discovery: well-known/nursa-openid-configuration.json
+note: >-
+  Nursa's OpenAPI declares no oauth2 securityScheme, so no scope is derivable from the spec —
+  0-working/derive-oauth-scopes.py returns "with oauth2: 0". Every scope below was read from the
+  provider's published Scopes reference. The OIDC discovery document advertises only the seven
+  UserInfo/OIDC scopes in `scopes_supported`; the twenty resource scopes are documented in prose
+  and are NOT advertised in discovery, so an OAuth client cannot enumerate them programmatically.
+schemes:
+- name: nursa-oidc
+  type: openIdConnect
+  source: https://auth.nursa.com/oidc/.well-known/openid-configuration
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.nursa.com/oidc/authorize
+    tokenUrl: https://auth.nursa.com/oidc/oauth/token
+  - flow: clientCredentials
+    tokenUrl: https://auth.nursa.com/oidc/oauth/token
+    note: enabled per-application on request only
+enforcement:
+  granted: HTTP 2xx
+  missing_scope: HTTP 403 Forbidden Resource
+  consent: >-
+    Scopes are requested in the `scope` parameter of the authorization request; the authorization
+    server may show a consent screen and the user may deny all or part of the request. The granted
+    set lands in the access token's `scope` claim.
+scopes:
+- scope: openid
+  description: Returns the sub claim, which uniquely identifies the user. In an ID Token, iss, aud, exp, iat and at_hash are also present.
+  category: openid
+  advertised_in_discovery: true
+- scope: profile
+  description: Returns basic profile claims — name, nickname, picture.
+  category: openid
+  advertised_in_discovery: true
+- scope: email
+  description: Returns the email claim.
+  category: openid
+  advertised_in_discovery: true
+- scope: phone
+  description: Returns the phone_number claim.
+  category: openid
+  advertised_in_discovery: true
+- scope: address
+  description: Returns the address claim — an object with city and state.
+  category: openid
+  advertised_in_discovery: true
+- scope: role
+  description: Returns the role claim; NURSE_USER or FACILITY_USER.
+  category: openid
+  advertised_in_discovery: true
+- scope: offline_access
+  description: Returns a refresh_token from the Get Token endpoint.
+  category: openid
+  advertised_in_discovery: true
+- scope: marketplace:write
+  name: Post Shifts
+  description: User allows your application to post and update shifts on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: marketplace:read
+  name: View Posted Shifts
+  description: User allows your application to read shifts on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: marketplace-policy:write
+  name: Manage Shift Policy
+  description: User allows your application to manage shift policy on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: marketplace-policy:read
+  name: View Shift Policy
+  description: User allows your application to read shift policy on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: shift-requests:write
+  name: Manage Shift Requests
+  description: User allows your application to manage shift requests on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: shift-requests:read
+  name: View Shift Requests
+  description: User allows your application to read shift requests on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: shift-reports:write
+  name: Manage Shift Reports
+  description: User allows your application to manage shift reports on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: shift-reports:read
+  name: View Shift Reports
+  description: User allows your application to read shift reports on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: facilities:write
+  name: Manage Facility Profile
+  description: User allows your application to manage the facility profile on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: facilities:read
+  name: View Facility Profile
+  description: User allows your application to read the facility profile on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: finances:write
+  name: Manage Financial Information
+  description: User allows your application to manage the facility's financial information on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: finances:read
+  name: View Financial Information
+  description: User allows your application to read the facility's financial information on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: communication-policy:write
+  name: Manage Communication Policy
+  description: User allows your application to manage the communication policy on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: communication-policy:read
+  name: View Communication Policy
+  description: User allows your application to read the communication policy on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: permissions:write
+  name: Manage Permissions
+  description: User allows your application to manage the user permissions under an organization on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: permissions:read
+  name: View Permissions
+  description: User allows your application to read the user permissions under an organization on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: integrations:write
+  name: Manage Integrations
+  description: User allows your application to manage the integration settings of the organization on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: oidc-application:write
+  name: Manage OIDC Applications
+  description: User allows your application to manage the OpenID Connect applications of the organization on their behalf.
+  category: resource
+  advertised_in_discovery: false
+- scope: oidc-application:read
+  name: View OIDC Applications
+  description: User allows your application to read the OpenID Connect applications of the organization on their behalf.
+  category: resource
+  advertised_in_discovery: false
+coverage:
+  total: 27
+  openid: 7
+  resource: 20
+  read_write_pairs: 9
+  write_only: 1
+gaps:
+- >-
+  No operation-to-scope binding is published anywhere machine-readable. The docs say "The API
+  documentation will define which scopes will be requested for each endpoint", but the OpenAPI's
+  only security requirement is `public-api: []` — an empty scope array on all 40 operations. An
+  agent or client cannot compute least privilege from the contract.
+- >-
+  `integrations:write` has no matching `integrations:read`, unlike every other resource family.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://docs.nursa.com/docs/Integration%20Guideline/Scopes/
+    status: 200
+  - url: https://auth.nursa.com/oidc/.well-known/openid-configuration
+    status: 200

@@ -1,0 +1,125 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/nursa-public-api-v2-openapi.yml
+docs:
+- https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
+- https://trust.nursa.com/
+standards:
+- id: openapi-3.0
+  conforms: partial
+  evidence: >-
+    Operations, schemas, examples, securitySchemes and servers are all published as OpenAPI objects
+    inside the docs build, but Nursa ships no downloadable document. The reconstructed spec also
+    carries provider-side schema defects that fail oas3-schema — `type: Array` (capital A) and
+    `type: sting` (typo) are not valid OpenAPI types, and several examples contradict their
+    declared type (a boolean field with example 'true', a number field with a string example, a
+    string `message` field carrying an array).
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Authorization code (+PKCE), client credentials, refresh token, resource owner password and
+    implicit grants documented; token endpoint live at https://auth.nursa.com/oidc/oauth/token.
+- id: oidc-core
+  conforms: true
+  evidence: ID Token with iss/aud/sub/nonce/sid/exp/iat, RS256, userinfo and end_session endpoints.
+- id: oidc-discovery
+  conforms: partial
+  evidence: >-
+    A complete discovery document is served, but from /oidc/.well-known/openid-configuration rather
+    than the RFC 8615 canonical /.well-known/openid-configuration, which returns 404. Generic OIDC
+    clients pointed at the issuer will not auto-discover.
+- id: rfc7636-pkce
+  conforms: partial
+  evidence: >-
+    code_challenge_methods_supported advertises S256 AND plain; `plain` is discouraged by RFC 7636
+    and disallowed by OAuth 2.1.
+- id: rfc9700-oauth-security-bcp
+  conforms: false
+  evidence: Implicit and Resource Owner Password grants are still advertised as supported.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404 on auth.nursa.com.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use the NestJS {message, error, statusCode} envelope as application/json; no
+    application/problem+json anywhere in the spec.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on nursa.com, docs.nursa.com and app.nursa.com.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog returns 404.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation policy and no Sunset/Deprecation header documented.
+- id: rfc3339-datetime
+  conforms: true
+  evidence: Shift from/to fields are validated as RFC 3339 date-times; error text names RFC 3339 explicitly.
+- id: iso8601-duration
+  conforms: true
+  evidence: breakTime is an ISO 8601 duration (PT45M).
+- id: hmac-webhook-signing
+  conforms: true
+  evidence: >-
+    Nursa-Signature header, t=<unix>,v1=<hex> format, HMAC-SHA256 over "<timestamp>.<body>", dual
+    secrets for zero-downtime rotation — the Stripe-style webhook signing convention.
+- id: asyncapi
+  conforms: false
+  evidence: A 14-event webhook surface exists but no AsyncAPI document is published.
+- id: json-api
+  conforms: false
+- id: odata
+  conforms: false
+- id: scim2
+  conforms: false
+- id: fhir-r4
+  conforms: false
+  evidence: >-
+    Nursa is a staffing marketplace, not a clinical data system; it exchanges shifts, credentials
+    and worked hours, not patient records. FHIR is not the applicable standard here.
+- id: hl7-v2
+  conforms: false
+- id: llms-txt
+  conforms: true
+  evidence: https://nursa.com/llms.txt returns 200 with a structured index of the public surface.
+- id: mcp
+  conforms: false
+  evidence: No MCP server is published on any Nursa host.
+- id: a2a
+  conforms: false
+  evidence: No agent card at /.well-known/agent-card.json or /.well-known/agent.json on any host.
+compliance_program:
+  trust_center: https://trust.nursa.com/
+  platform: SafeBase by Drata
+  certifications:
+  - SOC 2 Type 1
+  - SOC 2 Type 2
+  accreditation:
+  - The Joint Commission (health-care staffing services certification, company-level)
+  detail: >-
+    The public trust center lists SOC 2 Type 1 and Type 2 only. Detailed security documentation is
+    behind a "Get access" request. No HIPAA, ISO 27001, PCI DSS or HITRUST attestation is shown
+    publicly, and the trust center does not publish a vulnerability-disclosure policy or a security
+    contact.
+  detail_gated: true
+gaps:
+- No RFC 9457 problem details.
+- No security.txt (RFC 9116).
+- OIDC discovery is off the canonical well-known path; no RFC 8414 metadata.
+- PKCE `plain` and the implicit/password grants remain advertised.
+- No published AsyncAPI for a real 14-event webhook surface.
+- Provider spec carries invalid OpenAPI types (`Array`, `sting`) and type/example mismatches.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://auth.nursa.com/oidc/.well-known/openid-configuration
+    status: 200
+  - url: https://auth.nursa.com/.well-known/oauth-authorization-server
+    status: 404
+  - url: https://nursa.com/.well-known/security.txt
+    status: 404
+  - url: https://nursa.com/llms.txt
+    status: 200
+  - url: https://trust.nursa.com/
+    status: 200

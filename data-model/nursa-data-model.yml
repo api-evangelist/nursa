@@ -1,0 +1,198 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/nursa-public-api-v2-openapi.yml
+docs: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+note: >-
+  Entity graph derived from the 40 published operations, their path parameters and their inline
+  request/response schemas. Nursa's spec defines NO components.schemas — every shape is inlined per
+  operation, so entities below are inferred from the id-reference fields (facilityId, shiftId,
+  clinicianId, quoteId, documentId, attachmentId, webhookId) that recur across operations, not from
+  named schema objects.
+entities:
+- name: Facility
+  id_field: facilityId
+  id_format: 'prefixed string, e.g. NUR-123456'
+  description: A healthcare facility that posts shifts. The tenant boundary of the whole API.
+  operations:
+    list: FacilitiesController_getAll
+    get: FacilitiesController_getOneById
+    search: FacilitiesController_searchFacilities
+    work_history: FacilitiesController_getWorkHistory
+    request_connection: FacilitiesController_requestConnection
+    request_creation: FacilitiesController_requestFacilityCreation
+- name: Specialty
+  description: Facility specialty taxonomy (e.g. Wound Care).
+  operations:
+    list: FacilitiesController_getAllSpecialties
+- name: LicenseType
+  id_field: licenseType
+  id_format: 'code, e.g. RN, LPN, CNA, CMA'
+  description: Clinician license types a shift can require.
+  operations:
+    list: LicensesController_getAll
+- name: Clinician
+  id_field: clinicianId
+  id_format: opaque 28-character token
+  description: A credentialed healthcare professional who requests and works shifts.
+  operations:
+    get: CliniciansController_getDetails
+    documents: CliniciansController_getDocuments
+    profile_pdf: DownloadController_clinicianProfile
+    favorite: FacilitiesController_favoritingClinician
+- name: ClinicianDocument
+  id_field: documentId
+  description: A credential document (license, certification, vaccination record) on a clinician profile.
+  operations:
+    list: CliniciansController_getDocuments
+    attachments: CliniciansController_getDocumentAttachments
+- name: DocumentAttachment
+  id_field: attachmentId
+  description: A binary file attached to a clinician document.
+  operations:
+    download: CliniciansController_getAttachment
+- name: ShiftQuote
+  id_field: quoteId
+  description: A priced, single-use quotation for a prospective shift, exchangeable for a real shift.
+  operations:
+    create: MarketplaceController_quoteShift
+    redeem: MarketplaceController_createShiftFromQuote
+- name: Shift
+  id_field: shiftId
+  id_format: numeric string
+  description: An open per diem shift posted to the marketplace, with a bill rate and total amount.
+  operations:
+    list_marketplace: MarketplaceController_getMarketplaceShifts
+    search: ShiftsController_searchShifts
+    create_batch: MarketplaceController_createShifts
+    update: MarketplaceController_patchShift
+    cancel: MarketplaceController_cancelShift
+- name: ShiftRequest
+  description: A clinician's request to work a posted shift.
+  operations:
+    list: ShiftRequestsController_getShiftRequests
+    reject: ShiftRequestsController_rejectShiftRequest
+- name: ScheduledShift
+  description: The binding of a clinician to a shift once the facility accepts a request.
+  operations:
+    list: ScheduleShiftsController_getScheduledShifts
+    create: ScheduleShiftsController_scheduleShift
+    remove_clinician: ScheduleShiftsController_removeScheduledClinician
+- name: ShiftReport
+  description: >-
+    The hours-worked record for a completed shift. Two report types exist — a clinician report and
+    a facility report — and the pair is reconciled into accepted or rejected.
+  report_types: [Nurse, Facility, Admin]
+  operations:
+    list: MarketplaceShiftReportsController_getAllShiftShiftReports
+    accept: MarketplaceShiftReportsController_acceptShiftReport
+    reject: MarketplaceShiftReportsController_rejectShiftReport
+    cancel: MarketplaceShiftReportsController_cancelShiftReport
+- name: FacilityWebhook
+  id_field: webhookId
+  description: A webhook subscription scoped to one or more facilities.
+  operations:
+    list: FacilitiesWebhooksController_getAll
+    create: FacilitiesWebhooksController_createOne
+    update: FacilitiesWebhooksController_updateOne
+    delete: FacilitiesWebhooksController_deleteOne
+- name: UserWebhook
+  id_field: webhookId
+  description: A webhook subscription scoped to the authenticated user.
+  operations:
+    list: UserWebhooksController_getAllUserWebhooks
+    create: UserWebhooksController_createOneUserWebhook
+    update: UserWebhooksController_updateOneUserWebhook
+    delete: UserWebhooksController_deleteOneUserWebhook
+- name: WebhookLog
+  description: A delivery record for a dispatched webhook event, including retry attempts.
+  operations:
+    search: WebhookLogsController_searchLogs
+- name: User
+  id_field: userId
+  description: >-
+    A Nursa account. role is NURSE_USER or FACILITY_USER. Facility users must be connected to a
+    facility before they can act on it; every API action is attributed to a user.
+  operations:
+    associate_to_facility: SupportFacilitiesController_associateUsersToFacility
+relationships:
+- from: Shift
+  to: Facility
+  kind: belongs_to
+  via: facilityId
+- from: Shift
+  to: LicenseType
+  kind: belongs_to
+  via: licenseType
+- from: Shift
+  to: ShiftQuote
+  kind: belongs_to
+  via: quoteId
+  note: only for shifts created through the quote flow
+- from: Shift
+  to: ShiftRequest
+  kind: has_many
+  via: shiftId
+- from: Shift
+  to: ScheduledShift
+  kind: has_many
+  via: shiftId
+- from: Shift
+  to: ShiftReport
+  kind: has_many
+  via: shiftId
+- from: ShiftRequest
+  to: Clinician
+  kind: belongs_to
+  via: clinicianId
+- from: ScheduledShift
+  to: Clinician
+  kind: belongs_to
+  via: clinicianId
+- from: ShiftReport
+  to: Clinician
+  kind: belongs_to
+  via: clinicianId
+- from: Clinician
+  to: ClinicianDocument
+  kind: has_many
+  via: clinicianId
+- from: ClinicianDocument
+  to: DocumentAttachment
+  kind: has_many
+  via: documentId
+- from: Facility
+  to: Specialty
+  kind: has_many
+- from: Facility
+  to: User
+  kind: has_many
+  via: facilityId
+  note: connection is requested and accepted, surfaced as facility.user-connection.* webhook events
+- from: Facility
+  to: FacilityWebhook
+  kind: has_many
+  via: facilities[]
+- from: User
+  to: UserWebhook
+  kind: has_many
+- from: FacilityWebhook
+  to: WebhookLog
+  kind: has_many
+lifecycle_flow:
+- Facility connection requested and accepted (FacilitiesController_requestConnection)
+- Shift quoted (MarketplaceController_quoteShift) or created directly (MarketplaceController_createShifts)
+- Clinician requests the shift -> shift.request.created
+- Facility schedules the clinician (ScheduleShiftsController_scheduleShift) -> shift.scheduled, all other requests cancelled
+- Clinician works the shift and submits a shift report -> shift.report.created
+- Facility accepts or rejects within 48 hours, else the system auto-accepts -> shift.report.accepted[-automatically] | rejected
+gaps:
+- >-
+  The spec defines no components.schemas at all — every request and response body is inlined per
+  operation, so there is zero schema reuse, no named entity a code generator can bind to, and the
+  same Facility or Shift shape is redeclared in operation after operation. This is the single
+  highest-leverage structural fix available to Nursa's spec.
+- No state/status enumeration is published for Shift or ShiftReport, though error messages leak
+  real state names (Paid, CancelledFilledInternally).
+x-evidence:
+  fetched: '2026-08-04'
+  derived_from: openapi/nursa-public-api-v2-openapi.yml (40 operations, 35 paths, 0 named schemas)

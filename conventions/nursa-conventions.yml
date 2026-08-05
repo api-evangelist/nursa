@@ -1,0 +1,113 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/nursa-public-api-v2-openapi.yml
+docs: https://docs.nursa.com/
+note: >-
+  Cross-cutting request/response semantics for the Nursa Public API V2, read from the published
+  reference and derived from the 40 operations in the spec. Where a convention is absent it is
+  recorded as absent — that is the finding, not an omission.
+authentication:
+  style: bearer
+  header: 'Authorization: Bearer <JWT>'
+  issuer: https://auth.nursa.com/
+  detail: authentication/nursa-authentication.yml
+  scopes: scopes/nursa-scopes.yml
+idempotency:
+  supported: false
+  header: null
+  detail: >-
+    NO idempotency contract of any kind. There is no Idempotency-Key header, no client-supplied
+    request id, and no documented replay window. This matters more here than on most APIs:
+    MarketplaceController_createShifts creates BATCHES of shifts and the docs state the batch runs
+    in a transaction, so a client that retries a timed-out POST has no safe way to tell whether the
+    first attempt landed — it can silently double-post a facility's shifts, and each posted shift
+    is a real financial commitment. The quote-then-create pair
+    (MarketplaceController_quoteShift -> MarketplaceController_createShiftFromQuote) is the closest
+    thing to a de-duplicating handle, because a quoteId is single-use, but it covers only that one
+    flow.
+pagination:
+  consistent: false
+  styles:
+  - style: limit-offset
+    params: [limit, offset]
+    used_by: [MarketplaceController_getMarketplaceShifts, ShiftsController_searchShifts, FacilitiesController_searchFacilities]
+  - style: page
+    params: [page, limit]
+    used_by: [FacilitiesController_getAll, WebhookLogsController_searchLogs]
+  detail: >-
+    Two different pagination models coexist inside the same API version — some collections take
+    limit+offset, others take page+limit. There is no cursor, no documented default or maximum
+    page size, and no Link header. Response envelopes carry `data` but no published total count or
+    next-page token, so a client cannot know when it has reached the end without an empty page.
+sorting:
+  params: [sortDirection]
+  detail: sortDirection appears on some search operations; the sortable field is not parameterised.
+filtering:
+  detail: >-
+    Filtering is per-operation query parameters rather than a shared grammar — facilityId /
+    facilityIds / facilitiesIds all appear across different operations for the same concept, which
+    is a naming inconsistency a client has to memorise.
+  observed_variants: [facilityId, facilityIds, facilitiesIds, shiftId, shiftIds, licenseType, licenseTypes, statuses, startDate, startDateFrom, startDateTo, endDate, eventType, category, name]
+response_envelope:
+  success: '{ "data": ... }'
+  error: '{ "message": string | string[], "error": string, "statusCode": integer }'
+  detail: errors/nursa-problem-types.yml
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+  detail: No customer-defined metadata/tags field on any resource.
+request_tracing:
+  request_id_header: null
+  supported: false
+  detail: >-
+    No X-Request-Id / X-Correlation-Id is documented on requests or responses, and no id appears in
+    the error envelope. A failed call cannot be handed to Nursa support by reference.
+versioning:
+  scheme: uri-path
+  current: v2
+  path_prefix: /api/v2/public
+  detail: >-
+    Version is pinned in the path (/api/v2/public/...). One support path, /api/v2/support/..., sits
+    outside the /public namespace. No version header, no date-based pinning, no documented policy
+    for how v3 would be introduced or how long v2 survives it.
+  lifecycle: lifecycle/nursa-lifecycle.yml
+rate_limiting:
+  limit: 100 requests per minute (default)
+  headers: []
+  detail: rate-limits/nursa-rate-limits.yml
+date_time:
+  format: RFC 3339 / ISO 8601 UTC (e.g. 2024-01-01T14:00:00.000Z)
+  durations: ISO 8601 durations for breakTime (e.g. PT45M, PT15M)
+  constraint: a shift's `to` must be less than 24 hours after `from`
+identifiers:
+  facility: 'human-readable prefixed string, e.g. NUR-0879 / NUR-123456'
+  shift: numeric string, e.g. "12120878"
+  user_clinician: opaque 28-character token, e.g. I7002epLHLhBCypdPCrn9XP4kTN2
+  detail: >-
+    Id formats are inconsistent across resources and some doc examples use UUIDs for the same
+    fields the API reference shows as short tokens — treat every id as an opaque string.
+webhooks:
+  detail: asyncapi/nursa-public-api-v2-webhooks.yml
+  signature_header: Nursa-Signature
+  retries: 3 attempts at ~5, 30 and 60 minutes
+environments:
+  sandbox: https://public-api.sandbox.nursa.com
+  production: https://public-api.prod.nursa.com
+  detail: sandbox/nursa-sandbox.yml
+gaps:
+- No idempotency key on any write operation, including batch shift creation.
+- Two pagination models in one API version; no cursor; no total or next-page signal.
+- No request/correlation id anywhere, so errors are untraceable across the boundary.
+- No field expansion, sparse fieldsets or customer metadata.
+- Inconsistent plural/singular filter parameter names for the same concept.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - url: https://docs.nursa.com/
+    status: 200
+  - url: https://docs.nursa.com/docs/Rate%20Limiting/
+    status: 200
+  derived_from: openapi/nursa-public-api-v2-openapi.yml (40 operations, 35 paths)
