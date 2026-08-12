@@ -36,50 +36,14 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: nursa:public-api-v2
-  name: Nursa Public API V2
-  description: 'REST API for healthcare facilities and the workforce-management platforms that serve them.
-    Post, quote, update and cancel per diem shifts on the Nursa marketplace; read and reject clinician shift
-    requests; schedule and unschedule clinicians; accept, reject and cancel shift reports; search facilities
-    and specialties; read clinician profiles, documents and license types; and manage facility- and user-scoped
-    webhook subscriptions with signed, retried delivery. Authenticated with a JWT bearer token issued by the
-    Nursa OIDC authorization server; sandbox and production environments are separate.'
-  humanURL: https://docs.nursa.com/
-  baseURL: https://public-api.prod.nursa.com
-  tags:
-  - Healthcare
-  - Staffing
-  - Nursing
-  - Marketplace
-  - Shifts
-  - Scheduling
-  - Webhooks
-  properties:
-  - type: OpenAPI
-    url: openapi/nursa-public-api-v2-openapi.yml
-  - type: Documentation
-    url: https://docs.nursa.com/
-  - type: APIReference
-    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
-  - type: GettingStarted
-    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
-  - type: Overlay
-    url: overlays/nursa-public-api-v2-overlay.yaml
-  - type: Webhooks
-    url: asyncapi/nursa-public-api-v2-webhooks.yml
-  - type: RateLimits
-    url: rate-limits/nursa-rate-limits.yml
-  - type: ErrorCatalog
-    url: errors/nursa-problem-types.yml
-  - type: DataModel
-    url: data-model/nursa-data-model.yml
 - aid: nursa:auth
   name: Nursa Authorization Server
-  description: 'Nursa''s OpenID Connect / OAuth 2.0 authorization server. Issues the JWT access tokens the
-    Nursa Public API requires, supports the authorization code (with and without PKCE), resource owner
-    password, implicit, refresh token and client credentials grants, and publishes OIDC discovery metadata,
-    a JWKS, authorization, token, userinfo and end-session endpoints. Resource scopes are namespaced per
-    capability (marketplace, shift-requests, shift-reports, facilities, finances, permissions and more).'
+  description: >-
+    Nursa's OpenID Connect / OAuth 2.0 authorization server. Issues the JWT access tokens the Nursa Public
+    API requires, supports the authorization code (with and without PKCE), resource owner password, implicit,
+    refresh token and client credentials grants, and publishes OIDC discovery metadata, a JWKS, authorization,
+    token, userinfo and end-session endpoints. Resource scopes are namespaced per capability (marketplace,
+    shift-requests, shift-reports, facilities, finances, permissions and more).
   humanURL: https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
   baseURL: https://auth.nursa.com/oidc
   tags:
@@ -97,7 +61,321 @@ apis:
     url: scopes/nursa-scopes.yml
   - type: Authentication
     url: authentication/nursa-authentication.yml
+- aid: nursa:nursa-clinicians-api
+  name: Nursa Clinicians API
+  description: The Clinicians API from Nursa — 4 operation(s) for clinicians.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Clinicians
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-clinicians-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-downloads-api
+  name: Nursa Downloads API
+  description: The Downloads API from Nursa — 1 operation(s) for downloads.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Downloads
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-downloads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-facilities-api
+  name: Nursa Facilities API
+  description: The Facilities API from Nursa — 8 operation(s) for facilities.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Facilities
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-facilities-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-facilities-webhooks-api
+  name: Nursa Facilities webhooks API
+  description: The Facilities webhooks API from Nursa — 2 operation(s) for facilities webhooks.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Facilities webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-facilities-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-licenses-api
+  name: Nursa Licenses API
+  description: The Licenses API from Nursa — 1 operation(s) for licenses.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Licenses
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-licenses-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-marketplace-api
+  name: Nursa Marketplace API
+  description: The Marketplace API from Nursa — 6 operation(s) for marketplace.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Marketplace
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-marketplace-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-scheduled-shifts-api
+  name: Nursa Scheduled shifts API
+  description: The Scheduled shifts API from Nursa — 2 operation(s) for scheduled shifts.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Scheduled shifts
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-scheduled-shifts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-shift-reports-api
+  name: Nursa Shift reports API
+  description: The Shift reports API from Nursa — 4 operation(s) for shift reports.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Shift reports
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-shift-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-shift-requests-api
+  name: Nursa Shift requests API
+  description: The Shift requests API from Nursa — 2 operation(s) for shift requests.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Shift requests
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-shift-requests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-shifts-api
+  name: Nursa Shifts API
+  description: The Shifts API from Nursa — 1 operation(s) for shifts.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Shifts
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-shifts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-support-api
+  name: Nursa Support API
+  description: The Support API from Nursa — 1 operation(s) for support.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Support
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-support-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-user-webhooks-api
+  name: Nursa User webhooks API
+  description: The User webhooks API from Nursa — 2 operation(s) for user webhooks.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - User webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-user-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
+- aid: nursa:nursa-webhook-logs-api
+  name: Nursa Webhook logs API
+  description: The Webhook logs API from Nursa — 1 operation(s) for webhook logs.
+  humanURL: https://docs.nursa.com/
+  baseURL: https://public-api.prod.nursa.com
+  tags:
+  - Webhook logs
+  properties:
+  - type: OpenAPI
+    url: openapi/nursa-webhook-logs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.nursa.com/
+  - type: APIReference
+    url: https://docs.nursa.com/pages/api/nursa-public-api-v-2
+  - type: GettingStarted
+    url: https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/
+  - type: Webhooks
+    url: asyncapi/nursa-public-api-v2-webhooks.yml
+  - type: RateLimits
+    url: rate-limits/nursa-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/nursa-problem-types.yml
+  - type: DataModel
+    url: data-model/nursa-data-model.yml
 common:
+- type: MCPServer
+  url: mcp/nursa-mcp.yml
 - type: TrustCenter
   url: security/nursa-trust-center.yml
 - type: DomainSecurity
@@ -155,7 +433,7 @@ common:
 - type: Packages
   url: packages/nursa-packages.yml
 - type: OpenAPI
-  url: openapi/nursa-public-api-v2-openapi.yml
+  url: openapi/_original/nursa-public-api-v2-openapi.yml
 - type: Authentication
   url: authentication/nursa-authentication.yml
 - type: Webhooks
