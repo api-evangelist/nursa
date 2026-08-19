@@ -1,0 +1,473 @@
+{
+  "item": [
+    {
+      "id": "c23ab3e6-18a3-49cf-a74a-89713dcc53a8",
+      "name": "Shifts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a3b4dde3-70f3-480e-9198-a6a55da56beb",
+          "name": "Search Shifts",
+          "request": {
+            "name": "Search Shifts",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>This endpoint allows you to <strong>search for all shifts</strong>, including those that are <strong>not actively listed</strong> in the Nursa Marketplace.</p>\n<p>Unlike the <strong>Get Marketplace Shifts</strong> endpoint, which only returns shifts with the statuses <code>Open</code>, <code>Viewed</code>, <code>Requested</code>, or <code>Scheduled</code>, this endpoint retrieves shifts regardless of their status.</p>\n<p>You can use the following query parameters to filter the response:</p>\n<h4>Query Parameters</h4>\n<table>\n<thead>\n<tr>\n<th>Parameter</th>\n<th>Type</th>\n<th>Description</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>startDate</code></td>\n<td>ISO 8601 Date</td>\n<td>Filters shifts with a start date between <code>startDate</code> and <code>endDate</code>.</td>\n</tr>\n<tr>\n<td><code>endDate</code></td>\n<td>ISO 8601 Date</td>\n<td>Filters shifts with a start date between <code>startDate</code> and <code>endDate</code>.</td>\n</tr>\n<tr>\n<td><code>licenseTypes</code></td>\n<td>Array of strings</td>\n<td>Filters shifts by license types. Example: <code>[&quot;RN&quot;, &quot;CNA&quot;]</code></td>\n</tr>\n<tr>\n<td><code>facilityIds</code></td>\n<td>Array of strings</td>\n<td>Filters shifts by facility IDs. Example: <code>[&quot;P-12345&quot;, &quot;P-67890&quot;]</code></td>\n</tr>\n<tr>\n<td><code>statuses</code></td>\n<td>Array of strings</td>\n<td>Filters shifts by status. Example: <code>[&quot;Open&quot;, &quot;UnfulfilledRequested&quot;]</code></td>\n</tr>\n<tr>\n<td><code>shiftIds</code></td>\n<td>Array of strings</td>\n<td>Filters shifts by shift IDs. Example: <code>[&quot;4765568640&quot;, &quot;5552536398&quot;]</code></td>\n</tr>\n</tbody>\n</table>\n<h4>Important Notes</h4>\n<ul>\n<li>You <strong>must</strong> provide either:\n<ul>\n<li><code>shiftIds</code>, <strong>or</strong></li>\n<li>Both <code>startDate</code> and <code>endDate</code>.</li>\n</ul>\n</li>\n</ul>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "shifts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Pagination parameter, use to specify the quantity of records returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "DESC",
+                  "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>",
+                  "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)"
+                },
+                {
+                  "disabled": false,
+                  "key": "licenseTypes",
+                  "value": "<string>",
+                  "description": "License Type of the shift"
+                },
+                {
+                  "disabled": false,
+                  "key": "facilityIds",
+                  "value": "<string>",
+                  "description": "Id of the facility"
+                },
+                {
+                  "disabled": false,
+                  "key": "statuses",
+                  "value": "<string>",
+                  "description": "Status of the Shift"
+                },
+                {
+                  "disabled": false,
+                  "key": "shiftIds",
+                  "value": "<string>",
+                  "description": "Id of the shift"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9c43656f-f5c0-4445-b1d2-37974e108518",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-09-15T10:23:18.211Z"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-09-15T10:23:18.211Z"
+                    },
+                    {
+                      "key": "licenseTypes",
+                      "value": "RN"
+                    },
+                    {
+                      "key": "facilityIds",
+                      "value": "NUR-1660331570"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "UnfulfilledRequested"
+                    },
+                    {
+                      "key": "shiftIds",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"shiftId\": \"5552536398\",\n      \"facilityId\": \"NUR-1660331570\",\n      \"from\": \"2025-09-15T10:23:18.088Z\",\n      \"to\": \"2025-09-15T10:23:18.088Z\",\n      \"licenseType\": \"RN\",\n      \"status\": \"Requested\",\n      \"billRatePerHour\": 47.5,\n      \"autoSchedulingEnabled\": true,\n      \"breakTime\": \"PT45M\"\n    },\n    {\n      \"shiftId\": \"5552536398\",\n      \"facilityId\": \"NUR-1660331570\",\n      \"from\": \"2025-09-15T10:23:18.088Z\",\n      \"to\": \"2025-09-15T10:23:18.088Z\",\n      \"licenseType\": \"RN\",\n      \"status\": \"Requested\",\n      \"billRatePerHour\": 47.5,\n      \"autoSchedulingEnabled\": true,\n      \"breakTime\": \"PT45M\"\n    }\n  ],\n  \"meta\": {\n    \"limit\": 8994.58461496686,\n    \"offset\": 5101.263735745868,\n    \"sortDirection\": {},\n    \"total\": 5010.624369617851\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e80a79e-b36f-492a-b8bb-fb3d4a3f6a2f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-09-15T10:23:18.211Z"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-09-15T10:23:18.211Z"
+                    },
+                    {
+                      "key": "licenseTypes",
+                      "value": "RN"
+                    },
+                    {
+                      "key": "facilityIds",
+                      "value": "NUR-1660331570"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "UnfulfilledRequested"
+                    },
+                    {
+                      "key": "shiftIds",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"limit must be a number conforming to the specified constraints\",\n    \"limit must not be less than 0\",\n    \"limit must not be greater than 50\",\n    \"offset must be a number conforming to the specified constraints\",\n    \"offset must not be less than 0\",\n    \"sortDirection must be one of the following values: ASC, DESC\",\n    \"startDate must be a valid ISO 8601 date string\",\n    \"endDate must be a valid ISO 8601 date string\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "149dfd34-07d4-4249-9892-69477b6abfc5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-09-15T10:23:18.211Z"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-09-15T10:23:18.211Z"
+                    },
+                    {
+                      "key": "licenseTypes",
+                      "value": "RN"
+                    },
+                    {
+                      "key": "facilityIds",
+                      "value": "NUR-1660331570"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "UnfulfilledRequested"
+                    },
+                    {
+                      "key": "shiftIds",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5fd1580-5a4b-4ca0-9d1c-8462b2a66608",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-09-15T10:23:18.211Z"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2025-09-15T10:23:18.211Z"
+                    },
+                    {
+                      "key": "licenseTypes",
+                      "value": "RN"
+                    },
+                    {
+                      "key": "facilityIds",
+                      "value": "NUR-1660331570"
+                    },
+                    {
+                      "key": "statuses",
+                      "value": "UnfulfilledRequested"
+                    },
+                    {
+                      "key": "shiftIds",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public-api.prod.nursa.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6000af68-e3f7-40df-91fb-c96deb880d32",
+    "name": "Nursa Public API V2 Shifts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.\n\nContact Support:\n Name: Nursa API Team\n Email: josh.bear@nursa.com",
+      "type": "text/plain"
+    }
+  }
+}

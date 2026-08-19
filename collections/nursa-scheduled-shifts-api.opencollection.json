@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Scheduled shifts API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scheduled shifts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Scheduled Shifts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/scheduled-shifts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the quantity of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "DESC",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+              },
+              {
+                "name": "startDate",
+                "value": "2025-09-15T10:23:17.642Z",
+                "type": "query",
+                "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)"
+              },
+              {
+                "name": "licenseType",
+                "value": "RN",
+                "type": "query",
+                "description": "License Type of the shift"
+              },
+              {
+                "name": "facilityId",
+                "value": "NUR-1660331570",
+                "type": "query",
+                "description": "Id of the facility"
+              },
+              {
+                "name": "shiftId",
+                "value": "5552536398",
+                "type": "query",
+                "description": "Id of the shift"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns an array of shifts with the Scheduled status from facilities the user is <a href=\"facilities-controller-request-connection\" target=\"_blank\">connected to</a>.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Schedule clinician to a shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/scheduled-shifts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Schedule a clinician to a shift.</p>\n<p>After a <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">shift is created</a>, and a clinician requests it, you can use the <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">Get requested shifts</a> endpoint to check the clinicians who requested to work the shift. Additionally, you can <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">Download the Clinician Profile</a> to help you choose which clinician best fits "
+        },
+        {
+          "info": {
+            "name": "Remove scheduled clinician from shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/scheduled-shifts/remove-clinician",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3><strong>Remove a Scheduled Clinician from a Shift</strong></h3>\n<p>This operation removes a scheduled clinician from a shift under specific conditions and notifies relevant parties accordingly.</p>\n<h4><strong>Shift Status Updates</strong></h4>\n<ul>\n<li>If the <strong>shift has at least 1 hour remaining</strong>, it is returned to the &quot;Open&quot; status.</li>\n<li>Otherwise, the shift is set to <strong>UnfulfilledRequested</strong> and will no longer be offered to clinicians.</li>\n</ul>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

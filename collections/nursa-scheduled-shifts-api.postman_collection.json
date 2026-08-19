@@ -1,0 +1,1033 @@
+{
+  "item": [
+    {
+      "id": "ac2f36c4-b3cb-4bd2-adab-802cc115b9e4",
+      "name": "Scheduled shifts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3679264d-8080-4130-8381-ed43c71f8ce0",
+          "name": "Get Scheduled Shifts",
+          "request": {
+            "name": "Get Scheduled Shifts",
+            "description": {
+              "content": "<p>Returns an array of shifts with the Scheduled status from facilities the user is <a href=\"facilities-controller-request-connection\" target=\"_blank\">connected to</a>.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "scheduled-shifts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Pagination parameter, use to specify the quantity of records returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "DESC",
+                  "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)"
+                },
+                {
+                  "disabled": false,
+                  "key": "licenseType",
+                  "value": "<string>",
+                  "description": "License Type of the shift"
+                },
+                {
+                  "disabled": false,
+                  "key": "facilityId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the facility"
+                },
+                {
+                  "disabled": false,
+                  "key": "shiftId",
+                  "value": "<string>",
+                  "description": "Id of the shift"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "01bf1f01-abe7-466d-84d2-cb6af4ff55ea",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-09-15T10:23:17.642Z"
+                    },
+                    {
+                      "key": "licenseType",
+                      "value": "RN"
+                    },
+                    {
+                      "key": "facilityId",
+                      "value": "NUR-1660331570"
+                    },
+                    {
+                      "key": "shiftId",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"facilityId\": \"NUR-123456\",\n      \"shiftId\": \"1100482364\",\n      \"from\": \"2024-09-13T00:00:00.000Z\",\n      \"to\": \"2024-09-14T00:00:00.000Z\",\n      \"licenseType\": \"RN\",\n      \"clinician\": {\n        \"id\": \"I7002epLHLhBCypdPCrn9XP4kTN2\",\n        \"firstName\": \"Jane\",\n        \"lastName\": \"Doe\",\n        \"contactEmail\": \"jane@doe.com\",\n        \"contactPhone\": \"+12345678910\"\n      },\n      \"breakTime\": \"PT45M\"\n    },\n    {\n      \"facilityId\": \"NUR-123456\",\n      \"shiftId\": \"1100482364\",\n      \"from\": \"2024-09-13T00:00:00.000Z\",\n      \"to\": \"2024-09-14T00:00:00.000Z\",\n      \"licenseType\": \"RN\",\n      \"clinician\": {\n        \"id\": \"I7002epLHLhBCypdPCrn9XP4kTN2\",\n        \"firstName\": \"Jane\",\n        \"lastName\": \"Doe\",\n        \"contactEmail\": \"jane@doe.com\",\n        \"contactPhone\": \"+12345678910\"\n      },\n      \"breakTime\": \"PT45M\"\n    }\n  ],\n  \"meta\": {\n    \"limit\": 4803.521302806909,\n    \"offset\": 8353.000695558785,\n    \"sortDirection\": {},\n    \"total\": 4165.458058450079\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "818aa906-5212-473a-b3e8-4ebacd84ea82",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-09-15T10:23:17.642Z"
+                    },
+                    {
+                      "key": "licenseType",
+                      "value": "RN"
+                    },
+                    {
+                      "key": "facilityId",
+                      "value": "NUR-1660331570"
+                    },
+                    {
+                      "key": "shiftId",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"limit must be a number conforming to the specified constraints\",\n    \"limit must not be less than 0\",\n    \"limit must not be greater than 50\",\n    \"offset must be a number conforming to the specified constraints\",\n    \"offset must not be less than 0\",\n    \"sortDirection must be one of the following values: ASC, DESC\",\n    \"startDate must be a valid ISO 8601 date string\",\n    \"facilityId must be a string\",\n    \"shiftId must be a string\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21a13490-b553-49c7-be1d-7d97c21e5ed7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-09-15T10:23:17.642Z"
+                    },
+                    {
+                      "key": "licenseType",
+                      "value": "RN"
+                    },
+                    {
+                      "key": "facilityId",
+                      "value": "NUR-1660331570"
+                    },
+                    {
+                      "key": "shiftId",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e016e89-83a3-4aa3-960f-c6e6d9dba76b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2025-09-15T10:23:17.642Z"
+                    },
+                    {
+                      "key": "licenseType",
+                      "value": "RN"
+                    },
+                    {
+                      "key": "facilityId",
+                      "value": "NUR-1660331570"
+                    },
+                    {
+                      "key": "shiftId",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c2db258-1f2b-493f-ba65-ae6b6e256615",
+          "name": "Schedule clinician to a shift",
+          "request": {
+            "name": "Schedule clinician to a shift",
+            "description": {
+              "content": "<p>Schedule a clinician to a shift.</p>\n<p>After a <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">shift is created</a>, and a clinician requests it, you can use the <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">Get requested shifts</a> endpoint to check the clinicians who requested to work the shift. Additionally, you can <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">Download the Clinician Profile</a> to help you choose which clinician best fits the shift.</p>\n<p>Users can also create a <a href=\"facilities-webhooks-controller-create-one\" target=\"_blank\">Webhook</a> in our system to receive notifications when the a clinician requests to work a shift.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "scheduled-shifts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shiftId\": \"<string>\",\n  \"clinicianId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "07982048-bde2-4376-a59e-30bbc26b449b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"facilityId\": \"NUR-123456\",\n    \"shiftId\": \"4765568640\",\n    \"from\": \"2024-09-13T00:00:00.000Z\",\n    \"to\": \"2024-09-14T00:00:00.000Z\",\n    \"licenseType\": \"RN\",\n    \"clinician\": {\n      \"id\": \"I7002epLHLhBCypdPCrn9XP4kTN2\",\n      \"firstName\": \"Jane\",\n      \"lastName\": \"Doe\",\n      \"contactEmail\": \"jane@doe.com\",\n      \"contactPhone\": \"+12345678910\"\n    },\n    \"scheduledBy\": \"gsFu59GrbAhFmUB0QyYf1Ubg0Q5E\",\n    \"breakTime\": \"PT45M\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5589e596-16a2-4ef2-856c-8128113b6724",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"shiftId must be a string\",\n    \"clinicianId must be a string\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "906212c5-d29e-4a17-9384-0a013c6f259d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8db9e598-70f5-4c63-95c9-da2b0483168b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c02300b-5fee-47ab-b9d4-69000bcac6e0",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Clinician is no longer available\",\n  \"error\": \"Not Found\",\n  \"statusCode\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d043a143-ad0c-4ecb-8f7f-0756a424fc3b",
+          "name": "Remove scheduled clinician from shift",
+          "request": {
+            "name": "Remove scheduled clinician from shift",
+            "description": {
+              "content": "<h3><strong>Remove a Scheduled Clinician from a Shift</strong></h3>\n<p>This operation removes a scheduled clinician from a shift under specific conditions and notifies relevant parties accordingly.</p>\n<h4><strong>Shift Status Updates</strong></h4>\n<ul>\n<li>If the <strong>shift has at least 1 hour remaining</strong>, it is returned to the &quot;Open&quot; status.</li>\n<li>Otherwise, the shift is set to <strong>UnfulfilledRequested</strong> and will no longer be offered to clinicians.</li>\n</ul>\n<h4><strong>Notifications</strong></h4>\n<ul>\n<li>The <strong>removed clinician</strong> is notified about their removal from the shift.</li>\n<li>If the <strong>removal reason</strong> is <code>Remove hire refused to work</code>:\n<ul>\n<li>The clinician's status will be updated to <strong>&quot;frozen&quot;</strong>.</li>\n<li>If the shift <strong>has started</strong> or was in progress:\n<ul>\n<li>The clinician will be removed from any other scheduled shifts if there were previous removals for No Call No Show (NCNS).</li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n<h4><strong>Returning the Shift to the Marketplace</strong></h4>\n<ul>\n<li>If the shift is reopened and sent back to the marketplace:\n<ul>\n<li>Other clinicians who previously <strong>requested the shift</strong> will be notified so they can reapply.</li>\n<li><strong>Clinician candidates</strong> eligible to fill the shift will receive an <strong>SOS notification</strong>.</li>\n</ul>\n</li>\n</ul>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "scheduled-shifts",
+                "remove-clinician"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shiftId\": \"<string>\",\n  \"clinicianId\": \"<string>\",\n  \"removalReason\": \"<string>\",\n  \"comments\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "70aacecd-016b-4956-9438-adc4021fe7fc",
+              "name": "Empty Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts",
+                    "remove-clinician"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\",\n  \"removalReason\": \"Remove hire emergency\",\n  \"comments\": \"Clinician requested removal due to personal reasons.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8f0fecdc-61a0-4d91-aab2-b1714d5ca6a8",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts",
+                    "remove-clinician"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\",\n  \"removalReason\": \"Remove hire emergency\",\n  \"comments\": \"Clinician requested removal due to personal reasons.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"removalReason must be one of the following values: Remove hire emergency, Remove hire refused to work\",\n    \"removalReason must be a string\",\n    \"comments must be shorter than or equal to 900 characters\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddd174c4-8fb4-45f9-9571-5eae4d91baa3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts",
+                    "remove-clinician"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\",\n  \"removalReason\": \"Remove hire emergency\",\n  \"comments\": \"Clinician requested removal due to personal reasons.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb7c6dcc-1050-47c9-bb98-0883fae8dd56",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "scheduled-shifts",
+                    "remove-clinician"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shiftId\": \"5552536398\",\n  \"clinicianId\": \"WK85QZny89Wj9cabYQw6FHcd2Be5\",\n  \"removalReason\": \"Remove hire emergency\",\n  \"comments\": \"Clinician requested removal due to personal reasons.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public-api.prod.nursa.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "85940aef-c41d-4a7e-9fc0-0471bd9ef3c9",
+    "name": "Nursa Public API V2 Scheduled shifts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.\n\nContact Support:\n Name: Nursa API Team\n Email: josh.bear@nursa.com",
+      "type": "text/plain"
+    }
+  }
+}

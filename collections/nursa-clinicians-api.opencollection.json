@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Clinicians API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Clinicians",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Clinician Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/clinicians/:clinicianId/details",
+            "params": [
+              {
+                "name": "clinicianId",
+                "value": "I7002epLHLhBCypdPCrn9XP4kTN2",
+                "type": "path",
+                "description": "Clinician ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>This endpoint allows you to retrieve <strong>clinician information</strong></p>\n"
+        },
+        {
+          "info": {
+            "name": "Get Clinician Documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/clinicians/:clinicianId/documents",
+            "params": [
+              {
+                "name": "clinicianId",
+                "value": "I7002epLHLhBCypdPCrn9XP4kTN2",
+                "type": "path",
+                "description": "Clinician ID"
+              },
+              {
+                "name": "shiftId",
+                "value": "4603117571",
+                "type": "query",
+                "description": "Id of the shift"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>This endpoint allows facilities to retrieve a list of all documents associated with a specific clinician.</p>\n<h4><strong>Required Parameters</strong></h4>\n<ul>\n<li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>\n<li><strong>shiftId</strong> (query parameter): The shift ID which the clinician requested</li>\n</ul>\n<h4><strong>Document Categories</strong></h4>\n<p>The endpoint returns documents organized by the following cat"
+        },
+        {
+          "info": {
+            "name": "Download Clinician Document attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/clinicians/:clinicianId/documents/attachment/:attachmentId",
+            "params": [
+              {
+                "name": "clinicianId",
+                "value": "I7002epLHLhBCypdPCrn9XP4kTN2",
+                "type": "path",
+                "description": "Clinician ID"
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the attachment"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>This endpoint allows you to download a specific attachment file associated with a clinician's document.</p>\n<h4><strong>Required Parameters</strong></h4>\n<ul>\n<li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>\n<li><strong>attachmentId</strong> (path parameter): The unique identifier of the specific attachment to download</li>\n</ul>\n<h4><strong>File Handling</strong></h4>\n<ul>\n<li>Files are streamed directly to the client"
+        },
+        {
+          "info": {
+            "name": "Get Clinician Document attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/clinicians/:clinicianId/documents/:category/:documentId",
+            "params": [
+              {
+                "name": "clinicianId",
+                "value": "I7002epLHLhBCypdPCrn9XP4kTN2",
+                "type": "path",
+                "description": "Clinician ID"
+              },
+              {
+                "name": "category",
+                "value": "license",
+                "type": "path",
+                "description": "Category of the document"
+              },
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the document"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>This endpoint retrieves all file attachments associated with a specific clinician document.</p>\n<h4><strong>Required Parameters</strong></h4>\n<ul>\n<li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>\n<li><strong>category</strong> (path parameter): The document category (LICENSE, CREDENTIAL, BACKGROUND_CHECK, SSN, CDPH_530)</li>\n<li><strong>documentId</strong> (path parameter): The unique identifier of the specific document"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

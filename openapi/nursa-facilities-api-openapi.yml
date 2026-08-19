@@ -1,0 +1,1451 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Facilities API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Facilities
+paths:
+  /api/v2/public/facilities:
+    get:
+      operationId: FacilitiesController_getAll
+      summary: Get Facilities
+      description: '<p>Returns an array of facilities which the user has <a href="facilities-controller-request-connection" target="_blank">connection</a> to.</p>
+
+        '
+      tags:
+      - Facilities
+      security:
+      - public-api: []
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the quantity of records returned
+        schema:
+          minimum: 0
+          maximum: 50
+          default: 10
+          type: number
+      - name: offset
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the number of records to skip before starting to return results
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: sortDirection
+        required: false
+        in: query
+        example: DESC
+        description: Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending
+        schema:
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        facilityId:
+                          type: string
+                          description: Nursa id of the facility
+                          example: '124345'
+                        name:
+                          type: string
+                          description: Name of the facility
+                          example: Facility name
+                        type:
+                          type: string
+                          description: Type of the facility
+                          example: Freestanding Hospice
+                        category:
+                          type: string
+                          description: Category of the facility
+                          example: Hospice
+                        numberOfBeds:
+                          type: number
+                          description: Number of beds in the facility
+                          example: 10
+                          maximum: 999
+                          minimum: 0
+                        streetAddress:
+                          type: string
+                          description: Street address of the facility
+                          example: Idaho address
+                        cityName:
+                          type: string
+                          description: Name of the city where the facility is located
+                          example: Hayden
+                        zipCode:
+                          type: string
+                          description: Zip code of the facility
+                          format: '##### | #####-####'
+                          example: '83835'
+                        stateCode:
+                          type: string
+                          description: State Abbreviation of the facility in ANSI standard
+                          example: ID
+                        county:
+                          type: string
+                          description: Name of the county where the facility is located
+                          example: Idaho County
+                        contactPhone:
+                          type: string
+                          description: Telephone number of the facility
+                          format: +1##########
+                          example: '+12345678910'
+                        billingInformation:
+                          description: Data related to the billing information
+                          allOf:
+                          - type: object
+                            properties:
+                              contactName:
+                                type: string
+                                description: Name of the contact
+                                example: John Doe
+                              contactEmail:
+                                type: string
+                                description: Email of the contact
+                                example: john.doe@email.com
+                              contactPhone:
+                                type: string
+                                description: Telephone number of the contact
+                                format: +1##########
+                                example: '+11234567890'
+                            required:
+                            - contactName
+                            - contactEmail
+                            - contactPhone
+                            title: BillingInformationResponseDto
+                        specialty:
+                          description: Data related to the facility specialty
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                                description: Title of the specialty
+                                example: Intensive Care Unit
+                              description:
+                                type: string
+                                description: Description of the Specialty
+                                example: Intensive Care Unit
+                            required:
+                            - title
+                            - description
+                            title: SpecialtyResponseDto
+                        websiteUrl:
+                          type: string
+                          example: https://example.com
+                          description: Website URL of the facility
+                        healthCareSystem:
+                          type: string
+                          description: Healthcare System of the facility
+                      required:
+                      - facilityId
+                      - name
+                      - type
+                      - category
+                      - numberOfBeds
+                      - streetAddress
+                      - cityName
+                      - zipCode
+                      - stateCode
+                      - county
+                      - contactPhone
+                      - billingInformation
+                      - specialty
+                      title: FacilityInformationV2Dto
+                  meta:
+                    type: object
+                    properties:
+                      limit:
+                        type: number
+                        description: Number of items returned
+                      offset:
+                        type: number
+                        description: Starting position
+                      sortDirection:
+                        type: object
+                        description: Sorting direction
+                      total:
+                        type: number
+                        description: Total records found
+                    required:
+                    - limit
+                    - offset
+                    - sortDirection
+                    - total
+                    title: PaginationResponseDto
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - limit must be a number conforming to the specified constraints
+                    - limit must not be less than 0
+                    - limit must not be greater than 50
+                    - offset must be a number conforming to the specified constraints
+                    - offset must not be less than 0
+                    - 'sortDirection must be one of the following values: ASC, DESC'
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/facilities/connection:
+    post:
+      operationId: FacilitiesController_requestConnection
+      summary: Request Facility Connection
+      description: '<p>This endpoint allows users to request a connection to an existing facility in our application. The user must provide the <code>facilityId</code> in the request body payload. Once the request is submitted, a Nursa employee will review and either accept or reject the request.</p>
+
+        <p>A verified facility connection is required to act on behalf of the facility, such as using endpoints to <a href="marketplace-controller-create-shifts" target="_blank">Create Shifts</a> and <a href="/pages/api/schedule-shifts-controller-schedule-shift" target="_blank">Schedule Clinicians</a>.</p>
+
+        <p>Users can also create a <a href="facilities-webhooks-controller-create-one" target="_blank">Webhook</a> in our system to receive notifications when the facility connection request is accepted or rejected.</p>
+
+        '
+      tags:
+      - Facilities
+      security:
+      - public-api: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                facilityId:
+                  type: string
+                  description: Id of the Facility
+                  example: NUR-123456
+              required:
+              - facilityId
+              title: RequestFacilityConnectionRequestV2DTO
+      responses:
+        '201':
+          description: Empty Response
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - facilityId must be a string
+                    error: Bad Request
+                    statusCode: 400
+                Already Exists:
+                  summary: Facility connection request already exists
+                  value:
+                    message: Facility connection request already exists
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/facilities/favoriting-clinician:
+    post:
+      operationId: FacilitiesController_favoritingClinician
+      summary: Favoriting Clinicians
+      description: '<p>Auto scheduler will prioritize favorited clinicians.</p>
+
+        '
+      tags:
+      - Facilities
+      security:
+      - public-api: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                facilityId:
+                  type: string
+                  description: Facility ID
+                  example: P-1718096076938
+                clinicianId:
+                  type: string
+                  description: Clinician ID
+                  example: I7002epLHLhBCypdPCrn9XP4kTN2
+                isFavorited:
+                  type: boolean
+                  description: Favorite/Unfavorite a clinician
+                  example: 'true'
+              required:
+              - facilityId
+              - clinicianId
+              - isFavorited
+              title: FavoritingClinicianRequest
+      responses:
+        '201':
+          description: Empty Response
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - facilityId must be a string
+                    - clinicianId must be a string
+                    - isFavorited must be a boolean value
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+              examples:
+                Clinician Blocked:
+                  summary: Clinician is blocked
+                  value:
+                    message: Clinician is blocked
+                    error: Forbidden
+                    statusCode: 403
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Not Found
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 404
+              examples:
+                Clinician Not Found:
+                  summary: Clinician is no longer available for favoriting
+                  value:
+                    message: Clinician is no longer available for favoriting
+                    error: Not Found
+                    statusCode: 404
+  /api/v2/public/facilities/request:
+    post:
+      operationId: FacilitiesController_requestFacilityCreation
+      summary: Request Facility Creation
+      description: '<p>This endpoint allows users to request a facility to be created in our application. Once the request is submitted, a Nursa employee will review and either accept or reject the request.</p>
+
+        <p>If the request is accepted the connection between the user and the facility will be created automatically Therefore, there is no need to <a href="facilities-controller-request-connection" target="_blank">Request a Facility Connection</a> for the user who created the facility.</p>
+
+        <p>Users can also create a <a href="facilities-webhooks-controller-create-one" target="_blank">Webhook</a> in our system to receive notifications when the facility creation request is accepted or rejected.</p>
+
+        '
+      tags:
+      - Facilities
+      security:
+      - public-api: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the facility
+                  example: Facility name
+                type:
+                  type: string
+                  description: Type of the facility
+                  example: Long Term Care
+                category:
+                  type: string
+                  description: Category of the facility
+                  example: Assisted Living
+                numberOfBeds:
+                  type: integer
+                  description: Number of beds in the facility
+                  maximum: 999
+                  minimum: 0
+                streetAddress:
+                  type: string
+                  description: Street address of the facility
+                  example: 7623 S SUMMIT PEAK DR
+                cityName:
+                  type: string
+                  description: Name of the city where the facility is located
+                  example: Midvale
+                zipCode:
+                  type: string
+                  description: Zip code of the facility
+                  format: '##### | #####-####'
+                  example: 84047-7799
+                stateCode:
+                  type: string
+                  description: State Abbreviation of the facility in ANSI standard
+                  example: UT
+                county:
+                  type: string
+                  description: Name of the county where the facility is located
+                  example: Salt Lake County
+                contactPhone:
+                  type: string
+                  description: Telephone number of the facility
+                  format: +1##########
+                  example: '+11234567890'
+                billingInformation:
+                  type: object
+                  properties:
+                    contactName:
+                      type: string
+                      description: Name of the contact
+                      example: John Doe
+                    contactEmail:
+                      type: string
+                      description: Email of the contact
+                      example: john.doe@email.com
+                    contactPhone:
+                      type: string
+                      description: Telephone number of the contact
+                      format: +1##########
+                      example: '+11234567890'
+                  required:
+                  - contactName
+                  - contactEmail
+                  - contactPhone
+                  title: BillingInformationRequestDto
+                specialty:
+                  type: string
+                  description: Name of the facility specialty
+                  example: Pediatric
+                websiteUrl:
+                  type: string
+                  description: Website URL of the facility
+                  example: https://www.facility.com
+              required:
+              - name
+              - type
+              - category
+              - numberOfBeds
+              - streetAddress
+              - cityName
+              - zipCode
+              - stateCode
+              - county
+              - contactPhone
+              - billingInformation
+              - specialty
+              title: RequestFacilityCreationRequestDto
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      requestId:
+                        type: string
+                        description: Id of the Facility Creation Request
+                        example: ef3186f5-27cb-4d53-820f-8f567cd7e84e
+                      name:
+                        type: string
+                        description: Name of the facility
+                        example: Facility name
+                      type:
+                        type: string
+                        description: Type of the facility
+                        example: Long Term Care
+                      category:
+                        type: string
+                        description: Category of the facility
+                        example: Assisted Living
+                      numberOfBeds:
+                        type: number
+                        description: Number of beds in the facility
+                        maximum: 999
+                        minimum: 0
+                      streetAddress:
+                        type: string
+                        description: Street address of the facility
+                      cityName:
+                        type: string
+                        description: Name of the city where the facility is located
+                        example: 1108 Ross Clark Cir
+                      zipCode:
+                        type: string
+                        description: Zip code of the facility
+                        format: '##### | #####-####'
+                        example: '12345'
+                      stateCode:
+                        type: string
+                        description: State Abbreviation of the facility in ANSI standard
+                        example: AL
+                      county:
+                        type: string
+                        description: Name of the county where the facility is located
+                        example: Houston County
+                      contactPhone:
+                        type: string
+                        description: Telephone number of the facility
+                        format: +1##########
+                        example: '+11234567890'
+                      billingInformation:
+                        type: object
+                        properties:
+                          contactName:
+                            type: string
+                            description: Name of the contact
+                            example: John Doe
+                          contactEmail:
+                            type: string
+                            description: Email of the contact
+                            example: john.doe@email.com
+                          contactPhone:
+                            type: string
+                            description: Telephone number of the contact
+                            format: +1##########
+                            example: '+11234567890'
+                        required:
+                        - contactName
+                        - contactEmail
+                        - contactPhone
+                        title: BillingInformationRequestDto
+                      specialty:
+                        type: string
+                        description: Name of the facility specialty
+                      websiteUrl:
+                        type: string
+                        description: Website URL of the facility
+                    required:
+                    - requestId
+                    - name
+                    - type
+                    - category
+                    - numberOfBeds
+                    - streetAddress
+                    - cityName
+                    - zipCode
+                    - stateCode
+                    - county
+                    - contactPhone
+                    - billingInformation
+                    - specialty
+                    - websiteUrl
+                    title: RequestFacilityCreationResponseDto
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - name must be a string
+                    - type must be a string
+                    - category must be a string
+                    - numberOfBeds must not be greater than 999
+                    - numberOfBeds must not be less than 0
+                    - numberOfBeds must be an integer number
+                    - streetAddress must be a string
+                    - cityName must be a string
+                    - zipCode must be a string
+                    - stateCode must be a string
+                    - county must be a string
+                    - 'contactPhone needs to match the format: +1##########'
+                    - contactPhone must be a string
+                    - contactName must be a string
+                    - contactName should not be empty
+                    - contactEmail must be an email
+                    - contactEmail should not be empty
+                    - 'contactPhone needs to match the format: +1##########'
+                    - contactPhone must be a string
+                    - contactPhone should not be empty
+                    - specialty must be a string
+                    - websiteUrl must be a URL address
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Not Found
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 404
+              examples:
+                Specialty Not Found:
+                  summary: Specialty was not found
+                  value:
+                    message: Specialty Wound Care not found
+                    error: Not Found
+                    statusCode: 404
+  /api/v2/public/facilities/search:
+    get:
+      operationId: FacilitiesController_searchFacilities
+      summary: Search Facilities
+      description: '<p>Returns an array of all the facilities registered in the application. Only publicly available information about each facility will be returned through this endpoint.</p>
+
+        <p>You can use this endpoint to search for a specific facility to check if it already exists in the application. Instead of using the <a href="facilities-controller-request-facility-creation" target="_blank">Request Facility Creation</a> endpoint, you can use the <a href="facilities-controller-request-connection" target="_blank">Request Facility Connection</a> endpoint if the facility is found.</p>
+
+        '
+      tags:
+      - Facilities
+      security:
+      - public-api: []
+      parameters:
+      - name: page
+        required: false
+        in: query
+        example: 1
+        description: Use to paginate the results
+        schema:
+          minimum: 1
+          default: 1
+          type: number
+      - name: name
+        required: false
+        in: query
+        description: Use to filter the search based on the facility name
+        example: Facility Name
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        facilityId:
+                          type: string
+                          description: Nursa id of the facility
+                          example: '124345'
+                        name:
+                          type: string
+                          description: Name of the facility
+                          example: Facility name
+                        streetAddress:
+                          type: string
+                          description: Street address of the facility
+                          example: Idaho address
+                        cityName:
+                          type: string
+                          description: Name of the city where the facility is located
+                          example: City name
+                        zipCode:
+                          type: string
+                          description: Zip code of the facility
+                          format: '##### | #####-####'
+                          example: '12345'
+                        stateCode:
+                          type: string
+                          description: State Abbreviation of the facility in ANSI standard
+                          example: AL
+                        imageUrl:
+                          type: string
+                          description: URL of the facility image
+                        websiteUrl:
+                          type: string
+                          description: Website URL of the facility
+                      required:
+                      - facilityId
+                      - name
+                      - streetAddress
+                      - cityName
+                      - zipCode
+                      - stateCode
+                      - imageUrl
+                      - websiteUrl
+                      title: FacilitySearchListResponseDto
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - page must not be less than 1
+                    - page must be a number conforming to the specified constraints
+                    - name must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/facilities/specialties:
+    get:
+      operationId: FacilitiesController_getAllSpecialties
+      summary: Get Specialties
+      description: '<p>Returns an array of specialties. A specialty <strong>title</strong> is required when using the <a href="facilities-controller-request-connection" target="_blank">Request Facility Creation</a> endpoint.</p>
+
+        '
+      tags:
+      - Facilities
+      security:
+      - public-api: []
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          description: Title of the Specialty
+                          example: Oncology
+                        description:
+                          type: string
+                          description: Description of the Specialty
+                          example: Oncology travel nurses work mostly with patients who are undergoing cancer treatments or are in remission
+                      required:
+                      - title
+                      - description
+                      title: SpecialtyResponseDTO
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/facilities/{facilityId}:
+    get:
+      operationId: FacilitiesController_getOneById
+      summary: Get Facility
+      description: '<p>Return a single facility data based on the <code>facilityId</code> path param, you''ll only be able to fetch the facility''s data if you have a <a href="facilities-controller-request-connection" target="_blank">Facility Connection</a> in place.</p>
+
+        '
+      tags:
+      - Facilities
+      security:
+      - public-api: []
+      parameters:
+      - name: facilityId
+        required: true
+        in: path
+        description: Id of the facility
+        example: NUR-12345
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      facilityId:
+                        type: string
+                        description: Nursa id of the facility
+                        example: '124345'
+                      name:
+                        type: string
+                        description: Name of the facility
+                        example: Facility name
+                      type:
+                        type: string
+                        description: Type of the facility
+                        example: Freestanding Hospice
+                      category:
+                        type: string
+                        description: Category of the facility
+                        example: Hospice
+                      numberOfBeds:
+                        type: number
+                        description: Number of beds in the facility
+                        example: 10
+                        maximum: 999
+                        minimum: 0
+                      streetAddress:
+                        type: string
+                        description: Street address of the facility
+                        example: Idaho address
+                      cityName:
+                        type: string
+                        description: Name of the city where the facility is located
+                        example: Hayden
+                      zipCode:
+                        type: string
+                        description: Zip code of the facility
+                        format: '##### | #####-####'
+                        example: '83835'
+                      stateCode:
+                        type: string
+                        description: State Abbreviation of the facility in ANSI standard
+                        example: ID
+                      county:
+                        type: string
+                        description: Name of the county where the facility is located
+                        example: Idaho County
+                      contactPhone:
+                        type: string
+                        description: Telephone number of the facility
+                        format: +1##########
+                        example: '+12345678910'
+                      billingInformation:
+                        description: Data related to the billing information
+                        allOf:
+                        - type: object
+                          properties:
+                            contactName:
+                              type: string
+                              description: Name of the contact
+                              example: John Doe
+                            contactEmail:
+                              type: string
+                              description: Email of the contact
+                              example: john.doe@email.com
+                            contactPhone:
+                              type: string
+                              description: Telephone number of the contact
+                              format: +1##########
+                              example: '+11234567890'
+                          required:
+                          - contactName
+                          - contactEmail
+                          - contactPhone
+                          title: BillingInformationResponseDto
+                      specialty:
+                        description: Data related to the facility specialty
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            title:
+                              type: string
+                              description: Title of the specialty
+                              example: Intensive Care Unit
+                            description:
+                              type: string
+                              description: Description of the Specialty
+                              example: Intensive Care Unit
+                          required:
+                          - title
+                          - description
+                          title: SpecialtyResponseDto
+                      websiteUrl:
+                        type: string
+                        example: https://example.com
+                        description: Website URL of the facility
+                      healthCareSystem:
+                        type: string
+                        description: Healthcare System of the facility
+                    required:
+                    - facilityId
+                    - name
+                    - type
+                    - category
+                    - numberOfBeds
+                    - streetAddress
+                    - cityName
+                    - zipCode
+                    - stateCode
+                    - county
+                    - contactPhone
+                    - billingInformation
+                    - specialty
+                    title: FacilityInformationV2Dto
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - facilityId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Not Found
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 404
+              examples:
+                Not Found:
+                  summary: Facility was not found
+                  value:
+                    message: Facility not found
+                    error: Not Found
+                    statusCode: 404
+  /api/v2/public/facilities/{facilityId}/work-history:
+    get:
+      operationId: FacilitiesController_getWorkHistory
+      summary: Get Facility Work History
+      description: '<p>Return data of clinicians that have completed a shift for the given Facility.</p>
+
+        <p>The data will be sorted based on the Shift Start Date.</p>
+
+        '
+      tags:
+      - Facilities
+      security:
+      - public-api: []
+      parameters:
+      - name: facilityId
+        required: true
+        in: path
+        description: Id of the facility
+        example: NUR-12345
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the quantity of records returned
+        schema:
+          minimum: 0
+          maximum: 50
+          default: 10
+          type: number
+      - name: offset
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the number of records to skip before starting to return results
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: sortDirection
+        required: false
+        in: query
+        example: DESC
+        description: Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending
+        schema:
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        clinicianId:
+                          type: string
+                          description: Id of the Clinician
+                          example: I7002epLHLhBCypdPCrn9XP4kTN2
+                        firstName:
+                          type: string
+                          example: Mary
+                          description: First Name of the Clinician
+                        lastName:
+                          type: string
+                          example: Jane
+                          description: Last Name of the Clinician
+                        isFavorited:
+                          type: boolean
+                          example: false
+                          description: Indicates if the Clinician is favorited
+                        lastShiftDate:
+                          type: sting
+                          example: '2025-09-15T10:23:18.087Z'
+                          format: date-time
+                          description: The date of the last shift worked by the Clinician
+                      required:
+                      - clinicianId
+                      - firstName
+                      - lastName
+                      - isFavorited
+                      title: GetWorkHistoryResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - facilityId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

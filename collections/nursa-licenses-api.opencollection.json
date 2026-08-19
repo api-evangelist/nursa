@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Licenses API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Licenses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Licenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/licenses",
+            "params": [
+              {
+                "name": "facilityId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns an array of our Licenses. A <strong>licenseCode</strong> is required when using <a href=\"marketplace-controller-quote-shift\" target=\"_blank\">Quote Shift</a> and <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">Create Shifts</a> endpoints.</p>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

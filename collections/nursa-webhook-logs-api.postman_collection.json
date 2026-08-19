@@ -1,0 +1,456 @@
+{
+  "item": [
+    {
+      "id": "75f0953b-194e-4a1a-8c0e-a612fe20f180",
+      "name": "Webhook logs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9c739bcb-2bd7-4f3f-a98c-51251769c396",
+          "name": "Search webhook notification logs",
+          "request": {
+            "name": "Search webhook notification logs",
+            "description": {
+              "content": "<p>Webhook logs are stored for 14 days and are used for debugging purposes.</p>\n<p>Searching webhook logs can help you troubleshoot issues by providing detailed information about the webhook events and their payloads.\nThis can be crucial for diagnosing problems, verifying event delivery, and ensuring your integration is functioning correctly.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "webhooks",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "facilitiesIds",
+                  "value": "<string>",
+                  "description": "The facilities IDs to filter the logs."
+                },
+                {
+                  "disabled": false,
+                  "key": "facilitiesIds",
+                  "value": "<string>",
+                  "description": "The facilities IDs to filter the logs."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventType",
+                  "value": "<string>",
+                  "description": "The event type to filter the logs."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "Filters logs that happened after this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>",
+                  "description": "Filters logs that happened before this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Pagination parameter, use to specify the quantity of records returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "DESC",
+                  "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4f5608d7-5a8c-41f5-9ff2-a8df4acac54c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "webhooks",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facilitiesIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facilitiesIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2022-10-10T10:00:00.000Z"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2022-10-11T10:00:00.000Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"4621c22c-6442-4aac-81bc-a479d9858df8\",\n      \"facilityId\": \"f2bb1e8a-92c6-47ba-94f4-c82cad0ff081\",\n      \"eventType\": \"shift.cancelled\",\n      \"requestPayload\": {\n        \"data\": {\n          \"facilityId\": \"6ffcb3a8-cae3-459c-89c8-187d984dcb09\"\n        },\n        \"eventType\": \"shift.scheduled\"\n      },\n      \"responseStatus\": 201,\n      \"responseBody\": \"{\\\"statusCode\\\":201}\",\n      \"url\": \"https://example.com/webhook\",\n      \"retries\": {\n        \"id\": \"4621c22c-6442-4aac-81bc-a479d9858df8\",\n        \"facilityId\": \"f2bb1e8a-92c6-47ba-94f4-c82cad0ff081\",\n        \"eventType\": \"shift.cancelled\",\n        \"requestPayload\": {\n          \"data\": {\n            \"facilityId\": \"6ffcb3a8-cae3-459c-89c8-187d984dcb09\"\n          },\n          \"eventType\": \"shift.scheduled\"\n        },\n        \"responseStatus\": 201,\n        \"responseBody\": \"{\\\"statusCode\\\":201}\",\n        \"url\": \"https://example.com/webhook\",\n        \"retryAttempt\": 1221.2758741656949\n      },\n      \"status\": \"success\"\n    },\n    {\n      \"id\": \"4621c22c-6442-4aac-81bc-a479d9858df8\",\n      \"facilityId\": \"f2bb1e8a-92c6-47ba-94f4-c82cad0ff081\",\n      \"eventType\": \"shift.cancelled\",\n      \"requestPayload\": {\n        \"data\": {\n          \"facilityId\": \"6ffcb3a8-cae3-459c-89c8-187d984dcb09\"\n        },\n        \"eventType\": \"shift.scheduled\"\n      },\n      \"responseStatus\": 201,\n      \"responseBody\": \"{\\\"statusCode\\\":201}\",\n      \"url\": \"https://example.com/webhook\",\n      \"retries\": {\n        \"id\": \"4621c22c-6442-4aac-81bc-a479d9858df8\",\n        \"facilityId\": \"f2bb1e8a-92c6-47ba-94f4-c82cad0ff081\",\n        \"eventType\": \"shift.cancelled\",\n        \"requestPayload\": {\n          \"data\": {\n            \"facilityId\": \"6ffcb3a8-cae3-459c-89c8-187d984dcb09\"\n          },\n          \"eventType\": \"shift.scheduled\"\n        },\n        \"responseStatus\": 201,\n        \"responseBody\": \"{\\\"statusCode\\\":201}\",\n        \"url\": \"https://example.com/webhook\",\n        \"retryAttempt\": 70.77450001416796\n      },\n      \"status\": \"success\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59bb989d-fdcd-4d94-99e5-22256e3d7ce6",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "webhooks",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facilitiesIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facilitiesIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2022-10-10T10:00:00.000Z"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2022-10-11T10:00:00.000Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"facilitiesIds must be an array\",\n    \"eventType must be one of the following values: shift.request.created, shift.request.cancelled, shift.report.created, shift.scheduled.cancelled, shift.scheduled, shift.created, shift.report.accepted-automatically, shift.report.accepted, shift.report.rejected, shift.cancelled, all\",\n    \"startDate must be RFC 3339 date\",\n    \"startDate must be a date before endDate\",\n    \"startDate must be a valid ISO 8601 date string\",\n    \"endDate must be RFC 3339 date\",\n    \"endDate must be a valid ISO 8601 date string\",\n    \"limit must not be less than 0\",\n    \"limit must not be greater than 100\",\n    \"limit must be a number conforming to the specified constraints\",\n    \"offset must be a number conforming to the specified constraints\",\n    \"offset must not be less than 0\",\n    \"sortDirection must be one of the following values: ASC, DESC\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3882dbe5-3ac8-4fad-b454-77773e9aeea8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "webhooks",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facilitiesIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facilitiesIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2022-10-10T10:00:00.000Z"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2022-10-11T10:00:00.000Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d68122b-2548-45d7-bf3f-7e06372f3732",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "webhooks",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "facilitiesIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "facilitiesIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2022-10-10T10:00:00.000Z"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2022-10-11T10:00:00.000Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public-api.prod.nursa.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7da348ab-f596-4cf0-8a4f-254c3d450e6b",
+    "name": "Nursa Public API V2 Webhook logs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.\n\nContact Support:\n Name: Nursa API Team\n Email: josh.bear@nursa.com",
+      "type": "text/plain"
+    }
+  }
+}

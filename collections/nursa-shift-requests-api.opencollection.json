@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Shift requests API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shift requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get requested shifts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/shift-requests",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the quantity of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "DESC",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+              },
+              {
+                "name": "startDate",
+                "value": "2025-09-15T10:23:17.626Z",
+                "type": "query",
+                "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)"
+              },
+              {
+                "name": "licenseType",
+                "value": "RN",
+                "type": "query",
+                "description": "License Type of the shift"
+              },
+              {
+                "name": "facilityId",
+                "value": "NUR-1660331570",
+                "type": "query",
+                "description": "Id of the facility"
+              },
+              {
+                "name": "shiftId",
+                "value": "5552536398",
+                "type": "query",
+                "description": "Id of the shift"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns requested shift with clinician's details and a link to <a href=\"download-controller-clinician-profile\">download clinician profile</a> that is generated when the shift was requested. This ensures the clinician information is up to date.</p>\n<p>Users can also create a <a href=\"facilities-webhooks-controller-create-one\" target=\"_blank\">Webhook</a> in our system to receive notifications when a clinician requests to work a shift.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Reject clinicians shift request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/shift-requests/reject",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3><strong>Reject a Clinician's Shift Request</strong></h3>\n<p>This operation rejects a clinician's request to take a shift.</p>\n<h4><strong>Notifications</strong></h4>\n<ul>\n<li>The clinician whose request was rejected will be notified that the shift has already been filled.</li>\n</ul>\n<h4><strong>Shift Status Updates</strong></h4>\n<ul>\n<li>The rejected clinician will see the shift marked as <strong>&quot;Filled&quot;</strong> in their view, indicating that the shift is no longer available for "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

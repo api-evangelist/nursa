@@ -1,0 +1,796 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Shift reports API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Shift reports
+paths:
+  /api/v2/public/marketplace/shifts/reports/{shiftId}:
+    get:
+      operationId: MarketplaceShiftReportsController_getAllShiftShiftReports
+      summary: Get shift reports
+      description: '<h3>General Information</h3>
+
+        <p>Returns all the shift reports belonging to the Shift</p>
+
+        <p>Users can also create a <a href="facilities-webhooks-controller-create-one" target="_blank">Webhook</a> in our system to receive notifications whenever a new shift report is created.</p>
+
+        '
+      tags:
+      - Shift reports
+      security:
+      - public-api: []
+      parameters:
+      - name: shiftId
+        required: true
+        in: path
+        description: Nursa ShiftId
+        example: '8222234296'
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        from:
+                          type: string
+                          format: date-time
+                          description: Shift start date
+                          example: '2025-09-15T10:23:17.642Z'
+                        to:
+                          type: string
+                          format: date-time
+                          description: Shift end date
+                          example: '2025-09-15T10:23:17.642Z'
+                        cancelationReason:
+                          type: string
+                          enum:
+                          - Facility
+                          - Nurse
+                          - On Hold
+                          - Other
+                          example: Nurse
+                          description: Cancelation Reason
+                        cancelationComment:
+                          type: string
+                          enum:
+                          - No Call No Show
+                          - Excused Emergency
+                          - Refused to Work
+                          - No Longer Want to Work With This Clinician
+                          example: Excused Emergency
+                          description: Comment about the cancelation
+                        comment:
+                          type: string
+                          description: Comment of the shift
+                          example: Everything was fine :)
+                        bonus:
+                          type: number
+                          description: Bonus to be paid to Clinician
+                          example: 2.5
+                        reportType:
+                          type: string
+                          description: Type of the report
+                          enum:
+                          - Nurse
+                          - Facility
+                          - Admin
+                          - AdminBilling
+                          example: Nurse
+                        breakTime:
+                          type: string
+                          example: PT45M
+                          format: ISO 8601 duration
+                          description: Break Time for the shift
+                        updateDate:
+                          type: string
+                          format: date-time
+                          description: The date the shift was last updated
+                          example: '2025-09-15T10:23:17.643Z'
+                        totalAmount:
+                          type: number
+                          description: Total price
+                          example: 178.8
+                      required:
+                      - from
+                      - to
+                      - comment
+                      - bonus
+                      - reportType
+                      - updateDate
+                      - totalAmount
+                      title: GetShiftReportResponseDTO
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - shiftId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/marketplace/shifts/reports/{shiftId}/accept:
+    post:
+      operationId: MarketplaceShiftReportsController_acceptShiftReport
+      summary: Accept clinician's shift report
+      description: '<h3>General Information</h3>
+
+        <p>Accepts the Clinician''s shift report</p>
+
+        <p>When a facility user accepts the clinician''s shift report, they are agreeing with the information provided by the clinician. Therefore, no intervention from Nursa employees will be necessary.</p>
+
+        <p>You can use the <a href="marketplace-shift-reports-controller-get-all-shift-shift-reports" target="_blank">Get Shift Report</a> endpoint  verify if the clinician''s shift report is correctIf you believe the report contains incorrect information, you can use the <a href="marketplace-shift-reports-controller-reject-shift-report" target="_blank">Reject Shift Report</a> endpoint to submit the correct values.</p>
+
+        '
+      tags:
+      - Shift reports
+      security:
+      - public-api: []
+      parameters:
+      - name: shiftId
+        required: true
+        in: path
+        description: Nursa ShiftId
+        example: '8222234296'
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                  description: A comment about the clinician
+                  example: Awesome clinician
+                rate:
+                  type: number
+                  description: Rate the clinician from 1 to 5
+                  example: 5
+                  minimum: 1
+                  maximum: 5
+              required:
+              - comment
+              - rate
+              title: AcceptShiftReportRequest
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      from:
+                        type: string
+                        format: date-time
+                        description: Shift start date
+                        example: '2025-09-15T10:23:18.081Z'
+                      to:
+                        type: string
+                        format: date-time
+                        description: Shift end date
+                        example: '2025-09-15T10:23:18.081Z'
+                      cancelationReason:
+                        type: string
+                        enum:
+                        - Facility
+                        - Nurse
+                        - On Hold
+                        - Other
+                        example: Nurse
+                        description: Cancelation Reason
+                      cancelationComment:
+                        type: string
+                        enum:
+                        - No Call No Show
+                        - Excused Emergency
+                        - Refused to Work
+                        - No Longer Want to Work With This Clinician
+                        example: Excused Emergency
+                        description: Comment about the cancelation
+                      comment:
+                        type: string
+                        description: Comment of the shift
+                        example: Everything was fine :)
+                      bonus:
+                        type: number
+                        description: Bonus to be paid to Clinician
+                        example: 2.5
+                      reportType:
+                        type: string
+                        description: Type of the report
+                        enum:
+                        - Nurse
+                        - Facility
+                        - Admin
+                        - AdminBilling
+                        example: Nurse
+                      breakTime:
+                        type: string
+                        example: PT45M
+                        format: ISO 8601 duration
+                        description: Break Time for the shift
+                      updateDate:
+                        type: string
+                        format: date-time
+                        description: The date the shift was last updated
+                        example: '2025-09-15T10:23:18.082Z'
+                      totalAmount:
+                        type: number
+                        description: Total price of the shift
+                        example: 178.8
+                      reviewComment:
+                        type: number
+                        description: Comment reviewing the Clinician
+                        example: A comment
+                      rate:
+                        type: number
+                        description: Rate given to Clinician
+                        example: 5
+                    required:
+                    - from
+                    - to
+                    - comment
+                    - bonus
+                    - reportType
+                    - updateDate
+                    - totalAmount
+                    - reviewComment
+                    - rate
+                    title: AcceptShiftReportResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - comment must be a string
+                    - rate must not be greater than 5
+                    - rate must not be less than 1
+                    - rate must be an integer number
+                    error: Bad Request
+                    statusCode: 400
+                Shift not Completed:
+                  summary: Shift is not completed
+                  value:
+                    message: Shift must be completed to submit a shift report
+                    error: Bad Request
+                    statusCode: 400
+                Already Submitted:
+                  summary: Shift report already submitted
+                  value:
+                    message: Facility shift report already submitted
+                    error: Bad Request
+                    statusCode: 400
+                Missing Clinician Report:
+                  summary: Clinician shift report was not submitted
+                  value:
+                    message: Clinician shift report was not submitted
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/marketplace/shifts/reports/{shiftId}/cancel:
+    post:
+      operationId: MarketplaceShiftReportsController_cancelShiftReport
+      summary: Cancel clinician's shift report
+      description: '<h3>General Information</h3>
+
+        <p>Cancel the Clinician''s shift report</p>
+
+        <p>If the clinician didn''t work the shift, you can cancel it. After the cancel shift report is sent, the status of the shift will be changed to <strong>Didn''t Work</strong></p>
+
+        <p>Additionally, if the <code>cancellationComment</code> chosen was <code>No Longer Want to Work With This Clinician</code>, the clinician will be blocked from making future shift requests to the facility where the shift was scheduled.</p>
+
+        '
+      tags:
+      - Shift reports
+      security:
+      - public-api: []
+      parameters:
+      - name: shiftId
+        required: true
+        in: path
+        description: Nursa ShiftId
+        example: '8222234296'
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cancellationComment:
+                  type: string
+                  description: Reason why the shift was canceled or the clinician was not able to complete the shift
+                  enum:
+                  - No Call No Show
+                  - Excused Emergency
+                  - Refused to Work
+                  - No Longer Want to Work With This Clinician
+                  example: Excused Emergency
+                comment:
+                  type: string
+                  description: General comment or feedback about the shift itself, including any incidents, issues, or noteworthy aspects
+                  example: The Clinician was not able to complete the shift due to a family emergency.
+              required:
+              - cancellationComment
+              title: CancelShiftReportRequest
+      responses:
+        '201':
+          description: Empty Response
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - 'cancellationComment must be one of the following values: No Call No Show, Excused Emergency, Refused to Work, No Longer Want to Work With This Clinician'
+                    - comment must be a string
+                    error: Bad Request
+                    statusCode: 400
+                Shift not Completed:
+                  summary: Shift is not completed
+                  value:
+                    message: Shift must be completed to submit a shift report
+                    error: Bad Request
+                    statusCode: 400
+                Already Submitted:
+                  summary: Shift report already submitted
+                  value:
+                    message: Facility shift report already submitted
+                    error: Bad Request
+                    statusCode: 400
+                Missing Clinician Report:
+                  summary: Clinician shift report was not submitted
+                  value:
+                    message: Clinician shift report was not submitted
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/marketplace/shifts/reports/{shiftId}/reject:
+    post:
+      operationId: MarketplaceShiftReportsController_rejectShiftReport
+      summary: Reject clinician's shift report
+      description: '<h3>General Information</h3>
+
+        <p>Rejects the Clinician''s shift report</p>
+
+        <p>If you believe the clinician''s shift report contains incorrect information, you can reject it and submit the values you believe are correct. After your report is submitted, a Nursa employee will determine the correct information.</p>
+
+        '
+      tags:
+      - Shift reports
+      security:
+      - public-api: []
+      parameters:
+      - name: shiftId
+        required: true
+        in: path
+        description: Nursa ShiftId
+        example: '8222234296'
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reviewComment:
+                  type: string
+                  description: Comment regarding the individual who worked on the shift
+                  example: Exhibited exceptional professionalism and skill
+                rate:
+                  type: number
+                  description: Rate the clinician from 1 to 5
+                  example: 5
+                  minimum: 1
+                  maximum: 5
+                breakTime:
+                  type: string
+                  example: PT45M
+                  format: ISO 8601 duration
+                from:
+                  type: string
+                  format: date-time
+                to:
+                  type: string
+                  format: date-time
+                comment:
+                  type: string
+                  description: General comment or feedback about the shift itself, including any incidents, issues, or noteworthy aspects
+                  example: The clinician went to the wrong building, that's why the start time was delayed.
+                bonus:
+                  type: number
+                  description: monetary bonus to clinician
+                  example: 50
+              required:
+              - reviewComment
+              - rate
+              - breakTime
+              - from
+              - to
+              - comment
+              title: RejectShiftReportRequest
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      breakTime:
+                        type: string
+                        example: PT45M
+                        format: ISO 8601 duration
+                        description: Break Time for the shift
+                      from:
+                        type: string
+                        format: date-time
+                        description: Shift end date
+                        example: '2025-09-15T10:23:18.083Z'
+                      to:
+                        type: string
+                        format: date-time
+                        description: Shift start date
+                        example: '2025-09-15T10:23:18.083Z'
+                      comment:
+                        type: string
+                        description: Comment about how the clinician worked the shift
+                        example: All good, the clinician did a great job
+                      completed:
+                        type: boolean
+                        example: true
+                      createdAt:
+                        type: string
+                        description: Date the shift report was created
+                        format: date-time
+                        example: '2025-09-15T10:23:18.083Z'
+                      shiftId:
+                        type: string
+                        example: '12120878'
+                        description: Id of the shift
+                      reportType:
+                        type: string
+                        enum:
+                        - Nurse
+                        - Facility
+                        - Admin
+                        - AdminBilling
+                        description: Type of the report
+                        example: Facility
+                      totalAmount:
+                        type: number
+                        description: Total price
+                        example: 178.8
+                      cancelationReason:
+                        type: string
+                        enum:
+                        - Facility
+                        - Nurse
+                        - On Hold
+                        - Other
+                        example: Nurse
+                        description: Cancelation Reason
+                      cancelationComment:
+                        type: string
+                        enum:
+                        - No Call No Show
+                        - Excused Emergency
+                        - Refused to Work
+                        - No Longer Want to Work With This Clinician
+                        example: Excused Emergency
+                        description: Comment about the cancelation
+                    required:
+                    - from
+                    - to
+                    - comment
+                    - completed
+                    - createdAt
+                    - shiftId
+                    - reportType
+                    - totalAmount
+                    title: RejectShiftReportResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - reviewComment must be a string
+                    - rate must not be greater than 5
+                    - rate must not be less than 1
+                    - rate must be an integer number
+                    - breakTime must be a valid ISO 8601 duration (e.g., PT45M)
+                    - from must be RFC 3339 date
+                    - from must be a date before to
+                    - from must be a valid ISO 8601 date string
+                    - to must be RFC 3339 date
+                    - to must be less than 24 hours after from field
+                    - to must be a valid ISO 8601 date string
+                    - comment must be a string
+                    - bonus must not be less than 0
+                    - bonus must be a number conforming to the specified constraints
+                    error: Bad Request
+                    statusCode: 400
+                Shift not Completed:
+                  summary: Shift is not completed
+                  value:
+                    message: Shift must be completed to submit a shift report
+                    error: Bad Request
+                    statusCode: 400
+                Already Submitted:
+                  summary: Shift report already submitted
+                  value:
+                    message: Facility shift report already submitted
+                    error: Bad Request
+                    statusCode: 400
+                Missing Clinician Report:
+                  summary: Clinician shift report was not submitted
+                  value:
+                    message: Clinician shift report was not submitted
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

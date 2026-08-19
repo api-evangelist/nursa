@@ -3,13 +3,12 @@ method: derived
 status: candidate
 source: openapi/nursa-public-api-v2-openapi.yml
 published: false
-note: >-
-  NURSA OPERATES NO MCP SERVER. This file is a CANDIDATE design derived from the 40 operations in
-  the harvested OpenAPI — it is not a Nursa product, it is not hosted anywhere, and it is
-  deliberately NOT wired as a `type: MCPServer` pointer in apis.yml, because emitting that pointer
-  would assert an agent surface Nursa does not run. Probed for a server on every Nursa host and
-  searched the public registries: nothing. It is recorded here so the shape of the gap is concrete
-  the day Nursa (or a partner) wants to close it.
+note: 'NURSA OPERATES NO MCP SERVER. This file is a CANDIDATE design derived from the 40 operations in
+  the harvested OpenAPI — it is not a Nursa product, it is not hosted anywhere, and it is deliberately
+  NOT wired as a `type: MCPServer` pointer in apis.yml, because emitting that pointer would assert an
+  agent surface Nursa does not run. Probed for a server on every Nursa host and searched the public registries:
+  nothing. It is recorded here so the shape of the gap is concrete the day Nursa (or a partner) wants
+  to close it.'
 probes:
 - url: https://nursa.com/.well-known/ai-plugin.json
   status: 404
@@ -21,17 +20,14 @@ probes:
   status: 404
   note: nursa.com/llms.txt exists (200) but indexes marketing pages, not tools
 blockers:
-  - >-
-    Auth is the real blocker, not transport. Every Nursa action must be attributable to a facility
-    user with access to the target facility, and the client-credentials grant is enabled only on
-    request. An MCP server would need the OAuth authorization-code flow per user, plus
-    /.well-known/oauth-protected-resource (currently absent) for a client to discover it.
-  - >-
-    Twenty resource scopes are documented in prose but every operation declares an EMPTY scope
-    array, so a tool cannot compute the least-privilege token it needs.
-  - >-
-    No idempotency key. The write tools below are financially consequential; an agent that retries
-    createShifts can double-post a facility's shifts with no way to detect it.
+- Auth is the real blocker, not transport. Every Nursa action must be attributable to a facility user
+  with access to the target facility, and the client-credentials grant is enabled only on request. An
+  MCP server would need the OAuth authorization-code flow per user, plus /.well-known/oauth-protected-resource
+  (currently absent) for a client to discover it.
+- Twenty resource scopes are documented in prose but every operation declares an EMPTY scope array, so
+  a tool cannot compute the least-privilege token it needs.
+- No idempotency key. The write tools below are financially consequential; an agent that retries createShifts
+  can double-post a facility's shifts with no way to detect it.
 candidate_tools:
 - name: list_license_types
   read_only: true
@@ -94,3 +90,8 @@ x-evidence:
   fetched: '2026-08-04'
   searched: docs.nursa.com, nursa.com, github.com/nursa-com, npm registry
   result: no MCP server published by Nursa
+deployment:
+  mode: none
+  verified: derived
+  checked: '2026-08-12'
+  source: catalog MCP census

@@ -1,0 +1,1324 @@
+{
+  "item": [
+    {
+      "id": "5e08354a-08bb-48a0-8023-c72d008d5ea8",
+      "name": "Shift reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "24d0fa49-b821-4e53-9a05-66c4d9adf86c",
+          "name": "Get shift reports",
+          "request": {
+            "name": "Get shift reports",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>Returns all the shift reports belonging to the Shift</p>\n<p>Users can also create a <a href=\"facilities-webhooks-controller-create-one\" target=\"_blank\">Webhook</a> in our system to receive notifications whenever a new shift report is created.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                "reports",
+                ":shiftId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) Nursa ShiftId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4b4d7f3d-227f-4e45-be3b-5f576ff515a7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"from\": \"2025-09-15T10:23:17.642Z\",\n      \"to\": \"2025-09-15T10:23:17.642Z\",\n      \"comment\": \"Everything was fine :)\",\n      \"bonus\": 2.5,\n      \"reportType\": \"Nurse\",\n      \"updateDate\": \"2025-09-15T10:23:17.643Z\",\n      \"totalAmount\": 178.8,\n      \"cancelationReason\": \"Nurse\",\n      \"cancelationComment\": \"Excused Emergency\",\n      \"breakTime\": \"PT45M\"\n    },\n    {\n      \"from\": \"2025-09-15T10:23:17.642Z\",\n      \"to\": \"2025-09-15T10:23:17.642Z\",\n      \"comment\": \"Everything was fine :)\",\n      \"bonus\": 2.5,\n      \"reportType\": \"Nurse\",\n      \"updateDate\": \"2025-09-15T10:23:17.643Z\",\n      \"totalAmount\": 178.8,\n      \"cancelationReason\": \"Nurse\",\n      \"cancelationComment\": \"Excused Emergency\",\n      \"breakTime\": \"PT45M\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b37a2b50-136d-4239-b92c-14d09857431f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"shiftId must be a string\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3529bc04-74f2-45c8-a89b-0b6f2759ad67",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6571d7a-35c4-4ecb-81cc-27ad491c378f",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "353eb390-a7a7-45ec-82ba-d20faff98422",
+          "name": "Accept clinician's shift report",
+          "request": {
+            "name": "Accept clinician's shift report",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>Accepts the Clinician's shift report</p>\n<p>When a facility user accepts the clinician's shift report, they are agreeing with the information provided by the clinician. Therefore, no intervention from Nursa employees will be necessary.</p>\n<p>You can use the <a href=\"marketplace-shift-reports-controller-get-all-shift-shift-reports\" target=\"_blank\">Get Shift Report</a> endpoint  verify if the clinician's shift report is correctIf you believe the report contains incorrect information, you can use the <a href=\"marketplace-shift-reports-controller-reject-shift-report\" target=\"_blank\">Reject Shift Report</a> endpoint to submit the correct values.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                "reports",
+                ":shiftId",
+                "accept"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) Nursa ShiftId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"<string>\",\n  \"rate\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36bb1f5d-6ed5-433b-83ce-706214348739",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"Awesome clinician\",\n  \"rate\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"from\": \"2025-09-15T10:23:18.081Z\",\n    \"to\": \"2025-09-15T10:23:18.081Z\",\n    \"comment\": \"Everything was fine :)\",\n    \"bonus\": 2.5,\n    \"reportType\": \"Nurse\",\n    \"updateDate\": \"2025-09-15T10:23:18.082Z\",\n    \"totalAmount\": 178.8,\n    \"reviewComment\": 4313.387393246319,\n    \"rate\": 5,\n    \"cancelationReason\": \"Nurse\",\n    \"cancelationComment\": \"Excused Emergency\",\n    \"breakTime\": \"PT45M\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40064f98-ab45-4686-aca3-3c7d8d3f3a6d",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"Awesome clinician\",\n  \"rate\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"comment must be a string\",\n    \"rate must not be greater than 5\",\n    \"rate must not be less than 1\",\n    \"rate must be an integer number\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41082206-886f-4f66-84fa-290bb021aff2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"Awesome clinician\",\n  \"rate\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d8dc8d9-e923-49a3-b0cd-eb4159055600",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"Awesome clinician\",\n  \"rate\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c352ba3-41e4-486c-b9af-5ceab1a40e13",
+          "name": "Cancel clinician's shift report",
+          "request": {
+            "name": "Cancel clinician's shift report",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>Cancel the Clinician's shift report</p>\n<p>If the clinician didn't work the shift, you can cancel it. After the cancel shift report is sent, the status of the shift will be changed to <strong>Didn't Work</strong></p>\n<p>Additionally, if the <code>cancellationComment</code> chosen was <code>No Longer Want to Work With This Clinician</code>, the clinician will be blocked from making future shift requests to the facility where the shift was scheduled.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                "reports",
+                ":shiftId",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) Nursa ShiftId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cancellationComment\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2eee2984-12ef-4361-9e3b-60a89c6619f3",
+              "name": "Empty Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cancellationComment\": \"Excused Emergency\",\n  \"comment\": \"The Clinician was not able to complete the shift due to a family emergency.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c7f819d3-9781-45d4-a87d-f5e06c60831d",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cancellationComment\": \"Excused Emergency\",\n  \"comment\": \"The Clinician was not able to complete the shift due to a family emergency.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"cancellationComment must be one of the following values: No Call No Show, Excused Emergency, Refused to Work, No Longer Want to Work With This Clinician\",\n    \"comment must be a string\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40515836-581d-49bd-ac4f-a4904433c0cb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cancellationComment\": \"Excused Emergency\",\n  \"comment\": \"The Clinician was not able to complete the shift due to a family emergency.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f08097f-29a2-48aa-b541-8c32b376e3c7",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cancellationComment\": \"Excused Emergency\",\n  \"comment\": \"The Clinician was not able to complete the shift due to a family emergency.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a06d41ef-2c5e-4690-8fef-c3fcb0dbcbd3",
+          "name": "Reject clinician's shift report",
+          "request": {
+            "name": "Reject clinician's shift report",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>Rejects the Clinician's shift report</p>\n<p>If you believe the clinician's shift report contains incorrect information, you can reject it and submit the values you believe are correct. After your report is submitted, a Nursa employee will determine the correct information.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                "reports",
+                ":shiftId",
+                "reject"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) Nursa ShiftId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reviewComment\": \"<string>\",\n  \"rate\": \"<number>\",\n  \"breakTime\": \"<ISO 8601 duration>\",\n  \"from\": \"<dateTime>\",\n  \"to\": \"<dateTime>\",\n  \"comment\": \"<string>\",\n  \"bonus\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cedb1b9e-8987-4cfb-b21f-711fd0dcd94b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "reject"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewComment\": \"Exhibited exceptional professionalism and skill\",\n  \"rate\": 5,\n  \"breakTime\": \"PT45M\",\n  \"from\": \"<dateTime>\",\n  \"to\": \"<dateTime>\",\n  \"comment\": \"The clinician went to the wrong building, that's why the start time was delayed.\",\n  \"bonus\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"from\": \"2025-09-15T10:23:18.083Z\",\n    \"to\": \"2025-09-15T10:23:18.083Z\",\n    \"comment\": \"All good, the clinician did a great job\",\n    \"completed\": true,\n    \"createdAt\": \"2025-09-15T10:23:18.083Z\",\n    \"shiftId\": \"12120878\",\n    \"reportType\": \"Facility\",\n    \"totalAmount\": 178.8,\n    \"breakTime\": \"PT45M\",\n    \"cancelationReason\": \"Nurse\",\n    \"cancelationComment\": \"Excused Emergency\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "789e0f91-6836-4d6c-bc93-29f6dc8a9f3b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "reject"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewComment\": \"Exhibited exceptional professionalism and skill\",\n  \"rate\": 5,\n  \"breakTime\": \"PT45M\",\n  \"from\": \"<dateTime>\",\n  \"to\": \"<dateTime>\",\n  \"comment\": \"The clinician went to the wrong building, that's why the start time was delayed.\",\n  \"bonus\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"reviewComment must be a string\",\n    \"rate must not be greater than 5\",\n    \"rate must not be less than 1\",\n    \"rate must be an integer number\",\n    \"breakTime must be a valid ISO 8601 duration (e.g., PT45M)\",\n    \"from must be RFC 3339 date\",\n    \"from must be a date before to\",\n    \"from must be a valid ISO 8601 date string\",\n    \"to must be RFC 3339 date\",\n    \"to must be less than 24 hours after from field\",\n    \"to must be a valid ISO 8601 date string\",\n    \"comment must be a string\",\n    \"bonus must not be less than 0\",\n    \"bonus must be a number conforming to the specified constraints\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fd02f63-eadd-4e4e-881c-f6afe4588b15",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "reject"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewComment\": \"Exhibited exceptional professionalism and skill\",\n  \"rate\": 5,\n  \"breakTime\": \"PT45M\",\n  \"from\": \"<dateTime>\",\n  \"to\": \"<dateTime>\",\n  \"comment\": \"The clinician went to the wrong building, that's why the start time was delayed.\",\n  \"bonus\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22a43efe-2ecc-4f38-afe6-dcfcee2f2bd4",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "reports",
+                    ":shiftId",
+                    "reject"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewComment\": \"Exhibited exceptional professionalism and skill\",\n  \"rate\": 5,\n  \"breakTime\": \"PT45M\",\n  \"from\": \"<dateTime>\",\n  \"to\": \"<dateTime>\",\n  \"comment\": \"The clinician went to the wrong building, that's why the start time was delayed.\",\n  \"bonus\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public-api.prod.nursa.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "43fb00b4-5a1f-491f-b557-3171f9b2ec65",
+    "name": "Nursa Public API V2 Shift reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.\n\nContact Support:\n Name: Nursa API Team\n Email: josh.bear@nursa.com",
+      "type": "text/plain"
+    }
+  }
+}

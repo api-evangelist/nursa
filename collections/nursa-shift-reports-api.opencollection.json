@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Shift reports API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shift reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get shift reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/reports/:shiftId",
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "8222234296",
+                "type": "path",
+                "description": "Nursa ShiftId"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>Returns all the shift reports belonging to the Shift</p>\n<p>Users can also create a <a href=\"facilities-webhooks-controller-create-one\" target=\"_blank\">Webhook</a> in our system to receive notifications whenever a new shift report is created.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Accept clinician's shift report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/reports/:shiftId/accept",
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "8222234296",
+                "type": "path",
+                "description": "Nursa ShiftId"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>Accepts the Clinician's shift report</p>\n<p>When a facility user accepts the clinician's shift report, they are agreeing with the information provided by the clinician. Therefore, no intervention from Nursa employees will be necessary.</p>\n<p>You can use the <a href=\"marketplace-shift-reports-controller-get-all-shift-shift-reports\" target=\"_blank\">Get Shift Report</a> endpoint  verify if the clinician's shift report is correctIf you believe the report contains inc"
+        },
+        {
+          "info": {
+            "name": "Cancel clinician's shift report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/reports/:shiftId/cancel",
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "8222234296",
+                "type": "path",
+                "description": "Nursa ShiftId"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>Cancel the Clinician's shift report</p>\n<p>If the clinician didn't work the shift, you can cancel it. After the cancel shift report is sent, the status of the shift will be changed to <strong>Didn't Work</strong></p>\n<p>Additionally, if the <code>cancellationComment</code> chosen was <code>No Longer Want to Work With This Clinician</code>, the clinician will be blocked from making future shift requests to the facility where the shift was scheduled.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Reject clinician's shift report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/reports/:shiftId/reject",
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "8222234296",
+                "type": "path",
+                "description": "Nursa ShiftId"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>Rejects the Clinician's shift report</p>\n<p>If you believe the clinician's shift report contains incorrect information, you can reject it and submit the values you believe are correct. After your report is submitted, a Nursa employee will determine the correct information.</p>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

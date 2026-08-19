@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Webhook logs API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhook logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search webhook notification logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/webhooks/logs",
+            "params": [
+              {
+                "name": "facilitiesIds",
+                "value": "",
+                "type": "query",
+                "description": "The facilities IDs to filter the logs."
+              },
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "query",
+                "description": "The event type to filter the logs."
+              },
+              {
+                "name": "startDate",
+                "value": "2022-10-10T10:00:00.000Z",
+                "type": "query",
+                "description": "Filters logs that happened after this date"
+              },
+              {
+                "name": "endDate",
+                "value": "2022-10-11T10:00:00.000Z",
+                "type": "query",
+                "description": "Filters logs that happened before this date"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the quantity of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "DESC",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Webhook logs are stored for 14 days and are used for debugging purposes.</p>\n<p>Searching webhook logs can help you troubleshoot issues by providing detailed information about the webhook events and their payloads.\nThis can be crucial for diagnosing problems, verifying event delivery, and ensuring your integration is functioning correctly.</p>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

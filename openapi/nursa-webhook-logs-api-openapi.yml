@@ -1,0 +1,332 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Webhook logs API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Webhook logs
+paths:
+  /api/v2/public/webhooks/logs:
+    get:
+      operationId: WebhookLogsController_searchLogs
+      summary: Search webhook notification logs
+      description: '<p>Webhook logs are stored for 14 days and are used for debugging purposes.</p>
+
+        <p>Searching webhook logs can help you troubleshoot issues by providing detailed information about the webhook events and their payloads.
+
+        This can be crucial for diagnosing problems, verifying event delivery, and ensuring your integration is functioning correctly.</p>
+
+        '
+      tags:
+      - Webhook logs
+      security:
+      - public-api: []
+      parameters:
+      - name: facilitiesIds
+        required: false
+        in: query
+        description: The facilities IDs to filter the logs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: eventType
+        required: false
+        in: query
+        description: The event type to filter the logs.
+        schema:
+          enum:
+          - shift.request.created
+          - shift.request.cancelled
+          - shift.report.created
+          - shift.scheduled.cancelled
+          - shift.scheduled
+          - shift.created
+          - shift.report.accepted-automatically
+          - shift.report.accepted
+          - shift.report.rejected
+          - shift.cancelled
+          - all
+          type: string
+      - name: startDate
+        required: false
+        in: query
+        description: Filters logs that happened after this date
+        example: '2022-10-10T10:00:00.000Z'
+        schema:
+          format: date-time
+          type: string
+      - name: endDate
+        required: false
+        in: query
+        description: Filters logs that happened before this date
+        example: '2022-10-11T10:00:00.000Z'
+        schema:
+          format: date-time
+          type: string
+      - name: limit
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the quantity of records returned
+        schema:
+          minimum: 0
+          maximum: 100
+          default: 10
+          type: number
+      - name: offset
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the number of records to skip before starting to return results
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: sortDirection
+        required: false
+        in: query
+        example: DESC
+        description: Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending
+        schema:
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The webhook log ID.
+                          example: 4621c22c-6442-4aac-81bc-a479d9858df8
+                        facilityId:
+                          type: string
+                          description: Id of the Facility
+                          example: f2bb1e8a-92c6-47ba-94f4-c82cad0ff081
+                        eventType:
+                          type: string
+                          description: The event type.
+                          enum:
+                          - shift.request.created
+                          - shift.request.cancelled
+                          - shift.report.created
+                          - shift.scheduled.cancelled
+                          - shift.scheduled
+                          - shift.created
+                          - shift.report.accepted-automatically
+                          - shift.report.accepted
+                          - shift.report.rejected
+                          - shift.cancelled
+                          - all
+                          example: shift.cancelled
+                        requestPayload:
+                          type: object
+                          description: The request payload.
+                          example:
+                            data:
+                              facilityId: 6ffcb3a8-cae3-459c-89c8-187d984dcb09
+                            eventType: shift.scheduled
+                        responseStatus:
+                          type: number
+                          description: The received response status code when the event was sent.
+                          example: 201
+                        responseBody:
+                          type: string
+                          description: The received response body when the event was sent.
+                          example: '{"statusCode":201}'
+                        url:
+                          type: string
+                          description: The url used to dispatch the webhook.
+                          example: https://example.com/webhook
+                        retries:
+                          description: The retries that were made to resend the webhook
+                          allOf:
+                          - type: object
+                            properties:
+                              id:
+                                type: string
+                                description: The webhook log ID.
+                                example: 4621c22c-6442-4aac-81bc-a479d9858df8
+                              facilityId:
+                                type: string
+                                description: Id of the Facility
+                                example: f2bb1e8a-92c6-47ba-94f4-c82cad0ff081
+                              eventType:
+                                type: string
+                                description: The event type.
+                                enum:
+                                - shift.request.created
+                                - shift.request.cancelled
+                                - shift.report.created
+                                - shift.scheduled.cancelled
+                                - shift.scheduled
+                                - shift.created
+                                - shift.report.accepted-automatically
+                                - shift.report.accepted
+                                - shift.report.rejected
+                                - shift.cancelled
+                                - all
+                                example: shift.cancelled
+                              requestPayload:
+                                type: object
+                                description: The request payload.
+                                example:
+                                  data:
+                                    facilityId: 6ffcb3a8-cae3-459c-89c8-187d984dcb09
+                                  eventType: shift.scheduled
+                              responseStatus:
+                                type: number
+                                description: The received response status code when the event was sent.
+                                example: 201
+                              responseBody:
+                                type: string
+                                description: The received response body when the event was sent.
+                                example: '{"statusCode":201}'
+                              url:
+                                type: string
+                                description: The url used to dispatch the webhook.
+                                example: https://example.com/webhook
+                              retryAttempt:
+                                type: number
+                                description: The number indicating the attempt to resend the webhook
+                            required:
+                            - id
+                            - facilityId
+                            - eventType
+                            - requestPayload
+                            - responseStatus
+                            - responseBody
+                            - url
+                            - retryAttempt
+                            title: WebhookLogRetryResponse
+                        status:
+                          type: string
+                          description: The status of the webhook, if at least a single retry succeeds the status will be success.
+                          enum:
+                          - success
+                          - failure
+                          example: success
+                      required:
+                      - id
+                      - facilityId
+                      - eventType
+                      - requestPayload
+                      - responseStatus
+                      - responseBody
+                      - url
+                      - retries
+                      - status
+                      title: WebhookLogsResponseDto
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - facilitiesIds must be an array
+                    - 'eventType must be one of the following values: shift.request.created, shift.request.cancelled, shift.report.created, shift.scheduled.cancelled, shift.scheduled, shift.created, shift.report.accepted-automatically, shift.report.accepted, shift.report.rejected, shift.cancelled, all'
+                    - startDate must be RFC 3339 date
+                    - startDate must be a date before endDate
+                    - startDate must be a valid ISO 8601 date string
+                    - endDate must be RFC 3339 date
+                    - endDate must be a valid ISO 8601 date string
+                    - limit must not be less than 0
+                    - limit must not be greater than 100
+                    - limit must be a number conforming to the specified constraints
+                    - offset must be a number conforming to the specified constraints
+                    - offset must not be less than 0
+                    - 'sortDirection must be one of the following values: ASC, DESC'
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

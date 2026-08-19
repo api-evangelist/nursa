@@ -1,0 +1,1252 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Marketplace API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Marketplace
+paths:
+  /api/v2/public/marketplace/shifts:
+    get:
+      operationId: MarketplaceController_getMarketplaceShifts
+      summary: Get marketplace shifts
+      description: '<h3>General Information</h3>
+
+        <p>This endpoint returns shifts for the facilities that user is connected to.</p>
+
+        '
+      tags:
+      - Marketplace
+      security:
+      - public-api: []
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the quantity of records returned
+        schema:
+          minimum: 0
+          maximum: 50
+          default: 10
+          type: number
+      - name: offset
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the number of records to skip before starting to return results
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: sortDirection
+        required: false
+        in: query
+        example: DESC
+        description: Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending
+        schema:
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - name: facilityId
+        required: false
+        in: query
+        description: Id of the facility
+        example: NUR-12345
+        schema:
+          type: string
+      - name: startDateFrom
+        required: false
+        in: query
+        description: When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00). When startDateTo is provided this becomes mandatory
+        example: '2025-09-15T10:23:17.661Z'
+        schema:
+          format: date-time
+          type: string
+      - name: startDateTo
+        required: false
+        in: query
+        description: When you provide date-time value, time is ignored and will take end of the day for given date (23:59:59)
+        example: '2025-09-15T10:23:17.661Z'
+        schema:
+          format: date-time
+          type: string
+      - name: shiftId
+        required: false
+        in: query
+        description: Id of the shift
+        example: '5552536398'
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        shiftId:
+                          type: string
+                          example: '12120878'
+                          description: Id of the shift
+                        facilityId:
+                          type: string
+                          description: Id of the Facility
+                          example: NUR-0879
+                        from:
+                          type: string
+                          description: Shift start date
+                          format: date-time
+                          example: '2025-09-15T10:23:18.085Z'
+                        to:
+                          type: string
+                          description: Shift end date
+                          format: date-time
+                          example: '2025-09-15T10:23:18.085Z'
+                        licenseType:
+                          type: string
+                          description: License Type of the shift
+                          example: RN
+                        status:
+                          type: string
+                          description: Status of the Shift
+                          example: Requested
+                        breakTime:
+                          type: string
+                          example: PT45M
+                          format: ISO 8601 duration
+                          description: Break Time for the shift
+                        autoScheduleSettings:
+                          description: If the facility supports auto-scheduling, you can provide a list of auto-scheduling options.
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - shiftId
+                      - facilityId
+                      - from
+                      - to
+                      - licenseType
+                      - status
+                      title: GetMarketplaceShiftsResponse
+                  meta:
+                    type: object
+                    properties:
+                      limit:
+                        type: number
+                        description: Number of items returned
+                      offset:
+                        type: number
+                        description: Starting position
+                      sortDirection:
+                        type: object
+                        description: Sorting direction
+                      total:
+                        type: number
+                        description: Total records found
+                    required:
+                    - limit
+                    - offset
+                    - sortDirection
+                    - total
+                    title: PaginationResponseDto
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - limit must be a number conforming to the specified constraints
+                    - limit must not be less than 0
+                    - limit must not be greater than 50
+                    - offset must be a number conforming to the specified constraints
+                    - offset must not be less than 0
+                    - 'sortDirection must be one of the following values: ASC, DESC'
+                    - facilityId must be a string
+                    - startDateFrom must be a date before startDateTo
+                    - startDateFrom must be a valid ISO 8601 date string
+                    - startDateTo must be a valid ISO 8601 date string
+                    - shiftId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/marketplace/shifts/batch:
+    post:
+      operationId: MarketplaceController_createShifts
+      summary: Create shifts
+      description: '<h3>General Information</h3>
+
+        <p>When creating shift price quotation  is based on <code>from</code>, <code>to</code> dates, and optional <code>breakTime</code> params.</p>
+
+        <p>If the facility for which you are creating the shift has the <strong>Auto Schedule</strong> feature enabled, the shifts will inherit the same Auto Schedule settings by default.</p>
+
+        <ul>
+
+        <li>
+
+        <p>To enable only specific Auto Schedule options, use the <code>autoScheduleSettings</code> property in the request body to specify the desired options.</p>
+
+        </li>
+
+        <li>
+
+        <p>To create a shift <strong>without any Auto Schedule options</strong>, even if the facility has this feature enabled, set <code>autoScheduleSettings</code> to <code>null</code> or an empty array (<code>[]</code>).</p>
+
+        </li>
+
+        <li>
+
+        <p><strong>Failure</strong>: The process uses transactions, so if one job fails, all changes are reverted.</p>
+
+        </li>
+
+        <li>
+
+        <p><strong>License Requirement</strong>: A valid <a href="licenses-controller-get-all" target="_blank">licenseType</a> must be provided when creating a shift.</p>
+
+        </li>
+
+        <li>
+
+        <p><strong>Facility Connection</strong>: If the authenticated user is not connected with the facility, the system will return a &quot;facility not found&quot; error. In this case, refer to the <a href="facilities-controller-request-connection" target="_blank">facility connection request guide</a>. Ensure you account for this response in your implementation.</p>
+
+        </li>
+
+        </ul>
+
+        <h3>Potential Issues</h3>
+
+        <ul>
+
+        <li><strong>No Associated User</strong>: There is no user associated with the facility. At least one user must be created and associated with the facility.</li>
+
+        <li><strong>No Associated User</strong>: The user needs to have a <a href="facilities-controller-request-facility-creation" target="_blank">connection</a> with the facility</li>
+
+        <li><strong>Auto schedule option is not enabled for this facility</strong> The facility for which you are creating the shift does not have the specified Auto Schedule option enabled</li>
+
+        </ul>
+
+        '
+      tags:
+      - Marketplace
+      security:
+      - public-api: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                facilityId:
+                  type: string
+                  example: NUR-123456789
+                shifts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      licenseType:
+                        type: string
+                        description: License Type of the shift
+                        example: RN
+                      description:
+                        type: string
+                        description: Description of the shift, you can provide detailed information about the shift, it can include any relevant details that would help nurses understand the nature and requirements of the shift.
+                        example: Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies
+                      from:
+                        type: string
+                        format: date-time
+                        description: Shift start date
+                        example: '2024-01-01T10:00:00.000Z'
+                      to:
+                        type: string
+                        description: Shift end date, must be less than 24 hours after from field
+                        format: date-time
+                        example: '2022-01-01T22:00:00.000Z'
+                      breakTime:
+                        type: string
+                        example: PT45M
+                        format: ISO 8601 duration
+                        description: Break Time for the shift
+                      autoScheduleSettings:
+                        description: If the facility supports auto-scheduling, you can provide a list of auto-scheduling options.
+                        type: array
+                        items:
+                          type: string
+                    required:
+                    - licenseType
+                    - description
+                    - from
+                    - to
+                    title: CreateShiftsRequestShiftDetails
+              required:
+              - facilityId
+              - shifts
+              title: CreateShiftsRequest
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        shiftId:
+                          type: string
+                          example: '12120878'
+                          description: Id of the shift
+                        facilityId:
+                          type: string
+                          description: Id of the Facility
+                          example: NUR-0879
+                        description:
+                          type: string
+                          example: Must take 30 minute break
+                          description: Description of the Shift
+                        from:
+                          type: string
+                          format: date-time
+                          description: Shift start date
+                          example: '2022-09-13T00:00:00.000Z'
+                        to:
+                          type: string
+                          format: date-time
+                          description: Shift end date
+                          example: '2022-09-14T00:00:00.000Z'
+                        licenseType:
+                          type: string
+                          description: License Type of the shift
+                          example: RN
+                        price:
+                          type: object
+                          properties:
+                            billRatePerHour:
+                              type: number
+                              description: Price per hour
+                              example: 47.5
+                            totalAmount:
+                              type: number
+                              description: Total price
+                              example: 178.8
+                          required:
+                          - billRatePerHour
+                          - totalAmount
+                          title: ShiftPriceDto
+                        createdBy:
+                          type: string
+                          example: gsFu59GrbAhFmUB0QyYf1Ubg0Q5E
+                          description: Id of the user that created the shift
+                        breakTime:
+                          type: string
+                          example: PT45M
+                          format: ISO 8601 duration
+                          description: Break Time for the shift
+                      required:
+                      - shiftId
+                      - facilityId
+                      - description
+                      - from
+                      - to
+                      - licenseType
+                      - price
+                      title: CreateShiftResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - facilityId must be a string
+                    - licenseType should not be empty
+                    - licenseType must be a string
+                    - description should not be empty
+                    - description must be a string
+                    - from must be RFC 3339 date
+                    - from must be a valid ISO 8601 date string
+                    - from should not be empty
+                    - to must be RFC 3339 date
+                    - to must be less than 24 hours after from field
+                    - to must be a valid ISO 8601 date string
+                    - to should not be empty
+                    - shifts must be an array
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/marketplace/shifts/cancel/{shiftId}:
+    post:
+      operationId: MarketplaceController_cancelShift
+      summary: Cancel shift
+      description: '<h3>General Information</h3>
+
+        <p>Canceling a shift affects the following shift statuses:</p>
+
+        <ul>
+
+        <li><strong>Shift Open</strong>: <code>shift.cancelled</code></li>
+
+        <li><strong>Shift Requested</strong>: <code>shift.cancelled</code>, <code>shift.request.cancelled</code></li>
+
+        <li><strong>Shift Scheduled but Not Started</strong>: <code>shift.cancelled</code>, <code>shift.scheduled.cancelled</code></li>
+
+        <li><strong>Shift Scheduled and In Progress</strong>: <code>shift.cancelled</code>, <code>shift.scheduled.cancelled</code></li>
+
+        </ul>
+
+        <h3>Webhooks Configuration</h3>
+
+        <p>To stay up to date with shift cancellations, configure the following webhooks: <a href="facilities-webhooks-controller-get-all" target="_blank">Webhooks API Documentation</a></p>
+
+        <ul>
+
+        <li><code>shift.cancelled</code></li>
+
+        <li><code>shift.request.cancelled</code></li>
+
+        <li><code>shift.scheduled.cancelled</code></li>
+
+        </ul>
+
+        <h3>Cancellation Reason</h3>
+
+        <p>Possible reasons:</p>
+
+        <ul>
+
+        <li><code>Filled internally</code>: The shift was filled by internal staff within the organization.</li>
+
+        <li><code>Filled by other agency</code>: The shift was filled by a clinician from another agency.</li>
+
+        <li><code>Talent not needed</code>: The shift is no longer required, possibly due to changes in demand or scheduling errors.</li>
+
+        </ul>
+
+        '
+      tags:
+      - Marketplace
+      security:
+      - public-api: []
+      parameters:
+      - name: shiftId
+        required: true
+        in: path
+        description: Nursa ShiftId
+        example: '8222234296'
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                  description: General comment about the cancelation of the shift
+                  example: The shift was filled internally
+                cancelationReason:
+                  type: string
+                  description: Reason why the shift is being canceled
+                  enum:
+                  - Filled internally
+                  - Filled by other agency
+                  - Talent not needed
+                  - No call no show
+                  example: Filled internally
+              title: CancelShiftRequest
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      shiftId:
+                        type: string
+                        description: Id of the shift
+                        example: '3502817654'
+                      status:
+                        type: string
+                        description: Status of the shift
+                        example: Filled internally
+                      facilityId:
+                        type: string
+                        description: Id of the shift's Facility
+                        example: NUR-123456
+                      licenseType:
+                        type: string
+                        description: License Type of the shift
+                        example: RN
+                    required:
+                    - shiftId
+                    - status
+                    - facilityId
+                    - licenseType
+                    title: CancelShiftResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - comment must be a string
+                    - 'cancelationReason must be one of the following values: Filled internally, Filled by other agency, Talent not needed, No call no show'
+                    error: Bad Request
+                    statusCode: 400
+                Transition Status:
+                  summary: Cannot transition job to a different status
+                  value:
+                    message: Cannot transition job from status Paid to CancelledFilledInternally
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/marketplace/shifts/quote:
+    post:
+      operationId: MarketplaceController_quoteShift
+      summary: Quote the price of a given shift
+      description: '<h3>General Information</h3>
+
+        <p>Although a price quoting is calculated when <a href="marketplace-controller-create-shifts" target="_blank">creating shifts</a>, we provide a price quotation without creating a shift.</p>
+
+        <p>This will not create a shift, but you can <a href="marketplace-controller-create-shift-from-quote" target="_blank">create one from the quote</a>. The shift quote is calculated based on the <code>from</code>, <code>to</code>, and <code>breakTime</code> parameters.</p>
+
+        <p>Note: The quote is temporarily stored for 15 minutes. After that, it can no longer be used.</p>
+
+        '
+      tags:
+      - Marketplace
+      security:
+      - public-api: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                facilityId:
+                  type: string
+                  description: Id of the Facility
+                  example: NUR-123456
+                shift:
+                  type: object
+                  properties:
+                    licenseType:
+                      type: string
+                      description: License Type of the shift
+                      example: RN
+                    description:
+                      type: string
+                      description: Description of the shift, you can provide detailed information about the shift, it can include any relevant details that would help nurses understand the nature and requirements of the shift.
+                      example: Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies
+                    from:
+                      type: string
+                      format: date-time
+                      description: Shift start date
+                      example: '2024-01-01T10:00:00.000Z'
+                    to:
+                      type: string
+                      description: Shift end date, must be less than 24 hours after from field
+                      format: date-time
+                      example: '2022-01-01T22:00:00.000Z'
+                    breakTime:
+                      type: string
+                      example: PT45M
+                      format: ISO 8601 duration
+                      description: Break Time for the shift
+                    autoScheduleSettings:
+                      description: If the facility supports auto-scheduling, you can provide a list of auto-scheduling options.
+                      type: array
+                      items:
+                        type: string
+                  required:
+                  - licenseType
+                  - description
+                  - from
+                  - to
+                  title: CreateShiftsRequestShiftDetails
+              required:
+              - facilityId
+              - shift
+              title: QuoteShiftV2Request
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      quoteId:
+                        type: string
+                        description: Shift QuoteId
+                        example: 100ad731-4e41-4edf-88b1-ae41ce005202
+                      billRatePerHour:
+                        type: number
+                        description: Price per hour
+                        example: 47.5
+                      totalAmount:
+                        type: number
+                        description: Total price
+                        example: 178.8
+                      expiresAt:
+                        type: string
+                        format: date-time
+                        description: Quote expiration date
+                        example: '2025-09-15T10:23:17.640Z'
+                      breakTime:
+                        type: string
+                        example: PT45M
+                        format: ISO 8601 duration
+                        description: Break Time for the shift
+                    required:
+                    - quoteId
+                    - billRatePerHour
+                    - totalAmount
+                    - expiresAt
+                    title: QuoteShiftResponseDTO
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - facilityId must be a string
+                    - licenseType should not be empty
+                    - licenseType must be a string
+                    - description should not be empty
+                    - description must be a string
+                    - from must be RFC 3339 date
+                    - from must be a valid ISO 8601 date string
+                    - from should not be empty
+                    - to must be RFC 3339 date
+                    - to must be less than 24 hours after from field
+                    - to must be a valid ISO 8601 date string
+                    - to should not be empty
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/marketplace/shifts/quote/{quoteId}/shift:
+    post:
+      operationId: MarketplaceController_createShiftFromQuote
+      summary: Create shift from quote
+      description: '<h3>General Information</h3>
+
+        <p>Based on previously <a href="marketplace-controller-quote-shift" target="_blank">created quote</a> you can now create a shift.</p>
+
+        <p>If the facility for which you are creating the shift has the <strong>Auto Schedule</strong> feature enabled, the shifts will inherit the same Auto Schedule settings by default.</p>
+
+        <ul>
+
+        <li>To enable only specific Auto Schedule options, use the <code>autoScheduleSettings</code> property in the request body to specify the desired options.</li>
+
+        <li>To create a shift <strong>without any Auto Schedule options</strong>, even if the facility has this feature enabled, set <code>autoScheduleSettings</code> to <code>null</code> or an empty array (<code>[]</code>).</li>
+
+        </ul>
+
+        <h3>Potential issues</h3>
+
+        <ul>
+
+        <li><strong>Quoted shift not found</strong> Quote has expired</li>
+
+        <li><strong>Auto schedule option is not enabled for this facility</strong> The facility for which you are creating the shift does not have the specified Auto Schedule option enabled</li>
+
+        </ul>
+
+        '
+      tags:
+      - Marketplace
+      security:
+      - public-api: []
+      parameters:
+      - name: quoteId
+        required: true
+        in: path
+        description: Shift QuoteId
+        example: 86137ed9-b78d-4b8d-96f0-d63a6296a60b
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      shiftId:
+                        type: string
+                        example: '12120878'
+                        description: Id of the shift
+                      facilityId:
+                        type: string
+                        description: Id of the Facility
+                        example: NUR-0879
+                      description:
+                        type: string
+                        example: Must take 30 minute break
+                        description: Description of the Shift
+                      from:
+                        type: string
+                        format: date-time
+                        description: Shift start date
+                        example: '2022-09-13T00:00:00.000Z'
+                      to:
+                        type: string
+                        format: date-time
+                        description: Shift end date
+                        example: '2022-09-14T00:00:00.000Z'
+                      licenseType:
+                        type: string
+                        description: License Type of the shift
+                        example: RN
+                      price:
+                        type: object
+                        properties:
+                          billRatePerHour:
+                            type: number
+                            description: Price per hour
+                            example: 47.5
+                          totalAmount:
+                            type: number
+                            description: Total price
+                            example: 178.8
+                        required:
+                        - billRatePerHour
+                        - totalAmount
+                        title: ShiftPriceDto
+                      createdBy:
+                        type: string
+                        example: gsFu59GrbAhFmUB0QyYf1Ubg0Q5E
+                        description: Id of the user that created the shift
+                      breakTime:
+                        type: string
+                        example: PT45M
+                        format: ISO 8601 duration
+                        description: Break Time for the shift
+                    required:
+                    - shiftId
+                    - facilityId
+                    - description
+                    - from
+                    - to
+                    - licenseType
+                    - price
+                    title: CreateShiftResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - quoteId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Not Found
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 404
+              examples:
+                Quote Not Found:
+                  summary: Quote was not found
+                  value:
+                    message: Quoted shift not found
+                    error: Not Found
+                    statusCode: 404
+  /api/v2/public/marketplace/shifts/{shiftId}:
+    patch:
+      operationId: MarketplaceController_patchShift
+      summary: Update shift
+      description: '<h3>General Information</h3>
+
+        <p>You can update <code>description</code> and <code>bonus</code>, <code>bonus</code> will change the shift quote.</p>
+
+        '
+      tags:
+      - Marketplace
+      security:
+      - public-api: []
+      parameters:
+      - name: shiftId
+        required: true
+        in: path
+        description: Nursa ShiftId
+        example: '8222234296'
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: Description of the shift, you can provide detailed information about the shift, it can include any relevant details that would help nurses understand the nature and requirements of the shift.
+                  example: Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies
+                bonus:
+                  type: number
+                  description: monetary bonus to clinician
+                  example: 10
+              title: PatchShiftRequest
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      shiftId:
+                        type: string
+                        example: '3663958181'
+                        description: Id of the shift
+                      description:
+                        type: string
+                        example: Must take 30 minute break
+                        description: Description of the Shift
+                      facilityId:
+                        type: string
+                        description: Id of the Facility
+                        example: NUR-12345
+                      licenseType:
+                        type: string
+                        description: License Type of the shift
+                        example: CNA
+                      from:
+                        type: string
+                        format: date-time
+                        description: Shift start date
+                        example: '2024-01-01T13:00:00.000Z'
+                      to:
+                        type: string
+                        format: date-time
+                        description: Shift end date
+                        example: '2024-01-01T21:00:00.000Z'
+                      price:
+                        type: object
+                        properties:
+                          billRatePerHour:
+                            type: number
+                            description: Price per hour
+                            example: 47.5
+                          totalAmount:
+                            type: number
+                            description: Total price
+                            example: 178.8
+                        required:
+                        - billRatePerHour
+                        - totalAmount
+                        title: ShiftPriceResponse
+                    required:
+                    - shiftId
+                    - description
+                    - facilityId
+                    - licenseType
+                    - from
+                    - to
+                    - price
+                    title: PatchShiftResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - description must be a string
+                    - bonus must not be less than 0
+                    - bonus must be a number conforming to the specified constraints
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

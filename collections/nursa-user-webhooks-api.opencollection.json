@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 User webhooks API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all User Webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/webhooks/user",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Retrieves a list of all existing user webhooks.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Create User Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/webhooks/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>We strongly recommend you set up webhooks for better and easier integration.</p>\n<p>Creates a new User webhook. Use this endpoint to register a new webhook by specifying the URL and the events you want to subscribe to.</p>\n<p>With User Webhook you'll ne notified whenever a facility creation or connection request is either accepted or rejected.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Update User Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/webhooks/user/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "c8c7913d-3e1f-4e4c-a646-81282ecba2b8",
+                "type": "path",
+                "description": "Webhook id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Updates an existing user webhook. This endpoint allows you to modify the URL, events, or other settings of an already registered user webhook.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Delete User Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/webhooks/user/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "c8c7913d-3e1f-4e4c-a646-81282ecba2b8",
+                "type": "path",
+                "description": "Webhook id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Deletes a user webhook. Use this endpoint to remove a user webhook that is no longer needed.</p>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

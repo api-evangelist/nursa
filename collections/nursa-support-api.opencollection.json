@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Support API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Support",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Support Facilities Controller associate Users To Facility",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://public-api.prod.nursa.com/api/v2/support/facilities/user/associate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SupportFacilitiesController_associateUsersToFacility"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Downloads API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Downloads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download clinician profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/downloads/clinician/:clinicianId/shift/:shiftId",
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "4603117571",
+                "type": "path",
+                "description": "Id of the shift"
+              },
+              {
+                "name": "clinicianId",
+                "value": "lcFQMy1n0decDeZljQG2wUNZBru7",
+                "type": "path",
+                "description": "Id of the clinician"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns link to download detailed clinician profile for a shift.</p>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Marketplace API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Marketplace",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get marketplace shifts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the quantity of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "DESC",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+              },
+              {
+                "name": "facilityId",
+                "value": "NUR-12345",
+                "type": "query",
+                "description": "Id of the facility"
+              },
+              {
+                "name": "startDateFrom",
+                "value": "2025-09-15T10:23:17.661Z",
+                "type": "query",
+                "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00). When startDateTo is provided this becomes mandatory"
+              },
+              {
+                "name": "startDateTo",
+                "value": "2025-09-15T10:23:17.661Z",
+                "type": "query",
+                "description": "When you provide date-time value, time is ignored and will take end of the day for given date (23:59:59)"
+              },
+              {
+                "name": "shiftId",
+                "value": "5552536398",
+                "type": "query",
+                "description": "Id of the shift"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>This endpoint returns shifts for the facilities that user is connected to.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Create shifts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>When creating shift price quotation  is based on <code>from</code>, <code>to</code> dates, and optional <code>breakTime</code> params.</p>\n<p>If the facility for which you are creating the shift has the <strong>Auto Schedule</strong> feature enabled, the shifts will inherit the same Auto Schedule settings by default.</p>\n<ul>\n<li>\n<p>To enable only specific Auto Schedule options, use the <code>autoScheduleSettings</code> property in the request body to specify the"
+        },
+        {
+          "info": {
+            "name": "Cancel shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/cancel/:shiftId",
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "8222234296",
+                "type": "path",
+                "description": "Nursa ShiftId"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>Canceling a shift affects the following shift statuses:</p>\n<ul>\n<li><strong>Shift Open</strong>: <code>shift.cancelled</code></li>\n<li><strong>Shift Requested</strong>: <code>shift.cancelled</code>, <code>shift.request.cancelled</code></li>\n<li><strong>Shift Scheduled but Not Started</strong>: <code>shift.cancelled</code>, <code>shift.scheduled.cancelled</code></li>\n<li><strong>Shift Scheduled and In Progress</strong>: <code>shift.cancelled</code>, <code>shift.sc"
+        },
+        {
+          "info": {
+            "name": "Quote the price of a given shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/quote",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>Although a price quoting is calculated when <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">creating shifts</a>, we provide a price quotation without creating a shift.</p>\n<p>This will not create a shift, but you can <a href=\"marketplace-controller-create-shift-from-quote\" target=\"_blank\">create one from the quote</a>. The shift quote is calculated based on the <code>from</code>, <code>to</code>, and <code>breakTime</code> parameters.</p>\n<p>Note: T"
+        },
+        {
+          "info": {
+            "name": "Create shift from quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/quote/:quoteId/shift",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "86137ed9-b78d-4b8d-96f0-d63a6296a60b",
+                "type": "path",
+                "description": "Shift QuoteId"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>Based on previously <a href=\"marketplace-controller-quote-shift\" target=\"_blank\">created quote</a> you can now create a shift.</p>\n<p>If the facility for which you are creating the shift has the <strong>Auto Schedule</strong> feature enabled, the shifts will inherit the same Auto Schedule settings by default.</p>\n<ul>\n<li>To enable only specific Auto Schedule options, use the <code>autoScheduleSettings</code> property in the request body to specify the desired opt"
+        },
+        {
+          "info": {
+            "name": "Update shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/marketplace/shifts/:shiftId",
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "8222234296",
+                "type": "path",
+                "description": "Nursa ShiftId"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>You can update <code>description</code> and <code>bonus</code>, <code>bonus</code> will change the shift quote.</p>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

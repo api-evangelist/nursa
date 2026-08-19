@@ -1,0 +1,687 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Scheduled shifts API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Scheduled shifts
+paths:
+  /api/v2/public/scheduled-shifts:
+    get:
+      operationId: ScheduleShiftsController_getScheduledShifts
+      summary: Get Scheduled Shifts
+      description: '<p>Returns an array of shifts with the Scheduled status from facilities the user is <a href="facilities-controller-request-connection" target="_blank">connected to</a>.</p>
+
+        '
+      tags:
+      - Scheduled shifts
+      security:
+      - public-api: []
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the quantity of records returned
+        schema:
+          minimum: 0
+          maximum: 50
+          default: 10
+          type: number
+      - name: offset
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the number of records to skip before starting to return results
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: sortDirection
+        required: false
+        in: query
+        example: DESC
+        description: Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending
+        schema:
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - name: startDate
+        required: false
+        in: query
+        description: When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)
+        example: '2025-09-15T10:23:17.642Z'
+        schema:
+          format: date-time
+          type: string
+      - name: licenseType
+        required: false
+        in: query
+        description: License Type of the shift
+        example: RN
+        schema:
+          type: string
+      - name: facilityId
+        required: true
+        in: query
+        description: Id of the facility
+        example: NUR-1660331570
+        schema:
+          type: string
+      - name: shiftId
+        required: false
+        in: query
+        description: Id of the shift
+        example: '5552536398'
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        facilityId:
+                          type: string
+                          description: Id of the Facility
+                          example: NUR-123456
+                        shiftId:
+                          type: string
+                          description: Id of the shift
+                          example: '1100482364'
+                        from:
+                          type: string
+                          format: date-time
+                          description: Shift start date
+                          example: '2024-09-13T00:00:00.000Z'
+                        to:
+                          type: string
+                          format: date-time
+                          description: Shift end date
+                          example: '2024-09-14T00:00:00.000Z'
+                        licenseType:
+                          type: string
+                          description: License Type of the shift
+                          example: RN
+                        clinician:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: Id of the clinician
+                              example: I7002epLHLhBCypdPCrn9XP4kTN2
+                            firstName:
+                              type: string
+                              description: First name of the clinician
+                              example: Jane
+                            lastName:
+                              type: string
+                              description: Last name of the clinician
+                              example: Doe
+                            contactEmail:
+                              type: string
+                              description: Email of the clinician
+                              example: jane@doe.com
+                            contactPhone:
+                              type: string
+                              description: Contact Phone of the clinician
+                              format: +1##########
+                              example: '+12345678910'
+                          required:
+                          - id
+                          - firstName
+                          - lastName
+                          - contactEmail
+                          - contactPhone
+                          title: ScheduleShiftClinicianResponseDto
+                        breakTime:
+                          type: string
+                          example: PT45M
+                          format: ISO 8601 duration
+                          description: Break Time for the shift
+                      required:
+                      - facilityId
+                      - shiftId
+                      - from
+                      - to
+                      - licenseType
+                      - clinician
+                      title: ScheduledShiftResponse
+                  meta:
+                    type: object
+                    properties:
+                      limit:
+                        type: number
+                        description: Number of items returned
+                      offset:
+                        type: number
+                        description: Starting position
+                      sortDirection:
+                        type: object
+                        description: Sorting direction
+                      total:
+                        type: number
+                        description: Total records found
+                    required:
+                    - limit
+                    - offset
+                    - sortDirection
+                    - total
+                    title: PaginationResponseDto
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - limit must be a number conforming to the specified constraints
+                    - limit must not be less than 0
+                    - limit must not be greater than 50
+                    - offset must be a number conforming to the specified constraints
+                    - offset must not be less than 0
+                    - 'sortDirection must be one of the following values: ASC, DESC'
+                    - startDate must be a valid ISO 8601 date string
+                    - facilityId must be a string
+                    - shiftId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+    post:
+      operationId: ScheduleShiftsController_scheduleShift
+      summary: Schedule clinician to a shift
+      description: '<p>Schedule a clinician to a shift.</p>
+
+        <p>After a <a href="marketplace-controller-create-shifts" target="_blank">shift is created</a>, and a clinician requests it, you can use the <a href="marketplace-controller-create-shifts" target="_blank">Get requested shifts</a> endpoint to check the clinicians who requested to work the shift. Additionally, you can <a href="marketplace-controller-create-shifts" target="_blank">Download the Clinician Profile</a> to help you choose which clinician best fits the shift.</p>
+
+        <p>Users can also create a <a href="facilities-webhooks-controller-create-one" target="_blank">Webhook</a> in our system to receive notifications when the a clinician requests to work a shift.</p>
+
+        '
+      tags:
+      - Scheduled shifts
+      security:
+      - public-api: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shiftId:
+                  type: string
+                  description: Id of the shift
+                  example: '5552536398'
+                clinicianId:
+                  type: string
+                  description: Id of the clinician
+                  example: WK85QZny89Wj9cabYQw6FHcd2Be5
+              required:
+              - shiftId
+              - clinicianId
+              title: ScheduleShiftV2Request
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      facilityId:
+                        type: string
+                        description: Id of the Facility
+                        example: NUR-123456
+                      shiftId:
+                        type: string
+                        description: Id of the shift
+                        example: '4765568640'
+                      from:
+                        format: date-time
+                        type: string
+                        description: Shift start date
+                        example: '2024-09-13T00:00:00.000Z'
+                      to:
+                        format: date-time
+                        type: string
+                        description: Shift end date
+                        example: '2024-09-14T00:00:00.000Z'
+                      licenseType:
+                        type: string
+                        description: License Type of the shift
+                        example: RN
+                      clinician:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: Id of the clinician
+                            example: I7002epLHLhBCypdPCrn9XP4kTN2
+                          firstName:
+                            type: string
+                            description: First name of the clinician
+                            example: Jane
+                          lastName:
+                            type: string
+                            description: Last name of the clinician
+                            example: Doe
+                          contactEmail:
+                            type: string
+                            description: Email of the clinician
+                            example: jane@doe.com
+                          contactPhone:
+                            type: string
+                            description: Contact Phone of the clinician
+                            format: +1##########
+                            example: '+12345678910'
+                        required:
+                        - id
+                        - firstName
+                        - lastName
+                        - contactEmail
+                        - contactPhone
+                        title: ScheduleShiftClinicianResponseDto
+                      scheduledBy:
+                        type: string
+                        example: gsFu59GrbAhFmUB0QyYf1Ubg0Q5E
+                        description: Id of the user that scheduled the shift
+                      breakTime:
+                        type: string
+                        example: PT45M
+                        format: ISO 8601 duration
+                        description: Break Time for the shift
+                    required:
+                    - facilityId
+                    - shiftId
+                    - from
+                    - to
+                    - licenseType
+                    - clinician
+                    title: ScheduledShiftV2Response
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - shiftId must be a string
+                    - clinicianId must be a string
+                    error: Bad Request
+                    statusCode: 400
+                Clinician is no longer available to be scheduled to this shift.:
+                  summary: Clinician is no longer available to be scheduled to this shift.
+                  value:
+                    message: Clinician is no longer available to be scheduled to this shift.
+                    error: Bad Request
+                    statusCode: 400
+                Clinician is no longer available to be scheduled to this shift due to overlapping shifts.:
+                  summary: Clinician is no longer available to be scheduled to this shift due to overlapping shifts.
+                  value:
+                    message: Clinician is no longer available to be scheduled to this shift due to overlapping shifts.
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Not Found
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 404
+              examples:
+                Clinician Not available:
+                  summary: Clinician is no longer available
+                  value:
+                    message: Clinician is no longer available
+                    error: Not Found
+                    statusCode: 404
+                Shift Not Found:
+                  summary: Shift not found
+                  value:
+                    message: Shift not found
+                    error: Not Found
+                    statusCode: 404
+                Request Not Found:
+                  summary: Shift request not found
+                  value:
+                    message: Shift request not found
+                    error: Not Found
+                    statusCode: 404
+                Clinician Not Found:
+                  summary: Clinician not found
+                  value:
+                    message: Clinician not found
+                    error: Not Found
+                    statusCode: 404
+  /api/v2/public/scheduled-shifts/remove-clinician:
+    post:
+      operationId: ScheduleShiftsController_removeScheduledClinician
+      summary: Remove scheduled clinician from shift
+      description: '<h3><strong>Remove a Scheduled Clinician from a Shift</strong></h3>
+
+        <p>This operation removes a scheduled clinician from a shift under specific conditions and notifies relevant parties accordingly.</p>
+
+        <h4><strong>Shift Status Updates</strong></h4>
+
+        <ul>
+
+        <li>If the <strong>shift has at least 1 hour remaining</strong>, it is returned to the &quot;Open&quot; status.</li>
+
+        <li>Otherwise, the shift is set to <strong>UnfulfilledRequested</strong> and will no longer be offered to clinicians.</li>
+
+        </ul>
+
+        <h4><strong>Notifications</strong></h4>
+
+        <ul>
+
+        <li>The <strong>removed clinician</strong> is notified about their removal from the shift.</li>
+
+        <li>If the <strong>removal reason</strong> is <code>Remove hire refused to work</code>:
+
+        <ul>
+
+        <li>The clinician''s status will be updated to <strong>&quot;frozen&quot;</strong>.</li>
+
+        <li>If the shift <strong>has started</strong> or was in progress:
+
+        <ul>
+
+        <li>The clinician will be removed from any other scheduled shifts if there were previous removals for No Call No Show (NCNS).</li>
+
+        </ul>
+
+        </li>
+
+        </ul>
+
+        </li>
+
+        </ul>
+
+        <h4><strong>Returning the Shift to the Marketplace</strong></h4>
+
+        <ul>
+
+        <li>If the shift is reopened and sent back to the marketplace:
+
+        <ul>
+
+        <li>Other clinicians who previously <strong>requested the shift</strong> will be notified so they can reapply.</li>
+
+        <li><strong>Clinician candidates</strong> eligible to fill the shift will receive an <strong>SOS notification</strong>.</li>
+
+        </ul>
+
+        </li>
+
+        </ul>
+
+        '
+      tags:
+      - Scheduled shifts
+      security:
+      - public-api: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shiftId:
+                  type: string
+                  description: The unique identifier of the shift the clinician is assigned to.
+                  example: '5552536398'
+                clinicianId:
+                  type: string
+                  description: The unique identifier of the clinician (userId) to be unscheduled from the shift.
+                  example: WK85QZny89Wj9cabYQw6FHcd2Be5
+                removalReason:
+                  type: string
+                  enum:
+                  - Remove hire emergency
+                  - Remove hire refused to work
+                  description: The reason for removing the clinician from the shift.
+                  example: Remove hire emergency
+                comments:
+                  type: string
+                  description: 'Comments explaining the removal (max length: 900).'
+                  example: Clinician requested removal due to personal reasons.
+              required:
+              - shiftId
+              - clinicianId
+              - removalReason
+              - comments
+              title: RemoveScheduledClinicianV2Request
+      responses:
+        '201':
+          description: Empty Response
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - 'removalReason must be one of the following values: Remove hire emergency, Remove hire refused to work'
+                    - removalReason must be a string
+                    - comments must be shorter than or equal to 900 characters
+                    error: Bad Request
+                    statusCode: 400
+                Clinician is not scheduled for the shift.:
+                  summary: Clinician is not scheduled for the shift.
+                  value:
+                    message: Clinician is not scheduled for the shift.
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

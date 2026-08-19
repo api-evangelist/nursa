@@ -1,0 +1,192 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Downloads API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Downloads
+paths:
+  /api/v2/public/downloads/clinician/{clinicianId}/shift/{shiftId}:
+    get:
+      operationId: DownloadController_clinicianProfile
+      summary: Download clinician profile
+      description: '<p>Returns link to download detailed clinician profile for a shift.</p>
+
+        '
+      tags:
+      - Downloads
+      security:
+      - public-api: []
+      parameters:
+      - name: shiftId
+        required: true
+        in: path
+        description: Id of the shift
+        example: '4603117571'
+        schema:
+          type: string
+      - name: clinicianId
+        required: true
+        in: path
+        description: Id of the clinician
+        example: lcFQMy1n0decDeZljQG2wUNZBru7
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        example: https://nursa.page.link/N9Bw
+                    required:
+                    - url
+                    title: DownloadClinicianProfileResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - shiftId must be a string
+                    - clinicianId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+              examples:
+                Clinician did not Requested:
+                  summary: Clinician didn't requested this shift.
+                  value:
+                    message: Clinician didn't requested this shift.
+                    error: Forbidden
+                    statusCode: 403
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Not Found
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 404
+              examples:
+                Not Ready:
+                  summary: Clinician profile is not ready
+                  value:
+                    message: Clinician profile url is not available yet, try again later.
+                    error: Not Found
+                    statusCode: 404
+                Failed:
+                  summary: Failed to retrieve shift request
+                  value:
+                    message: Failed to retrieve shift request
+                    error: Not Found
+                    statusCode: 404
+                PDF Error:
+                  summary: Error downloading the PDF
+                  value:
+                    message: Error downloading the PDF
+                    error: Not Found
+                    statusCode: 404
+                Snapshot Error:
+                  summary: Failed to retrieve clinician profile snapshot url
+                  value:
+                    message: Failed to retrieve clinician profile snapshot url
+                    error: Not Found
+                    statusCode: 404
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

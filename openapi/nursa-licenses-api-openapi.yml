@@ -1,0 +1,110 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Licenses API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Licenses
+paths:
+  /api/v2/public/licenses:
+    get:
+      operationId: LicensesController_getAll
+      summary: Get Licenses
+      description: '<p>Returns an array of our Licenses. A <strong>licenseCode</strong> is required when using <a href="marketplace-controller-quote-shift" target="_blank">Quote Shift</a> and <a href="marketplace-controller-create-shifts" target="_blank">Create Shifts</a> endpoints.</p>
+
+        '
+      tags:
+      - Licenses
+      security:
+      - public-api: []
+      parameters:
+      - name: facilityId
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        licenseCode:
+                          type: string
+                          description: Code of the License
+                          example: CNA
+                        licenseName:
+                          type: string
+                          description: Name of the License
+                          example: Certified Nursing Assistant
+                      required:
+                      - licenseCode
+                      - licenseName
+                      title: GetLicenseResponseDTO
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

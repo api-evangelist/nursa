@@ -1,0 +1,53 @@
+{
+  "provider": "nursa",
+  "sources": [
+    "nursa-clinicians-api-openapi.yml",
+    "nursa-downloads-api-openapi.yml",
+    "nursa-facilities-api-openapi.yml",
+    "nursa-facilities-webhooks-api-openapi.yml",
+    "nursa-licenses-api-openapi.yml",
+    "nursa-marketplace-api-openapi.yml",
+    "nursa-scheduled-shifts-api-openapi.yml",
+    "nursa-shift-reports-api-openapi.yml",
+    "nursa-shift-requests-api-openapi.yml",
+    "nursa-shifts-api-openapi.yml",
+    "nursa-support-api-openapi.yml",
+    "nursa-user-webhooks-api-openapi.yml",
+    "nursa-webhook-logs-api-openapi.yml"
+  ],
+  "outputs": [
+    "nursa-clinicians-api-openapi.yml",
+    "nursa-downloads-api-openapi.yml",
+    "nursa-facilities-api-openapi.yml",
+    "nursa-facilities-webhooks-api-openapi.yml",
+    "nursa-licenses-api-openapi.yml",
+    "nursa-marketplace-api-openapi.yml",
+    "nursa-scheduled-shifts-api-openapi.yml",
+    "nursa-shift-reports-api-openapi.yml",
+    "nursa-shift-requests-api-openapi.yml",
+    "nursa-shifts-api-openapi.yml",
+    "nursa-support-api-openapi.yml",
+    "nursa-user-webhooks-api-openapi.yml",
+    "nursa-webhook-logs-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "nursa-clinicians-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-downloads-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-facilities-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-facilities-webhooks-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-licenses-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-marketplace-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-scheduled-shifts-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-shift-reports-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-shift-requests-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-shifts-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-support-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-user-webhooks-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-webhook-logs-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

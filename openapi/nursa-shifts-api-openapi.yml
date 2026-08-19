@@ -1,0 +1,381 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Shifts API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Shifts
+paths:
+  /api/v2/public/shifts:
+    get:
+      operationId: ShiftsController_searchShifts
+      summary: Search Shifts
+      description: '<h3>General Information</h3>
+
+        <p>This endpoint allows you to <strong>search for all shifts</strong>, including those that are <strong>not actively listed</strong> in the Nursa Marketplace.</p>
+
+        <p>Unlike the <strong>Get Marketplace Shifts</strong> endpoint, which only returns shifts with the statuses <code>Open</code>, <code>Viewed</code>, <code>Requested</code>, or <code>Scheduled</code>, this endpoint retrieves shifts regardless of their status.</p>
+
+        <p>You can use the following query parameters to filter the response:</p>
+
+        <h4>Query Parameters</h4>
+
+        <table>
+
+        <thead>
+
+        <tr>
+
+        <th>Parameter</th>
+
+        <th>Type</th>
+
+        <th>Description</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr>
+
+        <td><code>startDate</code></td>
+
+        <td>ISO 8601 Date</td>
+
+        <td>Filters shifts with a start date between <code>startDate</code> and <code>endDate</code>.</td>
+
+        </tr>
+
+        <tr>
+
+        <td><code>endDate</code></td>
+
+        <td>ISO 8601 Date</td>
+
+        <td>Filters shifts with a start date between <code>startDate</code> and <code>endDate</code>.</td>
+
+        </tr>
+
+        <tr>
+
+        <td><code>licenseTypes</code></td>
+
+        <td>Array of strings</td>
+
+        <td>Filters shifts by license types. Example: <code>[&quot;RN&quot;, &quot;CNA&quot;]</code></td>
+
+        </tr>
+
+        <tr>
+
+        <td><code>facilityIds</code></td>
+
+        <td>Array of strings</td>
+
+        <td>Filters shifts by facility IDs. Example: <code>[&quot;P-12345&quot;, &quot;P-67890&quot;]</code></td>
+
+        </tr>
+
+        <tr>
+
+        <td><code>statuses</code></td>
+
+        <td>Array of strings</td>
+
+        <td>Filters shifts by status. Example: <code>[&quot;Open&quot;, &quot;UnfulfilledRequested&quot;]</code></td>
+
+        </tr>
+
+        <tr>
+
+        <td><code>shiftIds</code></td>
+
+        <td>Array of strings</td>
+
+        <td>Filters shifts by shift IDs. Example: <code>[&quot;4765568640&quot;, &quot;5552536398&quot;]</code></td>
+
+        </tr>
+
+        </tbody>
+
+        </table>
+
+        <h4>Important Notes</h4>
+
+        <ul>
+
+        <li>You <strong>must</strong> provide either:
+
+        <ul>
+
+        <li><code>shiftIds</code>, <strong>or</strong></li>
+
+        <li>Both <code>startDate</code> and <code>endDate</code>.</li>
+
+        </ul>
+
+        </li>
+
+        </ul>
+
+        '
+      tags:
+      - Shifts
+      security:
+      - public-api: []
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the quantity of records returned
+        schema:
+          minimum: 0
+          maximum: 50
+          default: 10
+          type: number
+      - name: offset
+        required: false
+        in: query
+        example: 10
+        description: Pagination parameter, use to specify the number of records to skip before starting to return results
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: sortDirection
+        required: false
+        in: query
+        example: DESC
+        description: Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending
+        schema:
+          default: DESC
+          enum:
+          - ASC
+          - DESC
+          type: string
+      - name: startDate
+        required: false
+        in: query
+        description: When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)
+        example: '2025-09-15T10:23:18.211Z'
+        schema:
+          format: date-time
+          type: string
+      - name: endDate
+        required: false
+        in: query
+        description: When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)
+        example: '2025-09-15T10:23:18.211Z'
+        schema:
+          format: date-time
+          type: string
+      - name: licenseTypes
+        required: false
+        in: query
+        description: License Type of the shift
+        example: RN
+        schema:
+          type: string
+      - name: facilityIds
+        required: false
+        in: query
+        description: Id of the facility
+        example: NUR-1660331570
+        schema:
+          type: string
+      - name: statuses
+        required: false
+        in: query
+        description: Status of the Shift
+        example: UnfulfilledRequested
+        schema:
+          type: string
+      - name: shiftIds
+        required: false
+        in: query
+        description: Id of the shift
+        example: '5552536398'
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        shiftId:
+                          type: string
+                          description: Id of the shift
+                          example: '5552536398'
+                        facilityId:
+                          type: string
+                          description: Id of the facility
+                          example: NUR-1660331570
+                        from:
+                          type: string
+                          format: date-time
+                          description: When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)
+                          example: '2025-09-15T10:23:18.088Z'
+                        to:
+                          type: string
+                          format: date-time
+                          description: When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)
+                          example: '2025-09-15T10:23:18.088Z'
+                        licenseType:
+                          type: string
+                          description: License Type of the shift
+                          example: RN
+                        status:
+                          type: string
+                          description: Status of the Shift
+                          example: Requested
+                        breakTime:
+                          type: string
+                          example: PT45M
+                          format: ISO 8601 duration
+                          description: Break Time for the shift
+                        billRatePerHour:
+                          type: number
+                          description: Price per hour
+                          example: 47.5
+                        autoSchedulingEnabled:
+                          type: boolean
+                          description: If auto scheduling is enabled for this shift
+                          example: true
+                      required:
+                      - shiftId
+                      - facilityId
+                      - from
+                      - to
+                      - licenseType
+                      - status
+                      - billRatePerHour
+                      - autoSchedulingEnabled
+                      title: SearchShiftsResponse
+                  meta:
+                    type: object
+                    properties:
+                      limit:
+                        type: number
+                        description: Number of items returned
+                      offset:
+                        type: number
+                        description: Starting position
+                      sortDirection:
+                        type: object
+                        description: Sorting direction
+                      total:
+                        type: number
+                        description: Total records found
+                    required:
+                    - limit
+                    - offset
+                    - sortDirection
+                    - total
+                    title: PaginationResponseDto
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - limit must be a number conforming to the specified constraints
+                    - limit must not be less than 0
+                    - limit must not be greater than 50
+                    - offset must be a number conforming to the specified constraints
+                    - offset must not be less than 0
+                    - 'sortDirection must be one of the following values: ASC, DESC'
+                    - startDate must be a valid ISO 8601 date string
+                    - endDate must be a valid ISO 8601 date string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

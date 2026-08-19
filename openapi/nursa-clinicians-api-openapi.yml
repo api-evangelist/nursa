@@ -1,0 +1,616 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Clinicians API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Clinicians
+paths:
+  /api/v2/public/clinicians/{clinicianId}/details:
+    get:
+      operationId: CliniciansController_getDetails
+      summary: Get Clinician Details
+      description: '<h3>General Information</h3>
+
+        <p>This endpoint allows you to retrieve <strong>clinician information</strong></p>
+
+        '
+      tags:
+      - Clinicians
+      security:
+      - public-api: []
+      parameters:
+      - name: clinicianId
+        required: true
+        in: path
+        description: Clinician ID
+        example: I7002epLHLhBCypdPCrn9XP4kTN2
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      clinicianId:
+                        type: string
+                        description: Id of the clinician
+                        example: gpMEmsoXfWVmhXJIvXipPjo0dc43
+                      firstName:
+                        type: string
+                        description: First name of the clinician
+                        example: John
+                      lastName:
+                        type: string
+                        description: Last name of the clinician
+                        example: Doe
+                      contactEmail:
+                        type: string
+                        description: Email of the clinician
+                        example: john@doe.com
+                      contactPhone:
+                        type: string
+                        description: Contact phone of the clinician
+                        example: '+12345678910'
+                      licenseType:
+                        type: Array
+                        description: List of valid license types of the clinician
+                        example:
+                        - RN
+                        - CNA
+                    required:
+                    - clinicianId
+                    - firstName
+                    - lastName
+                    - contactEmail
+                    - contactPhone
+                    - licenseType
+                    title: GetClinicianDetailsResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - clinicianId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/clinicians/{clinicianId}/documents:
+    get:
+      operationId: CliniciansController_getDocuments
+      summary: Get Clinician Documents
+      description: '<h3>General Information</h3>
+
+        <p>This endpoint allows facilities to retrieve a list of all documents associated with a specific clinician.</p>
+
+        <h4><strong>Required Parameters</strong></h4>
+
+        <ul>
+
+        <li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>
+
+        <li><strong>shiftId</strong> (query parameter): The shift ID which the clinician requested</li>
+
+        </ul>
+
+        <h4><strong>Document Categories</strong></h4>
+
+        <p>The endpoint returns documents organized by the following categories:</p>
+
+        <ul>
+
+        <li><strong>LICENSE</strong>: Professional licenses (nursing, medical, etc.)</li>
+
+        <li><strong>CREDENTIAL</strong>: Professional credentials and certifications</li>
+
+        <li><strong>BACKGROUND_CHECK</strong>: Background check documents and results</li>
+
+        <li><strong>SSN</strong>: Social Security Number verification documents</li>
+
+        <li><strong>CDPH_530</strong>: California Department of Public Health 530 forms</li>
+
+        </ul>
+
+        <h4><strong>Access Control</strong></h4>
+
+        <ul>
+
+        <li>The implementation logic requires that a clinician has submitted a shift request to a facility that the facility user is connected to. This requirement is in place to prevent the unauthorized sharing of documentation for users who have not interacted with one of your shifts.</li>
+
+        </ul>
+
+        '
+      tags:
+      - Clinicians
+      security:
+      - public-api: []
+      parameters:
+      - name: clinicianId
+        required: true
+        in: path
+        description: Clinician ID
+        example: I7002epLHLhBCypdPCrn9XP4kTN2
+        schema:
+          type: string
+      - name: shiftId
+        required: true
+        in: query
+        description: Id of the shift
+        example: '4603117571'
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      clinicianId:
+                        type: string
+                        description: Id of the clinician
+                        example: gpMEmsoXfWVmhXJIvXipPjo0dc43
+                      documents:
+                        type: array
+                        description: Array containing clinician documents
+                        items:
+                          oneOf:
+                          - title: Verified Licenses
+                            type: object
+                            required:
+                            - category
+                            - type
+                            - documentId
+                            - hasFile
+                            - status
+                            - compact
+                            - state
+                            - expirationDate
+                            - number
+                          - title: Background Checks
+                            type: object
+                            required:
+                            - category
+                            - type
+                            - documentId
+                            - hasFile
+                            - status
+                            - expirationDate
+                            - completedDate
+                          - title: SSN
+                            type: object
+                            required:
+                            - category
+                            - lastFourDigits
+                          - title: Credentials
+                            type: object
+                            required:
+                            - category
+                            - type
+                            - documentId
+                            - hasFile
+                            - status
+                          - title: CDPH-530
+                            type: object
+                            required:
+                            - category
+                            - type
+                            - documentId
+                            - hasFile
+                            - status
+                    required:
+                    - clinicianId
+                    - documents
+                    title: GetClinicianDocumentsResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - shiftId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/clinicians/{clinicianId}/documents/attachment/{attachmentId}:
+    get:
+      operationId: CliniciansController_getAttachment
+      summary: Download Clinician Document attachment
+      description: '<h3>General Information</h3>
+
+        <p>This endpoint allows you to download a specific attachment file associated with a clinician''s document.</p>
+
+        <h4><strong>Required Parameters</strong></h4>
+
+        <ul>
+
+        <li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>
+
+        <li><strong>attachmentId</strong> (path parameter): The unique identifier of the specific attachment to download</li>
+
+        </ul>
+
+        <h4><strong>File Handling</strong></h4>
+
+        <ul>
+
+        <li>Files are streamed directly to the client for immediate download</li>
+
+        </ul>
+
+        '
+      tags:
+      - Clinicians
+      security:
+      - public-api: []
+      parameters:
+      - name: clinicianId
+        required: true
+        in: path
+        description: Clinician ID
+        example: I7002epLHLhBCypdPCrn9XP4kTN2
+        schema:
+          type: string
+      - name: attachmentId
+        required: true
+        in: path
+        description: Id of the attachment
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Empty Response
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - shiftId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/clinicians/{clinicianId}/documents/{category}/{documentId}:
+    get:
+      operationId: CliniciansController_getDocumentAttachments
+      summary: Get Clinician Document attachments
+      description: '<h3>General Information</h3>
+
+        <p>This endpoint retrieves all file attachments associated with a specific clinician document.</p>
+
+        <h4><strong>Required Parameters</strong></h4>
+
+        <ul>
+
+        <li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>
+
+        <li><strong>category</strong> (path parameter): The document category (LICENSE, CREDENTIAL, BACKGROUND_CHECK, SSN, CDPH_530)</li>
+
+        <li><strong>documentId</strong> (path parameter): The unique identifier of the specific document</li>
+
+        </ul>
+
+        <h4><strong>Access Control</strong></h4>
+
+        <ul>
+
+        <li>The implementation logic requires that a clinician has submitted a shift request to a facility that the facility user is connected to. This requirement is in place to prevent the unauthorized sharing of documentation for users who have not interacted with one of your shifts</li>
+
+        </ul>
+
+        '
+      tags:
+      - Clinicians
+      security:
+      - public-api: []
+      parameters:
+      - name: clinicianId
+        required: true
+        in: path
+        description: Clinician ID
+        example: I7002epLHLhBCypdPCrn9XP4kTN2
+        schema:
+          type: string
+      - name: category
+        required: true
+        in: path
+        description: Category of the document
+        example: license
+        schema:
+          enum:
+          - background-check
+          - credential
+          - license
+          - ssn
+          - cdph-530
+          type: string
+      - name: documentId
+        required: true
+        in: path
+        description: Id of the document
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        attachmentId:
+                          type: string
+                          description: Id of the attachment
+                          example: '123'
+                        attachmentUrl:
+                          type: string
+                          description: Url of the attachment
+                          example: https://example.com/attachment1.pdf
+                      required:
+                      - attachmentId
+                      - attachmentUrl
+                      title: GetClinicianDocumentAttachmentsResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - shiftId must be a string
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

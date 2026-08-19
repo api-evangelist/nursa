@@ -1,0 +1,2002 @@
+{
+  "item": [
+    {
+      "id": "b3ff3e29-23ff-4ef9-add4-addf6751c749",
+      "name": "Marketplace",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "278988e9-839b-4b5b-a2db-8de11bcddd33",
+          "name": "Get marketplace shifts",
+          "request": {
+            "name": "Get marketplace shifts",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>This endpoint returns shifts for the facilities that user is connected to.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Pagination parameter, use to specify the quantity of records returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "DESC",
+                  "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+                },
+                {
+                  "disabled": false,
+                  "key": "facilityId",
+                  "value": "<string>",
+                  "description": "Id of the facility"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDateFrom",
+                  "value": "<dateTime>",
+                  "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00). When startDateTo is provided this becomes mandatory"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDateTo",
+                  "value": "<dateTime>",
+                  "description": "When you provide date-time value, time is ignored and will take end of the day for given date (23:59:59)"
+                },
+                {
+                  "disabled": false,
+                  "key": "shiftId",
+                  "value": "<string>",
+                  "description": "Id of the shift"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "15158375-4774-4aa3-8cbd-eedc9775a0cc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "facilityId",
+                      "value": "NUR-12345"
+                    },
+                    {
+                      "key": "startDateFrom",
+                      "value": "2025-09-15T10:23:17.661Z"
+                    },
+                    {
+                      "key": "startDateTo",
+                      "value": "2025-09-15T10:23:17.661Z"
+                    },
+                    {
+                      "key": "shiftId",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"shiftId\": \"12120878\",\n      \"facilityId\": \"NUR-0879\",\n      \"from\": \"2025-09-15T10:23:18.085Z\",\n      \"to\": \"2025-09-15T10:23:18.085Z\",\n      \"licenseType\": \"RN\",\n      \"status\": \"Requested\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"shiftId\": \"12120878\",\n      \"facilityId\": \"NUR-0879\",\n      \"from\": \"2025-09-15T10:23:18.085Z\",\n      \"to\": \"2025-09-15T10:23:18.085Z\",\n      \"licenseType\": \"RN\",\n      \"status\": \"Requested\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"meta\": {\n    \"limit\": 3847.170733109423,\n    \"offset\": 9722.810799691195,\n    \"sortDirection\": {},\n    \"total\": 2636.6091077511464\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0e14224-cf56-41b5-9501-3e8872c4dac2",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "facilityId",
+                      "value": "NUR-12345"
+                    },
+                    {
+                      "key": "startDateFrom",
+                      "value": "2025-09-15T10:23:17.661Z"
+                    },
+                    {
+                      "key": "startDateTo",
+                      "value": "2025-09-15T10:23:17.661Z"
+                    },
+                    {
+                      "key": "shiftId",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"limit must be a number conforming to the specified constraints\",\n    \"limit must not be less than 0\",\n    \"limit must not be greater than 50\",\n    \"offset must be a number conforming to the specified constraints\",\n    \"offset must not be less than 0\",\n    \"sortDirection must be one of the following values: ASC, DESC\",\n    \"facilityId must be a string\",\n    \"startDateFrom must be a date before startDateTo\",\n    \"startDateFrom must be a valid ISO 8601 date string\",\n    \"startDateTo must be a valid ISO 8601 date string\",\n    \"shiftId must be a string\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abe2b96a-38f9-4b81-bfe2-f4cd26080e89",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "facilityId",
+                      "value": "NUR-12345"
+                    },
+                    {
+                      "key": "startDateFrom",
+                      "value": "2025-09-15T10:23:17.661Z"
+                    },
+                    {
+                      "key": "startDateTo",
+                      "value": "2025-09-15T10:23:17.661Z"
+                    },
+                    {
+                      "key": "shiftId",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "578d49fd-560f-44c5-a0cc-7520231d8fa8",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "DESC"
+                    },
+                    {
+                      "key": "facilityId",
+                      "value": "NUR-12345"
+                    },
+                    {
+                      "key": "startDateFrom",
+                      "value": "2025-09-15T10:23:17.661Z"
+                    },
+                    {
+                      "key": "startDateTo",
+                      "value": "2025-09-15T10:23:17.661Z"
+                    },
+                    {
+                      "key": "shiftId",
+                      "value": "5552536398"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "055645af-4da7-4b9f-beff-7aca202889a5",
+          "name": "Create shifts",
+          "request": {
+            "name": "Create shifts",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>When creating shift price quotation  is based on <code>from</code>, <code>to</code> dates, and optional <code>breakTime</code> params.</p>\n<p>If the facility for which you are creating the shift has the <strong>Auto Schedule</strong> feature enabled, the shifts will inherit the same Auto Schedule settings by default.</p>\n<ul>\n<li>\n<p>To enable only specific Auto Schedule options, use the <code>autoScheduleSettings</code> property in the request body to specify the desired options.</p>\n</li>\n<li>\n<p>To create a shift <strong>without any Auto Schedule options</strong>, even if the facility has this feature enabled, set <code>autoScheduleSettings</code> to <code>null</code> or an empty array (<code>[]</code>).</p>\n</li>\n<li>\n<p><strong>Failure</strong>: The process uses transactions, so if one job fails, all changes are reverted.</p>\n</li>\n<li>\n<p><strong>License Requirement</strong>: A valid <a href=\"licenses-controller-get-all\" target=\"_blank\">licenseType</a> must be provided when creating a shift.</p>\n</li>\n<li>\n<p><strong>Facility Connection</strong>: If the authenticated user is not connected with the facility, the system will return a &quot;facility not found&quot; error. In this case, refer to the <a href=\"facilities-controller-request-connection\" target=\"_blank\">facility connection request guide</a>. Ensure you account for this response in your implementation.</p>\n</li>\n</ul>\n<h3>Potential Issues</h3>\n<ul>\n<li><strong>No Associated User</strong>: There is no user associated with the facility. At least one user must be created and associated with the facility.</li>\n<li><strong>No Associated User</strong>: The user needs to have a <a href=\"facilities-controller-request-facility-creation\" target=\"_blank\">connection</a> with the facility</li>\n<li><strong>Auto schedule option is not enabled for this facility</strong> The facility for which you are creating the shift does not have the specified Auto Schedule option enabled</li>\n</ul>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"facilityId\": \"<string>\",\n  \"shifts\": [\n    {\n      \"licenseType\": \"<string>\",\n      \"description\": \"<string>\",\n      \"from\": \"<dateTime>\",\n      \"to\": \"<dateTime>\",\n      \"breakTime\": \"<ISO 8601 duration>\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"licenseType\": \"<string>\",\n      \"description\": \"<string>\",\n      \"from\": \"<dateTime>\",\n      \"to\": \"<dateTime>\",\n      \"breakTime\": \"<ISO 8601 duration>\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "735d0332-336a-44cf-ad3f-2cfc4fd0e1f7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"facilityId\": \"NUR-123456789\",\n  \"shifts\": [\n    {\n      \"licenseType\": \"RN\",\n      \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n      \"from\": \"2024-01-01T10:00:00.000Z\",\n      \"to\": \"2022-01-01T22:00:00.000Z\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"licenseType\": \"RN\",\n      \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n      \"from\": \"2024-01-01T10:00:00.000Z\",\n      \"to\": \"2022-01-01T22:00:00.000Z\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"shiftId\": \"12120878\",\n      \"facilityId\": \"NUR-0879\",\n      \"description\": \"Must take 30 minute break\",\n      \"from\": \"2022-09-13T00:00:00.000Z\",\n      \"to\": \"2022-09-14T00:00:00.000Z\",\n      \"licenseType\": \"RN\",\n      \"price\": {\n        \"billRatePerHour\": 47.5,\n        \"totalAmount\": 178.8\n      },\n      \"createdBy\": \"gsFu59GrbAhFmUB0QyYf1Ubg0Q5E\",\n      \"breakTime\": \"PT45M\"\n    },\n    {\n      \"shiftId\": \"12120878\",\n      \"facilityId\": \"NUR-0879\",\n      \"description\": \"Must take 30 minute break\",\n      \"from\": \"2022-09-13T00:00:00.000Z\",\n      \"to\": \"2022-09-14T00:00:00.000Z\",\n      \"licenseType\": \"RN\",\n      \"price\": {\n        \"billRatePerHour\": 47.5,\n        \"totalAmount\": 178.8\n      },\n      \"createdBy\": \"gsFu59GrbAhFmUB0QyYf1Ubg0Q5E\",\n      \"breakTime\": \"PT45M\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f899bd78-d8f9-4ffa-b7f8-4a3e0981f944",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"facilityId\": \"NUR-123456789\",\n  \"shifts\": [\n    {\n      \"licenseType\": \"RN\",\n      \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n      \"from\": \"2024-01-01T10:00:00.000Z\",\n      \"to\": \"2022-01-01T22:00:00.000Z\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"licenseType\": \"RN\",\n      \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n      \"from\": \"2024-01-01T10:00:00.000Z\",\n      \"to\": \"2022-01-01T22:00:00.000Z\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"facilityId must be a string\",\n    \"licenseType should not be empty\",\n    \"licenseType must be a string\",\n    \"description should not be empty\",\n    \"description must be a string\",\n    \"from must be RFC 3339 date\",\n    \"from must be a valid ISO 8601 date string\",\n    \"from should not be empty\",\n    \"to must be RFC 3339 date\",\n    \"to must be less than 24 hours after from field\",\n    \"to must be a valid ISO 8601 date string\",\n    \"to should not be empty\",\n    \"shifts must be an array\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "647a4258-9f00-4bcc-888a-797d70050221",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"facilityId\": \"NUR-123456789\",\n  \"shifts\": [\n    {\n      \"licenseType\": \"RN\",\n      \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n      \"from\": \"2024-01-01T10:00:00.000Z\",\n      \"to\": \"2022-01-01T22:00:00.000Z\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"licenseType\": \"RN\",\n      \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n      \"from\": \"2024-01-01T10:00:00.000Z\",\n      \"to\": \"2022-01-01T22:00:00.000Z\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "560c6c59-3063-4e4c-9147-12f6933e937d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"facilityId\": \"NUR-123456789\",\n  \"shifts\": [\n    {\n      \"licenseType\": \"RN\",\n      \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n      \"from\": \"2024-01-01T10:00:00.000Z\",\n      \"to\": \"2022-01-01T22:00:00.000Z\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"licenseType\": \"RN\",\n      \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n      \"from\": \"2024-01-01T10:00:00.000Z\",\n      \"to\": \"2022-01-01T22:00:00.000Z\",\n      \"breakTime\": \"PT45M\",\n      \"autoScheduleSettings\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b4d7daba-9928-4e2e-ac56-5dd2d97d37c2",
+          "name": "Cancel shift",
+          "request": {
+            "name": "Cancel shift",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>Canceling a shift affects the following shift statuses:</p>\n<ul>\n<li><strong>Shift Open</strong>: <code>shift.cancelled</code></li>\n<li><strong>Shift Requested</strong>: <code>shift.cancelled</code>, <code>shift.request.cancelled</code></li>\n<li><strong>Shift Scheduled but Not Started</strong>: <code>shift.cancelled</code>, <code>shift.scheduled.cancelled</code></li>\n<li><strong>Shift Scheduled and In Progress</strong>: <code>shift.cancelled</code>, <code>shift.scheduled.cancelled</code></li>\n</ul>\n<h3>Webhooks Configuration</h3>\n<p>To stay up to date with shift cancellations, configure the following webhooks: <a href=\"facilities-webhooks-controller-get-all\" target=\"_blank\">Webhooks API Documentation</a></p>\n<ul>\n<li><code>shift.cancelled</code></li>\n<li><code>shift.request.cancelled</code></li>\n<li><code>shift.scheduled.cancelled</code></li>\n</ul>\n<h3>Cancellation Reason</h3>\n<p>Possible reasons:</p>\n<ul>\n<li><code>Filled internally</code>: The shift was filled by internal staff within the organization.</li>\n<li><code>Filled by other agency</code>: The shift was filled by a clinician from another agency.</li>\n<li><code>Talent not needed</code>: The shift is no longer required, possibly due to changes in demand or scheduling errors.</li>\n</ul>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                "cancel",
+                ":shiftId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) Nursa ShiftId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"<string>\",\n  \"cancelationReason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b6f915cd-3f7c-47b3-b0a9-5348525455a3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "cancel",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"The shift was filled internally\",\n  \"cancelationReason\": \"Filled internally\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"shiftId\": \"3502817654\",\n    \"status\": \"Filled internally\",\n    \"facilityId\": \"NUR-123456\",\n    \"licenseType\": \"RN\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76e35d28-ead8-4773-b3a9-eda365f380f1",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "cancel",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"The shift was filled internally\",\n  \"cancelationReason\": \"Filled internally\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"comment must be a string\",\n    \"cancelationReason must be one of the following values: Filled internally, Filled by other agency, Talent not needed, No call no show\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3889329c-2a21-418f-857f-0a38a29cc25c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "cancel",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"The shift was filled internally\",\n  \"cancelationReason\": \"Filled internally\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7286451-4df3-4fa7-9e1c-619e07b65471",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "cancel",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"comment\": \"The shift was filled internally\",\n  \"cancelationReason\": \"Filled internally\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99d021bc-3ab8-4e7d-a76f-b376b46a3e09",
+          "name": "Quote the price of a given shift",
+          "request": {
+            "name": "Quote the price of a given shift",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>Although a price quoting is calculated when <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">creating shifts</a>, we provide a price quotation without creating a shift.</p>\n<p>This will not create a shift, but you can <a href=\"marketplace-controller-create-shift-from-quote\" target=\"_blank\">create one from the quote</a>. The shift quote is calculated based on the <code>from</code>, <code>to</code>, and <code>breakTime</code> parameters.</p>\n<p>Note: The quote is temporarily stored for 15 minutes. After that, it can no longer be used.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"facilityId\": \"<string>\",\n  \"shift\": {\n    \"licenseType\": \"<string>\",\n    \"description\": \"<string>\",\n    \"from\": \"<dateTime>\",\n    \"to\": \"<dateTime>\",\n    \"breakTime\": \"<ISO 8601 duration>\",\n    \"autoScheduleSettings\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa271b85-1926-49ea-a18f-3f85fa524460",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"facilityId\": \"NUR-123456\",\n  \"shift\": {\n    \"licenseType\": \"RN\",\n    \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n    \"from\": \"2024-01-01T10:00:00.000Z\",\n    \"to\": \"2022-01-01T22:00:00.000Z\",\n    \"breakTime\": \"PT45M\",\n    \"autoScheduleSettings\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"quoteId\": \"100ad731-4e41-4edf-88b1-ae41ce005202\",\n    \"billRatePerHour\": 47.5,\n    \"totalAmount\": 178.8,\n    \"expiresAt\": \"2025-09-15T10:23:17.640Z\",\n    \"breakTime\": \"PT45M\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2a68108-3885-4479-8ac3-41c969b7fed6",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"facilityId\": \"NUR-123456\",\n  \"shift\": {\n    \"licenseType\": \"RN\",\n    \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n    \"from\": \"2024-01-01T10:00:00.000Z\",\n    \"to\": \"2022-01-01T22:00:00.000Z\",\n    \"breakTime\": \"PT45M\",\n    \"autoScheduleSettings\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"facilityId must be a string\",\n    \"licenseType should not be empty\",\n    \"licenseType must be a string\",\n    \"description should not be empty\",\n    \"description must be a string\",\n    \"from must be RFC 3339 date\",\n    \"from must be a valid ISO 8601 date string\",\n    \"from should not be empty\",\n    \"to must be RFC 3339 date\",\n    \"to must be less than 24 hours after from field\",\n    \"to must be a valid ISO 8601 date string\",\n    \"to should not be empty\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "325f606a-635f-4f64-9380-aba3cbb61471",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"facilityId\": \"NUR-123456\",\n  \"shift\": {\n    \"licenseType\": \"RN\",\n    \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n    \"from\": \"2024-01-01T10:00:00.000Z\",\n    \"to\": \"2022-01-01T22:00:00.000Z\",\n    \"breakTime\": \"PT45M\",\n    \"autoScheduleSettings\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edb93ce4-459e-480f-b9d0-85906d4fbe65",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"facilityId\": \"NUR-123456\",\n  \"shift\": {\n    \"licenseType\": \"RN\",\n    \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n    \"from\": \"2024-01-01T10:00:00.000Z\",\n    \"to\": \"2022-01-01T22:00:00.000Z\",\n    \"breakTime\": \"PT45M\",\n    \"autoScheduleSettings\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe522b80-e200-4768-834a-5c47e168adba",
+          "name": "Create shift from quote",
+          "request": {
+            "name": "Create shift from quote",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>Based on previously <a href=\"marketplace-controller-quote-shift\" target=\"_blank\">created quote</a> you can now create a shift.</p>\n<p>If the facility for which you are creating the shift has the <strong>Auto Schedule</strong> feature enabled, the shifts will inherit the same Auto Schedule settings by default.</p>\n<ul>\n<li>To enable only specific Auto Schedule options, use the <code>autoScheduleSettings</code> property in the request body to specify the desired options.</li>\n<li>To create a shift <strong>without any Auto Schedule options</strong>, even if the facility has this feature enabled, set <code>autoScheduleSettings</code> to <code>null</code> or an empty array (<code>[]</code>).</li>\n</ul>\n<h3>Potential issues</h3>\n<ul>\n<li><strong>Quoted shift not found</strong> Quote has expired</li>\n<li><strong>Auto schedule option is not enabled for this facility</strong> The facility for which you are creating the shift does not have the specified Auto Schedule option enabled</li>\n</ul>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                "quote",
+                ":quoteId",
+                "shift"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quoteId",
+                  "description": "(Required) Shift QuoteId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8881e93d-d1ed-4ec9-8eee-6292919dc253",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote",
+                    ":quoteId",
+                    "shift"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) Shift QuoteId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"shiftId\": \"12120878\",\n    \"facilityId\": \"NUR-0879\",\n    \"description\": \"Must take 30 minute break\",\n    \"from\": \"2022-09-13T00:00:00.000Z\",\n    \"to\": \"2022-09-14T00:00:00.000Z\",\n    \"licenseType\": \"RN\",\n    \"price\": {\n      \"billRatePerHour\": 47.5,\n      \"totalAmount\": 178.8\n    },\n    \"createdBy\": \"gsFu59GrbAhFmUB0QyYf1Ubg0Q5E\",\n    \"breakTime\": \"PT45M\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf5e9508-ace9-4d76-beea-e5034c9116a6",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote",
+                    ":quoteId",
+                    "shift"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) Shift QuoteId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"quoteId must be a string\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbe34ed3-ad3d-4c9c-8e01-df650b808d00",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote",
+                    ":quoteId",
+                    "shift"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) Shift QuoteId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "617fc5c4-4468-424c-b077-3e02fa9c6630",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote",
+                    ":quoteId",
+                    "shift"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) Shift QuoteId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "334aa7de-9658-4132-87da-2508d7967608",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    "quote",
+                    ":quoteId",
+                    "shift"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quoteId",
+                      "description": "(Required) Shift QuoteId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Quoted shift not found\",\n  \"error\": \"Not Found\",\n  \"statusCode\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d93fe78-4fa0-4431-bc6e-44409421ca3b",
+          "name": "Update shift",
+          "request": {
+            "name": "Update shift",
+            "description": {
+              "content": "<h3>General Information</h3>\n<p>You can update <code>description</code> and <code>bonus</code>, <code>bonus</code> will change the shift quote.</p>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "public",
+                "marketplace",
+                "shifts",
+                ":shiftId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) Nursa ShiftId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"bonus\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "70a8338f-bf79-46a1-accc-e22b11346113",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n  \"bonus\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"shiftId\": \"3663958181\",\n    \"description\": \"Must take 30 minute break\",\n    \"facilityId\": \"NUR-12345\",\n    \"licenseType\": \"CNA\",\n    \"from\": \"2024-01-01T13:00:00.000Z\",\n    \"to\": \"2024-01-01T21:00:00.000Z\",\n    \"price\": {\n      \"billRatePerHour\": 47.5,\n      \"totalAmount\": 178.8\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c2e9fd7-11f5-443c-85ee-0548b246b032",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n  \"bonus\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": [\n    \"description must be a string\",\n    \"bonus must not be less than 0\",\n    \"bonus must be a number conforming to the specified constraints\"\n  ],\n  \"error\": \"Bad Request\",\n  \"statusCode\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89a9e1eb-9745-4fa1-be2c-8bf4a834b01a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n  \"bonus\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\",\n  \"statusCode\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b25ea2b-a336-4f2a-a1f6-9d020da980aa",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "public",
+                    "marketplace",
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) Nursa ShiftId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Nurses are expected to assist with triage, provide patient care, and support doctors during emergencies\",\n  \"bonus\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden Resource\",\n  \"error\": \"Forbidden\",\n  \"statusCode\": 403\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public-api.prod.nursa.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f881af75-1433-4c3c-a9b1-919ed25778a3",
+    "name": "Nursa Public API V2 Marketplace API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.\n\nContact Support:\n Name: Nursa API Team\n Email: josh.bear@nursa.com",
+      "type": "text/plain"
+    }
+  }
+}

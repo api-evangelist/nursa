@@ -1,0 +1,224 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Facilities API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Facilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Facilities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/facilities",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the quantity of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "DESC",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns an array of facilities which the user has <a href=\"facilities-controller-request-connection\" target=\"_blank\">connection</a> to.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Request Facility Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/facilities/connection",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>This endpoint allows users to request a connection to an existing facility in our application. The user must provide the <code>facilityId</code> in the request body payload. Once the request is submitted, a Nursa employee will review and either accept or reject the request.</p>\n<p>A verified facility connection is required to act on behalf of the facility, such as using endpoints to <a href=\"marketplace-controller-create-shifts\" target=\"_blank\">Create Shifts</a> and <a href=\"/pages/api/schedu"
+        },
+        {
+          "info": {
+            "name": "Favoriting Clinicians",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/facilities/favoriting-clinician",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Auto scheduler will prioritize favorited clinicians.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Request Facility Creation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/facilities/request",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>This endpoint allows users to request a facility to be created in our application. Once the request is submitted, a Nursa employee will review and either accept or reject the request.</p>\n<p>If the request is accepted the connection between the user and the facility will be created automatically Therefore, there is no need to <a href=\"facilities-controller-request-connection\" target=\"_blank\">Request a Facility Connection</a> for the user who created the facility.</p>\n<p>Users can also create "
+        },
+        {
+          "info": {
+            "name": "Search Facilities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/facilities/search",
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Use to paginate the results"
+              },
+              {
+                "name": "name",
+                "value": "Facility Name",
+                "type": "query",
+                "description": "Use to filter the search based on the facility name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns an array of all the facilities registered in the application. Only publicly available information about each facility will be returned through this endpoint.</p>\n<p>You can use this endpoint to search for a specific facility to check if it already exists in the application. Instead of using the <a href=\"facilities-controller-request-facility-creation\" target=\"_blank\">Request Facility Creation</a> endpoint, you can use the <a href=\"facilities-controller-request-connection\" target=\"_bla"
+        },
+        {
+          "info": {
+            "name": "Get Specialties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/facilities/specialties",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns an array of specialties. A specialty <strong>title</strong> is required when using the <a href=\"facilities-controller-request-connection\" target=\"_blank\">Request Facility Creation</a> endpoint.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Get Facility",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/facilities/:facilityId",
+            "params": [
+              {
+                "name": "facilityId",
+                "value": "NUR-12345",
+                "type": "path",
+                "description": "Id of the facility"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Return a single facility data based on the <code>facilityId</code> path param, you'll only be able to fetch the facility's data if you have a <a href=\"facilities-controller-request-connection\" target=\"_blank\">Facility Connection</a> in place.</p>\n"
+        },
+        {
+          "info": {
+            "name": "Get Facility Work History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/facilities/:facilityId/work-history",
+            "params": [
+              {
+                "name": "facilityId",
+                "value": "NUR-12345",
+                "type": "path",
+                "description": "Id of the facility"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the quantity of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "DESC",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Return data of clinicians that have completed a shift for the given Facility.</p>\n<p>The data will be sorted based on the Shift Start Date.</p>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

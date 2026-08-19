@@ -1,0 +1,629 @@
+openapi: 3.2.0
+info:
+  title: Nursa Public API V2 Facilities webhooks API
+  version: '2'
+  x-evidence:
+    harvested: '2026-08-04'
+    method: derived
+    source: https://docs.nursa.com/
+    note: decoded from the published docusaurus-plugin-openapi-docs page chunks; operations verbatim
+  description: The Nursa Public API lets healthcare facilities and their scheduling/workforce systems post and manage per diem shifts on the Nursa marketplace, review clinician shift requests, schedule clinicians, handle shift reports and cancellations, read clinician credentials, and subscribe to webhooks.
+  contact:
+    name: Nursa API Team
+    url: https://docs.nursa.com/
+    email: josh.bear@nursa.com
+servers:
+- url: https://public-api.prod.nursa.com
+  description: Production (documented at docs.nursa.com Accessing the API; probed 2026-08-04 -> 401)
+- url: https://public-api.sandbox.nursa.com
+  description: Sandbox (the server declared in the published docs bundle; probed 2026-08-04 -> 401)
+security:
+- public-api: []
+tags:
+- name: Facilities webhooks
+paths:
+  /api/v2/public/webhooks/facility:
+    get:
+      operationId: FacilitiesWebhooksController_getAll
+      summary: Get all Webhooks of current application
+      description: '<p>Retrieves a list of all existing webhooks.</p>
+
+        '
+      tags:
+      - Facilities webhooks
+      security:
+      - public-api: []
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: If of the Webhook
+                          example: ad2ce8f4-06d0-4d1a-9ef2-c156dfa17fba
+                        url:
+                          type: string
+                          description: Url of the Webhook
+                          example: https://exemple.com/webhook
+                        events:
+                          type: array
+                          description: List of events that this webhook will listen to
+                          example:
+                          - shift.report.created
+                          - shift.request.created
+                          items:
+                            type: string
+                            enum:
+                            - shift.request.created
+                            - shift.request.cancelled
+                            - shift.report.created
+                            - shift.scheduled.cancelled
+                            - shift.scheduled
+                            - shift.created
+                            - shift.report.accepted-automatically
+                            - shift.report.accepted
+                            - shift.report.rejected
+                            - shift.cancelled
+                            - all
+                        clientId:
+                          type: string
+                        facilities:
+                          description: List of facilities ids that this webhook belongs to
+                          example:
+                          - P-123456
+                          - P-123457
+                          type: array
+                          items:
+                            type: string
+                        secrets:
+                          description: List of webhook secrets
+                          example:
+                          - sDV1aKqitCLClI12m7UPFbAAvZfZquJw
+                          - mryefgHPBVHJwux0o3BYW7hPM0BZlcCa
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - id
+                      - url
+                      - events
+                      - clientId
+                      - facilities
+                      - secrets
+                      title: CreateWebhookResponse
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+    post:
+      operationId: FacilitiesWebhooksController_createOne
+      summary: Create Webhook for Facilities
+      description: '<p>We strongly recommend you set up webhooks for better and easier integration.</p>
+
+        <p>Creates a new webhook. Use this endpoint to register a new webhook by specifying the URL and the events you want to subscribe to.</p>
+
+        '
+      tags:
+      - Facilities webhooks
+      security:
+      - public-api: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL that will be called when an event is triggered.
+                  example: https://exemple.com/webhook
+                events:
+                  type: array
+                  description: The events that this webhook will listen to.
+                  example:
+                  - all
+                  items:
+                    type: string
+                    enum:
+                    - shift.request.created
+                    - shift.request.cancelled
+                    - shift.report.created
+                    - shift.scheduled.cancelled
+                    - shift.scheduled
+                    - shift.created
+                    - shift.report.accepted-automatically
+                    - shift.report.accepted
+                    - shift.report.rejected
+                    - shift.cancelled
+                    - all
+                facilities:
+                  description: The IDs of the facilities that will receive events from this webhook. If no value is provided it will auto detect facilities that user has access
+                  example:
+                  - P-123456
+                  - P-123457
+                  type: array
+                  items:
+                    type: string
+                secrets:
+                  description: "\n      The secrets that will be used to verify the authenticity of the webhook.\n      If no value is provided it will auto generate a secret.\n      Secrets are used to sign and validate the payload of the webhook.\n      It will accept 2 secrets to allow a rotation strategy without service downtime.\n    "
+                  example:
+                  - sDV1aKqitCLClI12m7UPFbAAvZfZquJw
+                  - mryefgHPBVHJwux0o3BYW7hPM0BZlcCa
+                  type: array
+                  items:
+                    type: string
+              required:
+              - url
+              - events
+              - facilities
+              - secrets
+              title: CreateWebhookRequest
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: If of the Webhook
+                        example: ad2ce8f4-06d0-4d1a-9ef2-c156dfa17fba
+                      url:
+                        type: string
+                        description: Url of the Webhook
+                        example: https://exemple.com/webhook
+                      events:
+                        type: array
+                        description: List of events that this webhook will listen to
+                        example:
+                        - shift.report.created
+                        - shift.request.created
+                        items:
+                          type: string
+                          enum:
+                          - shift.request.created
+                          - shift.request.cancelled
+                          - shift.report.created
+                          - shift.scheduled.cancelled
+                          - shift.scheduled
+                          - shift.created
+                          - shift.report.accepted-automatically
+                          - shift.report.accepted
+                          - shift.report.rejected
+                          - shift.cancelled
+                          - all
+                      clientId:
+                        type: string
+                      facilities:
+                        description: List of facilities ids that this webhook belongs to
+                        example:
+                        - P-123456
+                        - P-123457
+                        type: array
+                        items:
+                          type: string
+                      secrets:
+                        description: List of webhook secrets
+                        example:
+                        - sDV1aKqitCLClI12m7UPFbAAvZfZquJw
+                        - mryefgHPBVHJwux0o3BYW7hPM0BZlcCa
+                        type: array
+                        items:
+                          type: string
+                    required:
+                    - id
+                    - url
+                    - events
+                    - clientId
+                    - facilities
+                    - secrets
+                    title: CreateWebhookResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - should be a secure URL with HTTPS
+                    - url must be a string
+                    - events must contain at least 1 elements
+                    - events must be an array
+                    - 'each value in events must be one of the following values: shift.request.created, shift.request.cancelled, shift.report.created, shift.scheduled.cancelled, shift.scheduled, shift.created, shift.report.accepted-automatically, shift.report.accepted, shift.report.rejected, shift.cancelled, all'
+                    - each value in facilities must be a string
+                    - secrets must contain no more than 2 elements
+                    - secrets must be an array
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+  /api/v2/public/webhooks/facility/{webhookId}:
+    patch:
+      operationId: FacilitiesWebhooksController_updateOne
+      summary: Update Webhook
+      description: '<p>Updates an existing webhook. This endpoint allows you to modify the URL, events, or other settings of an already registered webhook.</p>
+
+        '
+      tags:
+      - Facilities webhooks
+      security:
+      - public-api: []
+      parameters:
+      - name: webhookId
+        required: true
+        in: path
+        description: Webhook id
+        example: c8c7913d-3e1f-4e4c-a646-81282ecba2b8
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL that will be called when an event is triggered.
+                  example: https://example.com/webhook
+                events:
+                  type: array
+                  description: The events that this webhook will listen to.
+                  example:
+                  - all
+                  items:
+                    type: string
+                    enum:
+                    - shift.request.created
+                    - shift.request.cancelled
+                    - shift.report.created
+                    - shift.scheduled.cancelled
+                    - shift.scheduled
+                    - shift.created
+                    - shift.report.accepted-automatically
+                    - shift.report.accepted
+                    - shift.report.rejected
+                    - shift.cancelled
+                    - all
+                facilities:
+                  description: The IDs of the facilities that will receive events from this webhook. If no value is provided it will auto detect facilities that user has access
+                  example:
+                  - P-123456
+                  - P-123457
+                  type: array
+                  items:
+                    type: string
+                secrets:
+                  description: "\n      The secrets that will be used to verify the authenticity of the webhook.\n      If no value is provided it will auto generate a secret.\n      Secrets are used to sign and validate the payload of the webhook.\n      It will accept 2 secrets to allow a rotation strategy without service downtime.\n    "
+                  example:
+                  - sDV1aKqitCLClI12m7UPFbAAvZfZquJw
+                  - mryefgHPBVHJwux0o3BYW7hPM0BZlcCa
+                  type: array
+                  items:
+                    type: string
+              title: UpdateWebhookRequest
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: If of the Webhook
+                        example: ad2ce8f4-06d0-4d1a-9ef2-c156dfa17fba
+                      url:
+                        type: string
+                        description: Url of the Webhook
+                        example: https://exemple.com/webhook
+                      events:
+                        type: array
+                        description: List of events that this webhook will listen to
+                        example:
+                        - shift.report.created
+                        - shift.request.created
+                        items:
+                          type: string
+                          enum:
+                          - shift.request.created
+                          - shift.request.cancelled
+                          - shift.report.created
+                          - shift.scheduled.cancelled
+                          - shift.scheduled
+                          - shift.created
+                          - shift.report.accepted-automatically
+                          - shift.report.accepted
+                          - shift.report.rejected
+                          - shift.cancelled
+                          - all
+                      clientId:
+                        type: string
+                      facilities:
+                        description: List of facilities ids that this webhook belongs to
+                        example:
+                        - P-123456
+                        - P-123457
+                        type: array
+                        items:
+                          type: string
+                      secrets:
+                        description: List of webhook secrets
+                        example:
+                        - sDV1aKqitCLClI12m7UPFbAAvZfZquJw
+                        - mryefgHPBVHJwux0o3BYW7hPM0BZlcCa
+                        type: array
+                        items:
+                          type: string
+                    required:
+                    - id
+                    - url
+                    - events
+                    - clientId
+                    - facilities
+                    - secrets
+                    title: CreateWebhookResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    description: Error description
+                    items:
+                      type: string
+                      example: Property must be a string
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Bad Request
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 400
+              examples:
+                Request Validation:
+                  summary: Request Validation Error
+                  value:
+                    message:
+                    - should be a secure URL with HTTPS
+                    - url must be a string
+                    - events must contain at least 1 elements
+                    - events must be an array
+                    - 'each value in events must be one of the following values: shift.request.created, shift.request.cancelled, shift.report.created, shift.scheduled.cancelled, shift.scheduled, shift.created, shift.report.accepted-automatically, shift.report.accepted, shift.report.rejected, shift.cancelled, all'
+                    - each value in facilities must be a string
+                    - secrets must contain no more than 2 elements
+                    - secrets must be an array
+                    error: Bad Request
+                    statusCode: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Not Found
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 404
+              examples:
+                Not Found:
+                  summary: Webhook was not found
+                  value:
+                    message: Webhook not found
+                    error: Not Found
+                    statusCode: 404
+    delete:
+      operationId: FacilitiesWebhooksController_deleteOne
+      summary: Delete Webhook
+      description: '<p>Deletes a webhook. Use this endpoint to remove a webhook that is no longer needed.</p>
+
+        '
+      tags:
+      - Facilities webhooks
+      security:
+      - public-api: []
+      parameters:
+      - name: webhookId
+        required: true
+        in: path
+        description: Webhook id
+        example: c8c7913d-3e1f-4e4c-a646-81282ecba2b8
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Empty Response
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Unauthorized
+                    description: Error description
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 401
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error description
+                    example: Forbidden Resource
+                  error:
+                    type: string
+                    description: The type of error
+                    example: Forbidden
+                  statusCode:
+                    type: integer
+                    description: Status code of the error
+                    example: 403
+components:
+  securitySchemes:
+    public-api:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Please, fill this with your authorization token
+externalDocs:
+  description: Nursa Public API documentation
+  url: https://docs.nursa.com/

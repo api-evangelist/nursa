@@ -1,0 +1,95 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nursa Public API V2 Shifts API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shifts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Shifts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public-api.prod.nursa.com/api/v2/public/shifts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the quantity of records returned"
+              },
+              {
+                "name": "offset",
+                "value": "10",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the number of records to skip before starting to return results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "DESC",
+                "type": "query",
+                "description": "Pagination parameter, use to specify the order of records by creation date, either 'asc' for ascending or 'desc' for descending"
+              },
+              {
+                "name": "startDate",
+                "value": "2025-09-15T10:23:18.211Z",
+                "type": "query",
+                "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)"
+              },
+              {
+                "name": "endDate",
+                "value": "2025-09-15T10:23:18.211Z",
+                "type": "query",
+                "description": "When you provide date-time value, time is ignored and will take the start of the day for the given date (00:00:00)"
+              },
+              {
+                "name": "licenseTypes",
+                "value": "RN",
+                "type": "query",
+                "description": "License Type of the shift"
+              },
+              {
+                "name": "facilityIds",
+                "value": "NUR-1660331570",
+                "type": "query",
+                "description": "Id of the facility"
+              },
+              {
+                "name": "statuses",
+                "value": "UnfulfilledRequested",
+                "type": "query",
+                "description": "Status of the Shift"
+              },
+              {
+                "name": "shiftIds",
+                "value": "5552536398",
+                "type": "query",
+                "description": "Id of the shift"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<h3>General Information</h3>\n<p>This endpoint allows you to <strong>search for all shifts</strong>, including those that are <strong>not actively listed</strong> in the Nursa Marketplace.</p>\n<p>Unlike the <strong>Get Marketplace Shifts</strong> endpoint, which only returns shifts with the statuses <code>Open</code>, <code>Viewed</code>, <code>Requested</code>, or <code>Scheduled</code>, this endpoint retrieves shifts regardless of their status.</p>\n<p>You can use the following query parameters "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
