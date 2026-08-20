@@ -29,6 +29,19 @@ tags:
 - Human Resources
 - Per Diem
 - Shifts
+- Webhook
+tags_raw:
+- Company
+- Healthcare
+- Health
+- Staffing
+- Nursing
+- Marketplace
+- Workforce Management
+- Scheduling
+- Human Resources
+- Per Diem
+- Shifts
 - Webhooks
 maintainers:
 - FN: Kin Lane
@@ -47,6 +60,11 @@ apis:
   humanURL: https://docs.nursa.com/docs/Integration%20Guideline/Authentication/
   baseURL: https://auth.nursa.com/oidc
   tags:
+  - Authentication
+  - Authorization
+  - OpenID Connect
+  - Identity
+  tags_raw:
   - Authentication
   - Authorization
   - OpenID Connect
@@ -259,6 +277,8 @@ apis:
   humanURL: https://docs.nursa.com/
   baseURL: https://public-api.prod.nursa.com
   tags:
+  - Shift Requests
+  tags_raw:
   - Shift requests
   properties:
   - type: OpenAPI
@@ -331,6 +351,8 @@ apis:
   humanURL: https://docs.nursa.com/
   baseURL: https://public-api.prod.nursa.com
   tags:
+  - User Webhooks
+  tags_raw:
   - User webhooks
   properties:
   - type: OpenAPI
@@ -355,6 +377,8 @@ apis:
   humanURL: https://docs.nursa.com/
   baseURL: https://public-api.prod.nursa.com
   tags:
+  - Webhook Logs
+  tags_raw:
   - Webhook logs
   properties:
   - type: OpenAPI
