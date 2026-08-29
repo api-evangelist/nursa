@@ -10,6 +10,18 @@ description: 'Nursa is a healthcare staffing marketplace, founded in Salt Lake C
   shifts, review requests, schedule clinicians, read clinician credentials and subscribe to webhooks — the
   integration surface behind its Covr, StaffLion, Dropstat, Maple and UKG partnerships. The company is
   accredited by The Joint Commission and reports more than 4,500 facilities and 500,000 clinicians nationwide.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/636e7f8063d6538dea5ca1e4/63e3d5253bcbd6e2b35efeee_logo-horizontal-color.svg
 url: https://raw.githubusercontent.com/api-evangelist/nursa/refs/heads/main/apis.yml
 x-type: company
