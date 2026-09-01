@@ -289,7 +289,7 @@ apis:
   humanURL: https://docs.nursa.com/
   baseURL: https://public-api.prod.nursa.com
   tags:
-  - Shift requests
+  - Shift Requests
   tags_raw:
   - Shift requests
   properties:
@@ -363,7 +363,7 @@ apis:
   humanURL: https://docs.nursa.com/
   baseURL: https://public-api.prod.nursa.com
   tags:
-  - User webhooks
+  - User Webhooks
   tags_raw:
   - User webhooks
   properties:
@@ -389,7 +389,7 @@ apis:
   humanURL: https://docs.nursa.com/
   baseURL: https://public-api.prod.nursa.com
   tags:
-  - Webhook logs
+  - Webhook Logs
   tags_raw:
   - Webhook logs
   properties:
