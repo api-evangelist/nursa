@@ -26,9 +26,7 @@ paths:
     get:
       operationId: DownloadController_clinicianProfile
       summary: Download clinician profile
-      description: '<p>Returns link to download detailed clinician profile for a shift.</p>
-
-        '
+      description: Returns link to download detailed clinician profile for a shift.
       tags:
       - Downloads
       security:

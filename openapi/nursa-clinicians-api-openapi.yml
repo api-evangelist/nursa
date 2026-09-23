@@ -26,11 +26,10 @@ paths:
     get:
       operationId: CliniciansController_getDetails
       summary: Get Clinician Details
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>This endpoint allows you to retrieve <strong>clinician information</strong></p>
 
-        '
+        This endpoint allows you to retrieve clinician information'
       tags:
       - Clinicians
       security:
@@ -155,47 +154,46 @@ paths:
     get:
       operationId: CliniciansController_getDocuments
       summary: Get Clinician Documents
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>This endpoint allows facilities to retrieve a list of all documents associated with a specific clinician.</p>
 
-        <h4><strong>Required Parameters</strong></h4>
+        This endpoint allows facilities to retrieve a list of all documents associated with a specific clinician.
 
-        <ul>
 
-        <li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>
+        Required Parameters
 
-        <li><strong>shiftId</strong> (query parameter): The shift ID which the clinician requested</li>
 
-        </ul>
+        clinicianId (path parameter): The unique identifier of the clinician
 
-        <h4><strong>Document Categories</strong></h4>
 
-        <p>The endpoint returns documents organized by the following categories:</p>
+        shiftId (query parameter): The shift ID which the clinician requested
 
-        <ul>
 
-        <li><strong>LICENSE</strong>: Professional licenses (nursing, medical, etc.)</li>
+        Document Categories
 
-        <li><strong>CREDENTIAL</strong>: Professional credentials and certifications</li>
 
-        <li><strong>BACKGROUND_CHECK</strong>: Background check documents and results</li>
+        The endpoint returns documents organized by the following categories:
 
-        <li><strong>SSN</strong>: Social Security Number verification documents</li>
 
-        <li><strong>CDPH_530</strong>: California Department of Public Health 530 forms</li>
+        LICENSE: Professional licenses (nursing, medical, etc.)
 
-        </ul>
 
-        <h4><strong>Access Control</strong></h4>
+        CREDENTIAL: Professional credentials and certifications
 
-        <ul>
 
-        <li>The implementation logic requires that a clinician has submitted a shift request to a facility that the facility user is connected to. This requirement is in place to prevent the unauthorized sharing of documentation for users who have not interacted with one of your shifts.</li>
+        BACKGROUND_CHECK: Background check documents and results
 
-        </ul>
 
-        '
+        SSN: Social Security Number verification documents
+
+
+        CDPH_530: California Department of Public Health 530 forms
+
+
+        Access Control
+
+
+        The implementation logic requires that a clinician has submitted a shift request to a facility that the facility user is connected to. This requirement is in place to prevent the unauthorized sharing of documentation for users who have not interacted with one of your shifts.'
       tags:
       - Clinicians
       security:
@@ -349,29 +347,25 @@ paths:
     get:
       operationId: CliniciansController_getAttachment
       summary: Download Clinician Document attachment
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>This endpoint allows you to download a specific attachment file associated with a clinician''s document.</p>
 
-        <h4><strong>Required Parameters</strong></h4>
+        This endpoint allows you to download a specific attachment file associated with a clinician''s document.
 
-        <ul>
 
-        <li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>
+        Required Parameters
 
-        <li><strong>attachmentId</strong> (path parameter): The unique identifier of the specific attachment to download</li>
 
-        </ul>
+        clinicianId (path parameter): The unique identifier of the clinician
 
-        <h4><strong>File Handling</strong></h4>
 
-        <ul>
+        attachmentId (path parameter): The unique identifier of the specific attachment to download
 
-        <li>Files are streamed directly to the client for immediate download</li>
 
-        </ul>
+        File Handling
 
-        '
+
+        Files are streamed directly to the client for immediate download'
       tags:
       - Clinicians
       security:
@@ -460,31 +454,28 @@ paths:
     get:
       operationId: CliniciansController_getDocumentAttachments
       summary: Get Clinician Document attachments
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>This endpoint retrieves all file attachments associated with a specific clinician document.</p>
 
-        <h4><strong>Required Parameters</strong></h4>
+        This endpoint retrieves all file attachments associated with a specific clinician document.
 
-        <ul>
 
-        <li><strong>clinicianId</strong> (path parameter): The unique identifier of the clinician</li>
+        Required Parameters
 
-        <li><strong>category</strong> (path parameter): The document category (LICENSE, CREDENTIAL, BACKGROUND_CHECK, SSN, CDPH_530)</li>
 
-        <li><strong>documentId</strong> (path parameter): The unique identifier of the specific document</li>
+        clinicianId (path parameter): The unique identifier of the clinician
 
-        </ul>
 
-        <h4><strong>Access Control</strong></h4>
+        category (path parameter): The document category (LICENSE, CREDENTIAL, BACKGROUND_CHECK, SSN, CDPH_530)
 
-        <ul>
 
-        <li>The implementation logic requires that a clinician has submitted a shift request to a facility that the facility user is connected to. This requirement is in place to prevent the unauthorized sharing of documentation for users who have not interacted with one of your shifts</li>
+        documentId (path parameter): The unique identifier of the specific document
 
-        </ul>
 
-        '
+        Access Control
+
+
+        The implementation logic requires that a clinician has submitted a shift request to a facility that the facility user is connected to. This requirement is in place to prevent the unauthorized sharing of documentation for users who have not interacted with one of your shifts'
       tags:
       - Clinicians
       security:

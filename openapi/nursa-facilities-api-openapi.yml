@@ -26,9 +26,7 @@ paths:
     get:
       operationId: FacilitiesController_getAll
       summary: Get Facilities
-      description: '<p>Returns an array of facilities which the user has <a href="facilities-controller-request-connection" target="_blank">connection</a> to.</p>
-
-        '
+      description: Returns an array of facilities which the user has connection to.
       tags:
       - Facilities
       security:
@@ -281,13 +279,13 @@ paths:
     post:
       operationId: FacilitiesController_requestConnection
       summary: Request Facility Connection
-      description: '<p>This endpoint allows users to request a connection to an existing facility in our application. The user must provide the <code>facilityId</code> in the request body payload. Once the request is submitted, a Nursa employee will review and either accept or reject the request.</p>
+      description: 'This endpoint allows users to request a connection to an existing facility in our application. The user must provide the facilityId in the request body payload. Once the request is submitted, a Nursa employee will review and either accept or reject the request.
 
-        <p>A verified facility connection is required to act on behalf of the facility, such as using endpoints to <a href="marketplace-controller-create-shifts" target="_blank">Create Shifts</a> and <a href="/pages/api/schedule-shifts-controller-schedule-shift" target="_blank">Schedule Clinicians</a>.</p>
 
-        <p>Users can also create a <a href="facilities-webhooks-controller-create-one" target="_blank">Webhook</a> in our system to receive notifications when the facility connection request is accepted or rejected.</p>
+        A verified facility connection is required to act on behalf of the facility, such as using endpoints to Create Shifts and Schedule Clinicians.
 
-        '
+
+        Users can also create a Webhook in our system to receive notifications when the facility connection request is accepted or rejected.'
       tags:
       - Facilities
       security:
@@ -383,9 +381,7 @@ paths:
     post:
       operationId: FacilitiesController_favoritingClinician
       summary: Favoriting Clinicians
-      description: '<p>Auto scheduler will prioritize favorited clinicians.</p>
-
-        '
+      description: Auto scheduler will prioritize favorited clinicians.
       tags:
       - Facilities
       security:
@@ -520,13 +516,13 @@ paths:
     post:
       operationId: FacilitiesController_requestFacilityCreation
       summary: Request Facility Creation
-      description: '<p>This endpoint allows users to request a facility to be created in our application. Once the request is submitted, a Nursa employee will review and either accept or reject the request.</p>
+      description: 'This endpoint allows users to request a facility to be created in our application. Once the request is submitted, a Nursa employee will review and either accept or reject the request.
 
-        <p>If the request is accepted the connection between the user and the facility will be created automatically Therefore, there is no need to <a href="facilities-controller-request-connection" target="_blank">Request a Facility Connection</a> for the user who created the facility.</p>
 
-        <p>Users can also create a <a href="facilities-webhooks-controller-create-one" target="_blank">Webhook</a> in our system to receive notifications when the facility creation request is accepted or rejected.</p>
+        If the request is accepted the connection between the user and the facility will be created automatically Therefore, there is no need to Request a Facility Connection for the user who created the facility.
 
-        '
+
+        Users can also create a Webhook in our system to receive notifications when the facility creation request is accepted or rejected.'
       tags:
       - Facilities
       security:
@@ -839,11 +835,10 @@ paths:
     get:
       operationId: FacilitiesController_searchFacilities
       summary: Search Facilities
-      description: '<p>Returns an array of all the facilities registered in the application. Only publicly available information about each facility will be returned through this endpoint.</p>
+      description: 'Returns an array of all the facilities registered in the application. Only publicly available information about each facility will be returned through this endpoint.
 
-        <p>You can use this endpoint to search for a specific facility to check if it already exists in the application. Instead of using the <a href="facilities-controller-request-facility-creation" target="_blank">Request Facility Creation</a> endpoint, you can use the <a href="facilities-controller-request-connection" target="_blank">Request Facility Connection</a> endpoint if the facility is found.</p>
 
-        '
+        You can use this endpoint to search for a specific facility to check if it already exists in the application. Instead of using the Request Facility Creation endpoint, you can use the Request Facility Connection endpoint if the facility is found.'
       tags:
       - Facilities
       security:
@@ -988,9 +983,7 @@ paths:
     get:
       operationId: FacilitiesController_getAllSpecialties
       summary: Get Specialties
-      description: '<p>Returns an array of specialties. A specialty <strong>title</strong> is required when using the <a href="facilities-controller-request-connection" target="_blank">Request Facility Creation</a> endpoint.</p>
-
-        '
+      description: Returns an array of specialties. A specialty title is required when using the Request Facility Creation endpoint.
       tags:
       - Facilities
       security:
@@ -1059,9 +1052,7 @@ paths:
     get:
       operationId: FacilitiesController_getOneById
       summary: Get Facility
-      description: '<p>Return a single facility data based on the <code>facilityId</code> path param, you''ll only be able to fetch the facility''s data if you have a <a href="facilities-controller-request-connection" target="_blank">Facility Connection</a> in place.</p>
-
-        '
+      description: Return a single facility data based on the facilityId path param, you'll only be able to fetch the facility's data if you have a Facility Connection in place.
       tags:
       - Facilities
       security:
@@ -1289,11 +1280,10 @@ paths:
     get:
       operationId: FacilitiesController_getWorkHistory
       summary: Get Facility Work History
-      description: '<p>Return data of clinicians that have completed a shift for the given Facility.</p>
+      description: 'Return data of clinicians that have completed a shift for the given Facility.
 
-        <p>The data will be sorted based on the Shift Start Date.</p>
 
-        '
+        The data will be sorted based on the Shift Start Date.'
       tags:
       - Facilities
       security:

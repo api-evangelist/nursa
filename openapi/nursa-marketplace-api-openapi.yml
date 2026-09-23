@@ -26,11 +26,10 @@ paths:
     get:
       operationId: MarketplaceController_getMarketplaceShifts
       summary: Get marketplace shifts
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>This endpoint returns shifts for the facilities that user is connected to.</p>
 
-        '
+        This endpoint returns shifts for the facilities that user is connected to.'
       tags:
       - Marketplace
       security:
@@ -251,59 +250,40 @@ paths:
     post:
       operationId: MarketplaceController_createShifts
       summary: Create shifts
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>When creating shift price quotation  is based on <code>from</code>, <code>to</code> dates, and optional <code>breakTime</code> params.</p>
 
-        <p>If the facility for which you are creating the shift has the <strong>Auto Schedule</strong> feature enabled, the shifts will inherit the same Auto Schedule settings by default.</p>
+        When creating shift price quotation is based on from, to dates, and optional breakTime params.
 
-        <ul>
 
-        <li>
+        If the facility for which you are creating the shift has the Auto Schedule feature enabled, the shifts will inherit the same Auto Schedule settings by default.
 
-        <p>To enable only specific Auto Schedule options, use the <code>autoScheduleSettings</code> property in the request body to specify the desired options.</p>
 
-        </li>
+        To enable only specific Auto Schedule options, use the autoScheduleSettings property in the request body to specify the desired options.
 
-        <li>
 
-        <p>To create a shift <strong>without any Auto Schedule options</strong>, even if the facility has this feature enabled, set <code>autoScheduleSettings</code> to <code>null</code> or an empty array (<code>[]</code>).</p>
+        To create a shift without any Auto Schedule options, even if the facility has this feature enabled, set autoScheduleSettings to null or an empty array ([]).
 
-        </li>
 
-        <li>
+        Failure: The process uses transactions, so if one job fails, all changes are reverted.
 
-        <p><strong>Failure</strong>: The process uses transactions, so if one job fails, all changes are reverted.</p>
 
-        </li>
+        License Requirement: A valid licenseType must be provided when creating a shift.
 
-        <li>
 
-        <p><strong>License Requirement</strong>: A valid <a href="licenses-controller-get-all" target="_blank">licenseType</a> must be provided when creating a shift.</p>
+        Facility Connection: If the authenticated user is not connected with the facility, the system will return a "facility not found" error. In this case, refer to the facility connection request guide. Ensure you account for this response in your implementation.
 
-        </li>
 
-        <li>
+        Potential Issues
 
-        <p><strong>Facility Connection</strong>: If the authenticated user is not connected with the facility, the system will return a &quot;facility not found&quot; error. In this case, refer to the <a href="facilities-controller-request-connection" target="_blank">facility connection request guide</a>. Ensure you account for this response in your implementation.</p>
 
-        </li>
+        No Associated User: There is no user associated with the facility. At least one user must be created and associated with the facility.
 
-        </ul>
 
-        <h3>Potential Issues</h3>
+        No Associated User: The user needs to have a connection with the facility
 
-        <ul>
 
-        <li><strong>No Associated User</strong>: There is no user associated with the facility. At least one user must be created and associated with the facility.</li>
-
-        <li><strong>No Associated User</strong>: The user needs to have a <a href="facilities-controller-request-facility-creation" target="_blank">connection</a> with the facility</li>
-
-        <li><strong>Auto schedule option is not enabled for this facility</strong> The facility for which you are creating the shift does not have the specified Auto Schedule option enabled</li>
-
-        </ul>
-
-        '
+        Auto schedule option is not enabled for this facility The facility for which you are creating the shift does not have the specified Auto Schedule option enabled'
       tags:
       - Marketplace
       security:
@@ -513,51 +493,52 @@ paths:
     post:
       operationId: MarketplaceController_cancelShift
       summary: Cancel shift
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>Canceling a shift affects the following shift statuses:</p>
 
-        <ul>
+        Canceling a shift affects the following shift statuses:
 
-        <li><strong>Shift Open</strong>: <code>shift.cancelled</code></li>
 
-        <li><strong>Shift Requested</strong>: <code>shift.cancelled</code>, <code>shift.request.cancelled</code></li>
+        Shift Open: shift.cancelled
 
-        <li><strong>Shift Scheduled but Not Started</strong>: <code>shift.cancelled</code>, <code>shift.scheduled.cancelled</code></li>
 
-        <li><strong>Shift Scheduled and In Progress</strong>: <code>shift.cancelled</code>, <code>shift.scheduled.cancelled</code></li>
+        Shift Requested: shift.cancelled, shift.request.cancelled
 
-        </ul>
 
-        <h3>Webhooks Configuration</h3>
+        Shift Scheduled but Not Started: shift.cancelled, shift.scheduled.cancelled
 
-        <p>To stay up to date with shift cancellations, configure the following webhooks: <a href="facilities-webhooks-controller-get-all" target="_blank">Webhooks API Documentation</a></p>
 
-        <ul>
+        Shift Scheduled and In Progress: shift.cancelled, shift.scheduled.cancelled
 
-        <li><code>shift.cancelled</code></li>
 
-        <li><code>shift.request.cancelled</code></li>
+        Webhooks Configuration
 
-        <li><code>shift.scheduled.cancelled</code></li>
 
-        </ul>
+        To stay up to date with shift cancellations, configure the following webhooks: Webhooks API Documentation
 
-        <h3>Cancellation Reason</h3>
 
-        <p>Possible reasons:</p>
+        shift.cancelled
 
-        <ul>
 
-        <li><code>Filled internally</code>: The shift was filled by internal staff within the organization.</li>
+        shift.request.cancelled
 
-        <li><code>Filled by other agency</code>: The shift was filled by a clinician from another agency.</li>
 
-        <li><code>Talent not needed</code>: The shift is no longer required, possibly due to changes in demand or scheduling errors.</li>
+        shift.scheduled.cancelled
 
-        </ul>
 
-        '
+        Cancellation Reason
+
+
+        Possible reasons:
+
+
+        Filled internally: The shift was filled by internal staff within the organization.
+
+
+        Filled by other agency: The shift was filled by a clinician from another agency.
+
+
+        Talent not needed: The shift is no longer required, possibly due to changes in demand or scheduling errors.'
       tags:
       - Marketplace
       security:
@@ -698,15 +679,16 @@ paths:
     post:
       operationId: MarketplaceController_quoteShift
       summary: Quote the price of a given shift
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>Although a price quoting is calculated when <a href="marketplace-controller-create-shifts" target="_blank">creating shifts</a>, we provide a price quotation without creating a shift.</p>
 
-        <p>This will not create a shift, but you can <a href="marketplace-controller-create-shift-from-quote" target="_blank">create one from the quote</a>. The shift quote is calculated based on the <code>from</code>, <code>to</code>, and <code>breakTime</code> parameters.</p>
+        Although a price quoting is calculated when creating shifts, we provide a price quotation without creating a shift.
 
-        <p>Note: The quote is temporarily stored for 15 minutes. After that, it can no longer be used.</p>
 
-        '
+        This will not create a shift, but you can create one from the quote. The shift quote is calculated based on the from, to, and breakTime parameters.
+
+
+        Note: The quote is temporarily stored for 15 minutes. After that, it can no longer be used.'
       tags:
       - Marketplace
       security:
@@ -881,31 +863,28 @@ paths:
     post:
       operationId: MarketplaceController_createShiftFromQuote
       summary: Create shift from quote
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>Based on previously <a href="marketplace-controller-quote-shift" target="_blank">created quote</a> you can now create a shift.</p>
 
-        <p>If the facility for which you are creating the shift has the <strong>Auto Schedule</strong> feature enabled, the shifts will inherit the same Auto Schedule settings by default.</p>
+        Based on previously created quote you can now create a shift.
 
-        <ul>
 
-        <li>To enable only specific Auto Schedule options, use the <code>autoScheduleSettings</code> property in the request body to specify the desired options.</li>
+        If the facility for which you are creating the shift has the Auto Schedule feature enabled, the shifts will inherit the same Auto Schedule settings by default.
 
-        <li>To create a shift <strong>without any Auto Schedule options</strong>, even if the facility has this feature enabled, set <code>autoScheduleSettings</code> to <code>null</code> or an empty array (<code>[]</code>).</li>
 
-        </ul>
+        To enable only specific Auto Schedule options, use the autoScheduleSettings property in the request body to specify the desired options.
 
-        <h3>Potential issues</h3>
 
-        <ul>
+        To create a shift without any Auto Schedule options, even if the facility has this feature enabled, set autoScheduleSettings to null or an empty array ([]).
 
-        <li><strong>Quoted shift not found</strong> Quote has expired</li>
 
-        <li><strong>Auto schedule option is not enabled for this facility</strong> The facility for which you are creating the shift does not have the specified Auto Schedule option enabled</li>
+        Potential issues
 
-        </ul>
 
-        '
+        Quoted shift not found Quote has expired
+
+
+        Auto schedule option is not enabled for this facility The facility for which you are creating the shift does not have the specified Auto Schedule option enabled'
       tags:
       - Marketplace
       security:
@@ -1081,11 +1060,10 @@ paths:
     patch:
       operationId: MarketplaceController_patchShift
       summary: Update shift
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>You can update <code>description</code> and <code>bonus</code>, <code>bonus</code> will change the shift quote.</p>
 
-        '
+        You can update description and bonus, bonus will change the shift quote.'
       tags:
       - Marketplace
       security:

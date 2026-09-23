@@ -20,19 +20,18 @@ servers:
 security:
 - public-api: []
 tags:
-- name: Shift requests
+- name: Shift Requests
 paths:
   /api/v2/public/shift-requests:
     get:
       operationId: ShiftRequestsController_getShiftRequests
       summary: Get requested shifts
-      description: '<p>Returns requested shift with clinician''s details and a link to <a href="download-controller-clinician-profile">download clinician profile</a> that is generated when the shift was requested. This ensures the clinician information is up to date.</p>
+      description: 'Returns requested shift with clinician''s details and a link to download clinician profile that is generated when the shift was requested. This ensures the clinician information is up to date.
 
-        <p>Users can also create a <a href="facilities-webhooks-controller-create-one" target="_blank">Webhook</a> in our system to receive notifications when a clinician requests to work a shift.</p>
 
-        '
+        Users can also create a Webhook in our system to receive notifications when a clinician requests to work a shift.'
       tags:
-      - Shift requests
+      - Shift Requests
       security:
       - public-api: []
       parameters:
@@ -277,45 +276,33 @@ paths:
     post:
       operationId: ShiftRequestsController_rejectShiftRequest
       summary: Reject clinicians shift request
-      description: '<h3><strong>Reject a Clinician''s Shift Request</strong></h3>
+      description: 'Reject a Clinician''s Shift Request
 
-        <p>This operation rejects a clinician''s request to take a shift.</p>
 
-        <h4><strong>Notifications</strong></h4>
+        This operation rejects a clinician''s request to take a shift.
 
-        <ul>
 
-        <li>The clinician whose request was rejected will be notified that the shift has already been filled.</li>
+        Notifications
 
-        </ul>
 
-        <h4><strong>Shift Status Updates</strong></h4>
+        The clinician whose request was rejected will be notified that the shift has already been filled.
 
-        <ul>
 
-        <li>The rejected clinician will see the shift marked as <strong>&quot;Filled&quot;</strong> in their view, indicating that the shift is no longer available for them.</li>
+        Shift Status Updates
 
-        </ul>
 
-        <h4><strong>Errors</strong></h4>
+        The rejected clinician will see the shift marked as "Filled" in their view, indicating that the shift is no longer available for them.
 
-        <ul>
 
-        <li><strong>409 Conflict</strong>: Returned if you attempt to reject a shift request that is not in the <strong>&quot;Requested&quot;</strong> status.
+        Errors
 
-        <ul>
 
-        <li><strong>Message:</strong> <code>Shift request can''t be rejected because shift is not in Requested status.</code></li>
+        409 Conflict: Returned if you attempt to reject a shift request that is not in the "Requested" status.
 
-        </ul>
 
-        </li>
-
-        </ul>
-
-        '
+        Message: Shift request can''t be rejected because shift is not in Requested status.'
       tags:
-      - Shift requests
+      - Shift Requests
       security:
       - public-api: []
       parameters: []

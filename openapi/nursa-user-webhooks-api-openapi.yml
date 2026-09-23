@@ -20,17 +20,15 @@ servers:
 security:
 - public-api: []
 tags:
-- name: User webhooks
+- name: User Webhooks
 paths:
   /api/v2/public/webhooks/user:
     get:
       operationId: UserWebhooksController_getAllUserWebhooks
       summary: Get all User Webhooks
-      description: '<p>Retrieves a list of all existing user webhooks.</p>
-
-        '
+      description: Retrieves a list of all existing user webhooks.
       tags:
-      - User webhooks
+      - User Webhooks
       security:
       - public-api: []
       parameters: []
@@ -123,15 +121,15 @@ paths:
     post:
       operationId: UserWebhooksController_createOneUserWebhook
       summary: Create User Webhook
-      description: '<p>We strongly recommend you set up webhooks for better and easier integration.</p>
+      description: 'We strongly recommend you set up webhooks for better and easier integration.
 
-        <p>Creates a new User webhook. Use this endpoint to register a new webhook by specifying the URL and the events you want to subscribe to.</p>
 
-        <p>With User Webhook you''ll ne notified whenever a facility creation or connection request is either accepted or rejected.</p>
+        Creates a new User webhook. Use this endpoint to register a new webhook by specifying the URL and the events you want to subscribe to.
 
-        '
+
+        With User Webhook you''ll ne notified whenever a facility creation or connection request is either accepted or rejected.'
       tags:
-      - User webhooks
+      - User Webhooks
       security:
       - public-api: []
       parameters: []
@@ -295,11 +293,9 @@ paths:
     patch:
       operationId: UserWebhooksController_updateOneUserWebhook
       summary: Update User Webhook
-      description: '<p>Updates an existing user webhook. This endpoint allows you to modify the URL, events, or other settings of an already registered user webhook.</p>
-
-        '
+      description: Updates an existing user webhook. This endpoint allows you to modify the URL, events, or other settings of an already registered user webhook.
       tags:
-      - User webhooks
+      - User Webhooks
       security:
       - public-api: []
       parameters:
@@ -493,11 +489,9 @@ paths:
     delete:
       operationId: UserWebhooksController_deleteOneUserWebhook
       summary: Delete User Webhook
-      description: '<p>Deletes a user webhook. Use this endpoint to remove a user webhook that is no longer needed.</p>
-
-        '
+      description: Deletes a user webhook. Use this endpoint to remove a user webhook that is no longer needed.
       tags:
-      - User webhooks
+      - User Webhooks
       security:
       - public-api: []
       parameters:

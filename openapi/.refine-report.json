@@ -1,19 +1,7 @@
 {
   "provider": "nursa",
   "sources": [
-    "nursa-clinicians-api-openapi.yml",
-    "nursa-downloads-api-openapi.yml",
-    "nursa-facilities-api-openapi.yml",
-    "nursa-facilities-webhooks-api-openapi.yml",
-    "nursa-licenses-api-openapi.yml",
-    "nursa-marketplace-api-openapi.yml",
-    "nursa-scheduled-shifts-api-openapi.yml",
-    "nursa-shift-reports-api-openapi.yml",
-    "nursa-shift-requests-api-openapi.yml",
-    "nursa-shifts-api-openapi.yml",
-    "nursa-support-api-openapi.yml",
-    "nursa-user-webhooks-api-openapi.yml",
-    "nursa-webhook-logs-api-openapi.yml"
+    "_original/nursa-public-api-v2-openapi.yml"
   ],
   "outputs": [
     "nursa-clinicians-api-openapi.yml",
@@ -34,20 +22,25 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "nursa-clinicians-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-downloads-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-facilities-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-facilities-webhooks-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-licenses-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-marketplace-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-scheduled-shifts-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-shift-reports-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-shift-requests-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-shifts-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-support-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-user-webhooks-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "nursa-webhook-logs-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "nursa-public-api-v2-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "nursa-public-api-v2-openapi.yml: tagged paths PUT /api/v2/support/facilities/user/associate -> Support",
+    "nursa-public-api-v2-openapi.yml: declared missing tag: Support",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "nursa-clinicians-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-downloads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-facilities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-facilities-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-licenses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-marketplace-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-scheduled-shifts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-shift-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-shift-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-shifts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-support-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-user-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nursa-webhook-logs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

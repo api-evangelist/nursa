@@ -26,117 +26,80 @@ paths:
     get:
       operationId: ShiftsController_searchShifts
       summary: Search Shifts
-      description: '<h3>General Information</h3>
+      description: 'General Information
 
-        <p>This endpoint allows you to <strong>search for all shifts</strong>, including those that are <strong>not actively listed</strong> in the Nursa Marketplace.</p>
 
-        <p>Unlike the <strong>Get Marketplace Shifts</strong> endpoint, which only returns shifts with the statuses <code>Open</code>, <code>Viewed</code>, <code>Requested</code>, or <code>Scheduled</code>, this endpoint retrieves shifts regardless of their status.</p>
+        This endpoint allows you to search for all shifts, including those that are not actively listed in the Nursa Marketplace.
 
-        <p>You can use the following query parameters to filter the response:</p>
 
-        <h4>Query Parameters</h4>
+        Unlike the Get Marketplace Shifts endpoint, which only returns shifts with the statuses Open, Viewed, Requested, or Scheduled, this endpoint retrieves shifts regardless of their status.
 
-        <table>
 
-        <thead>
+        You can use the following query parameters to filter the response:
 
-        <tr>
 
-        <th>Parameter</th>
+        Query Parameters
 
-        <th>Type</th>
 
-        <th>Description</th>
+        Parameter
 
-        </tr>
+        Type
 
-        </thead>
+        Description
 
-        <tbody>
 
-        <tr>
+        startDate
 
-        <td><code>startDate</code></td>
+        ISO 8601 Date
 
-        <td>ISO 8601 Date</td>
+        Filters shifts with a start date between startDate and endDate.
 
-        <td>Filters shifts with a start date between <code>startDate</code> and <code>endDate</code>.</td>
 
-        </tr>
+        endDate
 
-        <tr>
+        ISO 8601 Date
 
-        <td><code>endDate</code></td>
+        Filters shifts with a start date between startDate and endDate.
 
-        <td>ISO 8601 Date</td>
 
-        <td>Filters shifts with a start date between <code>startDate</code> and <code>endDate</code>.</td>
+        licenseTypes
 
-        </tr>
+        Array of strings
 
-        <tr>
+        Filters shifts by license types. Example: ["RN", "CNA"]
 
-        <td><code>licenseTypes</code></td>
 
-        <td>Array of strings</td>
+        facilityIds
 
-        <td>Filters shifts by license types. Example: <code>[&quot;RN&quot;, &quot;CNA&quot;]</code></td>
+        Array of strings
 
-        </tr>
+        Filters shifts by facility IDs. Example: ["P-12345", "P-67890"]
 
-        <tr>
 
-        <td><code>facilityIds</code></td>
+        statuses
 
-        <td>Array of strings</td>
+        Array of strings
 
-        <td>Filters shifts by facility IDs. Example: <code>[&quot;P-12345&quot;, &quot;P-67890&quot;]</code></td>
+        Filters shifts by status. Example: ["Open", "UnfulfilledRequested"]
 
-        </tr>
 
-        <tr>
+        shiftIds
 
-        <td><code>statuses</code></td>
+        Array of strings
 
-        <td>Array of strings</td>
+        Filters shifts by shift IDs. Example: ["4765568640", "5552536398"]
 
-        <td>Filters shifts by status. Example: <code>[&quot;Open&quot;, &quot;UnfulfilledRequested&quot;]</code></td>
 
-        </tr>
+        Important Notes
 
-        <tr>
 
-        <td><code>shiftIds</code></td>
+        You must provide either:
 
-        <td>Array of strings</td>
 
-        <td>Filters shifts by shift IDs. Example: <code>[&quot;4765568640&quot;, &quot;5552536398&quot;]</code></td>
+        shiftIds, or
 
-        </tr>
 
-        </tbody>
-
-        </table>
-
-        <h4>Important Notes</h4>
-
-        <ul>
-
-        <li>You <strong>must</strong> provide either:
-
-        <ul>
-
-        <li><code>shiftIds</code>, <strong>or</strong></li>
-
-        <li>Both <code>startDate</code> and <code>endDate</code>.</li>
-
-        </ul>
-
-        </li>
-
-        </ul>
-
-        '
+        Both startDate and endDate.'
       tags:
       - Shifts
       security:

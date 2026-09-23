@@ -26,9 +26,7 @@ paths:
     get:
       operationId: FacilitiesWebhooksController_getAll
       summary: Get all Webhooks of current application
-      description: '<p>Retrieves a list of all existing webhooks.</p>
-
-        '
+      description: Retrieves a list of all existing webhooks.
       tags:
       - Facilities webhooks
       security:
@@ -138,11 +136,10 @@ paths:
     post:
       operationId: FacilitiesWebhooksController_createOne
       summary: Create Webhook for Facilities
-      description: '<p>We strongly recommend you set up webhooks for better and easier integration.</p>
+      description: 'We strongly recommend you set up webhooks for better and easier integration.
 
-        <p>Creates a new webhook. Use this endpoint to register a new webhook by specifying the URL and the events you want to subscribe to.</p>
 
-        '
+        Creates a new webhook. Use this endpoint to register a new webhook by specifying the URL and the events you want to subscribe to.'
       tags:
       - Facilities webhooks
       security:
@@ -339,9 +336,7 @@ paths:
     patch:
       operationId: FacilitiesWebhooksController_updateOne
       summary: Update Webhook
-      description: '<p>Updates an existing webhook. This endpoint allows you to modify the URL, events, or other settings of an already registered webhook.</p>
-
-        '
+      description: Updates an existing webhook. This endpoint allows you to modify the URL, events, or other settings of an already registered webhook.
       tags:
       - Facilities webhooks
       security:
@@ -565,9 +560,7 @@ paths:
     delete:
       operationId: FacilitiesWebhooksController_deleteOne
       summary: Delete Webhook
-      description: '<p>Deletes a webhook. Use this endpoint to remove a webhook that is no longer needed.</p>
-
-        '
+      description: Deletes a webhook. Use this endpoint to remove a webhook that is no longer needed.
       tags:
       - Facilities webhooks
       security:

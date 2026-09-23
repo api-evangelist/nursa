@@ -26,9 +26,7 @@ paths:
     get:
       operationId: ScheduleShiftsController_getScheduledShifts
       summary: Get Scheduled Shifts
-      description: '<p>Returns an array of shifts with the Scheduled status from facilities the user is <a href="facilities-controller-request-connection" target="_blank">connected to</a>.</p>
-
-        '
+      description: Returns an array of shifts with the Scheduled status from facilities the user is connected to.
       tags:
       - Scheduled shifts
       security:
@@ -267,13 +265,13 @@ paths:
     post:
       operationId: ScheduleShiftsController_scheduleShift
       summary: Schedule clinician to a shift
-      description: '<p>Schedule a clinician to a shift.</p>
+      description: 'Schedule a clinician to a shift.
 
-        <p>After a <a href="marketplace-controller-create-shifts" target="_blank">shift is created</a>, and a clinician requests it, you can use the <a href="marketplace-controller-create-shifts" target="_blank">Get requested shifts</a> endpoint to check the clinicians who requested to work the shift. Additionally, you can <a href="marketplace-controller-create-shifts" target="_blank">Download the Clinician Profile</a> to help you choose which clinician best fits the shift.</p>
 
-        <p>Users can also create a <a href="facilities-webhooks-controller-create-one" target="_blank">Webhook</a> in our system to receive notifications when the a clinician requests to work a shift.</p>
+        After a shift is created, and a clinician requests it, you can use the Get requested shifts endpoint to check the clinicians who requested to work the shift. Additionally, you can Download the Clinician Profile to help you choose which clinician best fits the shift.
 
-        '
+
+        Users can also create a Webhook in our system to receive notifications when the a clinician requests to work a shift.'
       tags:
       - Scheduled shifts
       security:
@@ -503,67 +501,49 @@ paths:
     post:
       operationId: ScheduleShiftsController_removeScheduledClinician
       summary: Remove scheduled clinician from shift
-      description: '<h3><strong>Remove a Scheduled Clinician from a Shift</strong></h3>
+      description: 'Remove a Scheduled Clinician from a Shift
 
-        <p>This operation removes a scheduled clinician from a shift under specific conditions and notifies relevant parties accordingly.</p>
 
-        <h4><strong>Shift Status Updates</strong></h4>
+        This operation removes a scheduled clinician from a shift under specific conditions and notifies relevant parties accordingly.
 
-        <ul>
 
-        <li>If the <strong>shift has at least 1 hour remaining</strong>, it is returned to the &quot;Open&quot; status.</li>
+        Shift Status Updates
 
-        <li>Otherwise, the shift is set to <strong>UnfulfilledRequested</strong> and will no longer be offered to clinicians.</li>
 
-        </ul>
+        If the shift has at least 1 hour remaining, it is returned to the "Open" status.
 
-        <h4><strong>Notifications</strong></h4>
 
-        <ul>
+        Otherwise, the shift is set to UnfulfilledRequested and will no longer be offered to clinicians.
 
-        <li>The <strong>removed clinician</strong> is notified about their removal from the shift.</li>
 
-        <li>If the <strong>removal reason</strong> is <code>Remove hire refused to work</code>:
+        Notifications
 
-        <ul>
 
-        <li>The clinician''s status will be updated to <strong>&quot;frozen&quot;</strong>.</li>
+        The removed clinician is notified about their removal from the shift.
 
-        <li>If the shift <strong>has started</strong> or was in progress:
 
-        <ul>
+        If the removal reason is Remove hire refused to work:
 
-        <li>The clinician will be removed from any other scheduled shifts if there were previous removals for No Call No Show (NCNS).</li>
 
-        </ul>
+        The clinician''s status will be updated to "frozen".
 
-        </li>
 
-        </ul>
+        If the shift has started or was in progress:
 
-        </li>
 
-        </ul>
+        The clinician will be removed from any other scheduled shifts if there were previous removals for No Call No Show (NCNS).
 
-        <h4><strong>Returning the Shift to the Marketplace</strong></h4>
 
-        <ul>
+        Returning the Shift to the Marketplace
 
-        <li>If the shift is reopened and sent back to the marketplace:
 
-        <ul>
+        If the shift is reopened and sent back to the marketplace:
 
-        <li>Other clinicians who previously <strong>requested the shift</strong> will be notified so they can reapply.</li>
 
-        <li><strong>Clinician candidates</strong> eligible to fill the shift will receive an <strong>SOS notification</strong>.</li>
+        Other clinicians who previously requested the shift will be notified so they can reapply.
 
-        </ul>
 
-        </li>
-
-        </ul>
-
-        '
+        Clinician candidates eligible to fill the shift will receive an SOS notification.'
       tags:
       - Scheduled shifts
       security:

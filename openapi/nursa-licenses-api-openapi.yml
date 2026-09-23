@@ -26,9 +26,7 @@ paths:
     get:
       operationId: LicensesController_getAll
       summary: Get Licenses
-      description: '<p>Returns an array of our Licenses. A <strong>licenseCode</strong> is required when using <a href="marketplace-controller-quote-shift" target="_blank">Quote Shift</a> and <a href="marketplace-controller-create-shifts" target="_blank">Create Shifts</a> endpoints.</p>
-
-        '
+      description: Returns an array of our Licenses. A licenseCode is required when using Quote Shift and Create Shifts endpoints.
       tags:
       - Licenses
       security:

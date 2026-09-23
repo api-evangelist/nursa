@@ -20,21 +20,20 @@ servers:
 security:
 - public-api: []
 tags:
-- name: Webhook logs
+- name: Webhook Logs
 paths:
   /api/v2/public/webhooks/logs:
     get:
       operationId: WebhookLogsController_searchLogs
       summary: Search webhook notification logs
-      description: '<p>Webhook logs are stored for 14 days and are used for debugging purposes.</p>
+      description: 'Webhook logs are stored for 14 days and are used for debugging purposes.
 
-        <p>Searching webhook logs can help you troubleshoot issues by providing detailed information about the webhook events and their payloads.
 
-        This can be crucial for diagnosing problems, verifying event delivery, and ensuring your integration is functioning correctly.</p>
+        Searching webhook logs can help you troubleshoot issues by providing detailed information about the webhook events and their payloads.
 
-        '
+        This can be crucial for diagnosing problems, verifying event delivery, and ensuring your integration is functioning correctly.'
       tags:
-      - Webhook logs
+      - Webhook Logs
       security:
       - public-api: []
       parameters:
