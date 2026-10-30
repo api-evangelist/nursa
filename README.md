@@ -64,5 +64,159 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Nursa is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/nursa_stock/
+Nursa is a healthcare staffing marketplace, founded in Salt Lake City in 2019, that connects credentialed per diem (PRN) clinicians — registered nurses, licensed practical nurses, certified nursing assistants, certified medication aides and allied professionals — directly with hospitals, skilled nursing facilities, long-term and post-acute care providers, removing the traditional staffing agency from the middle. Facilities post open shifts and set their own rates, clinicians browse and request shifts, and both sides settle through Nursa's shift-report flow. Nursa publishes a Public API V2 (REST, JWT bearer, with an OpenID Connect / OAuth 2.0 authorization server) so workforce-management and scheduling platforms can post shifts, review requests, schedule clinicians, read clinician credentials and subscribe to webhooks — the integration surface behind its Covr, StaffLion, Dropstat, Maple and UKG partnerships. The company is accredited by The Joint Commission and reports more than 4,500 facilities and 500,000 clinicians nationwide.
+
+**Areas:** Company · Healthcare · Health · Staffing · Nursing · Marketplace · Workforce Management · Scheduling · Human Resources · Per Diem · Shifts · Webhook
+
+## Nursa on APIs.io
+
+Everything profiled for Nursa is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nursa/](https://apis.io/providers/nursa/)** — or go straight to one of the APIs or properties below.
+
+### APIs (14)
+
+- [Nursa Authorization Server](https://apis.io/apis/nursa/auth/) — Nursa's OpenID Connect / OAuth 2.0 authorization server. Issues the JWT access tokens the Nursa Public API requires, supports the authorization code (with…
+- [Nursa Clinicians API](https://apis.io/apis/nursa/nursa-clinicians-api/) — The Clinicians API from Nursa — 4 operation(s) for clinicians.
+- [Nursa Downloads API](https://apis.io/apis/nursa/nursa-downloads-api/) — The Downloads API from Nursa — 1 operation(s) for downloads.
+- [Nursa Facilities API](https://apis.io/apis/nursa/nursa-facilities-api/) — The Facilities API from Nursa — 8 operation(s) for facilities.
+- [Nursa Facilities webhooks API](https://apis.io/apis/nursa/nursa-facilities-webhooks-api/) — The Facilities webhooks API from Nursa — 2 operation(s) for facilities webhooks.
+- [Nursa Licenses API](https://apis.io/apis/nursa/nursa-licenses-api/) — The Licenses API from Nursa — 1 operation(s) for licenses.
+- [Nursa Marketplace API](https://apis.io/apis/nursa/nursa-marketplace-api/) — The Marketplace API from Nursa — 6 operation(s) for marketplace.
+- [Nursa Scheduled shifts API](https://apis.io/apis/nursa/nursa-scheduled-shifts-api/) — The Scheduled shifts API from Nursa — 2 operation(s) for scheduled shifts.
+- [Nursa Shift reports API](https://apis.io/apis/nursa/nursa-shift-reports-api/) — The Shift reports API from Nursa — 4 operation(s) for shift reports.
+- [Nursa Shift requests API](https://apis.io/apis/nursa/nursa-shift-requests-api/) — The Shift requests API from Nursa — 2 operation(s) for shift requests.
+- [Nursa Shifts API](https://apis.io/apis/nursa/nursa-shifts-api/) — The Shifts API from Nursa — 1 operation(s) for shifts.
+- [Nursa Support API](https://apis.io/apis/nursa/nursa-support-api/) — The Support API from Nursa — 1 operation(s) for support.
+- [Nursa User webhooks API](https://apis.io/apis/nursa/nursa-user-webhooks-api/) — The User webhooks API from Nursa — 2 operation(s) for user webhooks.
+- [Nursa Webhook logs API](https://apis.io/apis/nursa/nursa-webhook-logs-api/) — The Webhook logs API from Nursa — 1 operation(s) for webhook logs.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Nursa Public Api V2 Webhooks](https://apis.io/asyncapis/nursa/nursa-public-api-v2-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [nursa-mcp.yml](https://apis.io/servers/nursa/nursa-mcp-yml/)
+
+#### Collections (13)
+
+Postman and Open Collection request collections.
+
+- [Nursa Public API V2 Clinicians API](https://apis.io/collections/nursa/open-nursa-clinicians-api/)
+- [Nursa Public API V2 Downloads API](https://apis.io/collections/nursa/open-nursa-downloads-api/)
+- [Nursa Public API V2 Facilities API](https://apis.io/collections/nursa/open-nursa-facilities-api/)
+- [Nursa Public API V2 Facilities webhooks API](https://apis.io/collections/nursa/open-nursa-facilities-webhooks-api/)
+- [Nursa Public API V2 Licenses API](https://apis.io/collections/nursa/open-nursa-licenses-api/)
+- [Nursa Public API V2 Marketplace API](https://apis.io/collections/nursa/open-nursa-marketplace-api/)
+- [Nursa Public API V2 Scheduled shifts API](https://apis.io/collections/nursa/open-nursa-scheduled-shifts-api/)
+- [Nursa Public API V2 Shift reports API](https://apis.io/collections/nursa/open-nursa-shift-reports-api/)
+- [Nursa Public API V2 Shift requests API](https://apis.io/collections/nursa/open-nursa-shift-requests-api/)
+- [Nursa Public API V2 Shifts API](https://apis.io/collections/nursa/open-nursa-shifts-api/)
+- [Nursa Public API V2 Support API](https://apis.io/collections/nursa/open-nursa-support-api/)
+- [Nursa Public API V2 User webhooks API](https://apis.io/collections/nursa/open-nursa-user-webhooks-api/)
+- [Nursa Public API V2 Webhook logs API](https://apis.io/collections/nursa/open-nursa-webhook-logs-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Nursa Public Api V2 Overlay](https://apis.io/overlays/nursa/nursa-public-api-v2-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Nursa Authentication](https://apis.io/security/nursa/nursa-authentication/)
+- [Nursa Domain Security](https://apis.io/security/nursa/nursa-domain-security/)
+- [Nursa Trust Center](https://apis.io/security/nursa/nursa-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Nursa Scopes](https://apis.io/scopes/nursa/nursa-scopes/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Nursa Rate Limits](https://apis.io/rate-limits/nursa/nursa-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://nursa.com/)
+- [Documentation](https://docs.nursa.com/)
+- [Getting started](https://docs.nursa.com/docs/Integration%20Guideline/First%20steps/)
+- [API reference](https://docs.nursa.com/pages/api/nursa-public-api-v-2)
+- [Pricing](https://nursa.com/facility/pricing)
+- [Sign up](https://nursa.com/signup/facility)
+- [Support](https://nursa.com/support)
+- [Blog](https://nursa.com/blog)
+- [Compliance](https://trust.nursa.com/)
+- [Terms of service](https://nursa.com/terms)
+- [Privacy policy](https://nursa.com/privacy-policy)
+- [GitHub](https://github.com/nursa-com)
+
+## API Evangelist rating
+
+**Kin Score 55.7** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 61.7 |
+| Contract governance | 4.5 |
+| Operational transparency | 31.6 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 60.5 |
+
+**Agent readiness 36.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 36.7** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nursa/](https://apis.io/providers/nursa/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Nursa: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nursa/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
